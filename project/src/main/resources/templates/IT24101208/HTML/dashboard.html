@@ -1,81 +1,16 @@
 <!DOCTYPE html>
-<html>
+<<html lang="en">>
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <script>
-
-        window.onload=function(){
-
-        const params =
-        new URLSearchParams(window.location.search);
-
-        let role=params.get("role");
-
-        document.getElementById("roleTitle")
-        .innerText=role.toUpperCase()+" DASHBOARD";
-
-        if(role==="admin"){
-        document.getElementById("adminPanel").style.display="block";
-        }
-
-        if(role==="customer"){
-        document.getElementById("customerPanel").style.display="block";
-        }
-
-        if(role==="delivery"){
-        document.getElementById("deliveryPanel").style.display="block";
-        }
-
-        if(role==="supplier"){
-        document.getElementById("supplierPanel").style.display="block";
-        }
-        }
-
-    </script>
+    <link rel="stylesheet" href="../CSS/logout.css">
 </head>
-
 <body>
 
-<nav class="navbar">
-    <h2>Vendora</h2>
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="login.html">Logout</a></li>
-    </ul>
-</nav>
-
 <div class="dashboard">
+    <h1>Welcome to Vendora</h1>
 
-    <h2 id="roleTitle"></h2>
-
-    <!-- ADMIN -->
-    <div id="adminPanel" style="display:none">
-        <div class="card">Manage Users</div>
-        <div class="card">View Orders</div>
-        <div class="card">Manage Suppliers</div>
-    </div>
-
-    <!-- CUSTOMER -->
-    <div id="customerPanel" style="display:none">
-        <div class="card">Browse Products</div>
-        <div class="card">My Orders</div>
-        <div class="card">Shopping Cart</div>
-    </div>
-
-    <!-- DELIVERY -->
-    <div id="deliveryPanel" style="display:none">
-        <div class="card">Assigned Deliveries</div>
-        <div class="card">Update Delivery Status</div>
-    </div>
-
-    <!-- SUPPLIER -->
-    <div id="supplierPanel" style="display:none">
-        <div class="card">Supply Products</div>
-        <div class="card">Inventory Requests</div>
-    </div>
-
+    <a href="Profile.html">View Profile</a>
+    <a href="member-logout.html">Logout</a>
 </div>
 
 </body>

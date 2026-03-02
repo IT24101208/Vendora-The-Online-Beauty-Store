@@ -1,64 +1,52 @@
-// Registration Validation
-function registerValidation() {
+// REGISTER VALIDATION
+const registerForm = document.getElementById("registerForm");
+if(registerForm){
+    registerForm.addEventListener("submit", function(e){
+        e.preventDefault();
 
-let password =
-document.getElementById("password").value;
+        let password = document.getElementById("password").value;
+        let confirmPassword = document.getElementById("confirmPassword").value;
 
-let confirmPassword =
-document.getElementById("confirmPassword").value;
+        if(password.length < 6){
+            alert("Password must be at least 6 characters!");
+            return;
+        }
 
-if(password !== confirmPassword){
-alert("Passwords do not match!");
-return false;
+        if(password !== confirmPassword){
+            alert("Passwords do not match!");
+            return;
+        }
+
+        alert("Registration Successful!");
+        window.location.href = "Login.html";
+    });
 }
 
-alert("Registration Successful!");
-return true;
+// LOGIN VALIDATION
+const loginForm = document.getElementById("loginForm");
+if(loginForm){
+    loginForm.addEventListener("submit", function(e){
+        e.preventDefault();
+        alert("Login Successful!");
+        window.location.href = "dashboard.html";
+    });
 }
 
+// UPDATE PASSWORD
+const updateForm = document.getElementById("updatePasswordForm");
+if(updateForm){
+    updateForm.addEventListener("submit", function(e){
+        e.preventDefault();
 
-// Login Validation + Role Redirect
-function loginValidation(){
+        let newPass = document.getElementById("newPassword").value;
+        let confirmNewPass = document.getElementById("confirmNewPassword").value;
 
-let role =
-document.getElementById("role").value;
+        if(newPass !== confirmNewPass){
+            alert("Passwords do not match!");
+            return;
+        }
 
-if(role === "admin"){
-window.location.href="dashboard.html?role=admin";
-}
-else if(role === "customer"){
-window.location.href="dashboard.html?role=customer";
-}
-else if(role === "delivery"){
-window.location.href="dashboard.html?role=delivery";
-}
-else{
-window.location.href="dashboard.html?role=supplier";
-}
-
-return false;
-}
-
-
-// Admin Login Check
-function adminLoginValidation(){
-
-let email =
-document.getElementById("adminEmail").value;
-
-let password =
-document.getElementById("adminPassword").value;
-
-if(email==="admin@vendora.com"
-&& password==="admin123"){
-
-window.location.href=
-"dashboard.html?role=admin";
-return false;
-}
-
-document.getElementById("error")
-.innerText="Invalid Admin Credentials";
-
-return false;
+        alert("Password Updated Successfully!");
+        window.location.href = "Login.html";
+    });
 }

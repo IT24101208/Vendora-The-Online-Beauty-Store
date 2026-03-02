@@ -1,0 +1,26 @@
+body {
+    background-color: #FAE8ED;
+    font-family: Arial;
+}
+
+.card {
+    background: #FDD5DF;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.btn-primary {
+    background-color: #FFA2B9;
+    border: none;
+    padding: 10px;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #FFB2C5;
+}
+
+input {
+    border: 1px solid #FFC2D1;
+    padding: 8px;
+}

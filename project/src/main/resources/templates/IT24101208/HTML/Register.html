@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Vendora - Register</title>
+    <link rel="stylesheet" href="../CSS/common.css">
     <link rel="stylesheet" href="../CSS/signup.css">
 </head>
 <body>
@@ -11,32 +12,46 @@
     <h2>Create Account</h2>
 
     <form id="registerForm">
-
         <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" placeholder="Enter full name" required>
 
         <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" placeholder="Enter email" required>
 
         <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+        <input type="tel" id="phone" placeholder="Enter phone number" pattern="[0-9]{10}" required>
 
         <label for="address">Address</label>
-        <textarea id="address" name="address" required></textarea>
+        <textarea id="address" placeholder="Enter address" required></textarea>
 
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" placeholder="Enter password" required>
 
         <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
 
         <button type="submit">Register</button>
 
         <p>Already have an account? <a href="Login.html">Login</a></p>
-
     </form>
 </div>
 
 <script src="../js/Validation.js"></script>
+<script>
+    document.getElementById('registerForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        const pwd = document.getElementById('password').value;
+        const confirmPwd = document.getElementById('confirmPassword').value;
+
+        if(pwd !== confirmPwd){
+            alert('Passwords do not match!');
+            return;
+        }
+
+        alert('Registration successful! Please verify your email.');
+        window.location.href = 'verify-email.html';
+    });
+</script>
+
 </body>
 </html>

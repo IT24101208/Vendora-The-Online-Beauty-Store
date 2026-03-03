@@ -1,0 +1,78 @@
+/* Body & Background */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #FAE8ED;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Form Container */
+.form-container {
+    width: 400px;
+    background: #FFFFFF;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    text-align: center;
+    margin: auto;
+}
+
+/* Headings */
+h2 {
+    color: #FFA2B9;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Inputs and Textareas */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #FFC2D1;
+    outline: none;
+}
+
+input:focus, textarea:focus {
+    border-color: #FFB2C5;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #FFB2C5;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #FFA2B9;
+}
+
+/* Links */
+a {
+    color: #FFA2B9;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Dashboard / Logout container */
+.dashboard {
+    text-align: center;
+    background: #FFFFFF;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}

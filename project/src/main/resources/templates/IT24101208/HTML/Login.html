@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Vendora - Login</title>
+    <link rel="stylesheet" href="../CSS/common.css">
     <link rel="stylesheet" href="../CSS/login.css">
 </head>
 <body>
@@ -11,23 +12,28 @@
     <h2>Customer Login</h2>
 
     <form id="loginForm">
-
-        <!-- Email -->
         <label for="loginEmail">Email</label>
-        <input type="email" id="loginEmail" name="loginEmail" placeholder="Enter your email" required>
+        <input type="email" id="loginEmail" placeholder="Enter your email" required>
 
-        <!-- Password -->
         <label for="loginPassword">Password</label>
-        <input type="password" id="loginPassword" name="loginPassword" placeholder="Enter your password" required>
+        <input type="password" id="loginPassword" placeholder="Enter your password" required>
 
         <button type="submit">Login</button>
 
         <p><a href="forgot-password.html">Forgot Password?</a></p>
         <p>Don't have an account? <a href="Register.html">Register</a></p>
-
     </form>
 </div>
 
 <script src="../js/Validation.js"></script>
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        // Simulate login success
+        alert('Login successful!');
+        window.location.href = 'Profile.html';
+    });
+</script>
+
 </body>
 </html>

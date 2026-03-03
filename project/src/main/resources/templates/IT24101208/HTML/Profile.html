@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>My Profile - Vendora</title>
+    <link rel="stylesheet" href="../CSS/common.css">
     <link rel="stylesheet" href="../CSS/signup.css">
 </head>
 <body>
@@ -11,7 +12,6 @@
     <h2>My Profile</h2>
 
     <form id="profileForm">
-
         <label for="fullName">Full Name</label>
         <input type="text" id="fullName" placeholder="Enter your full name" required>
 
@@ -25,9 +25,19 @@
         <textarea id="address" placeholder="Enter your address" required></textarea>
 
         <button type="submit">Update Profile</button>
-
     </form>
+
+    <p><a href="update-password.html">Change Password</a></p>
+    <p><a href="member-logout.html">Logout</a></p>
 </div>
+
+<script src="../js/Validation.js"></script>
+<script>
+    document.getElementById('profileForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        alert('Profile updated successfully!');
+    });
+</script>
 
 </body>
 </html>

@@ -1,11 +1,9 @@
+/* Only unique styling for logout page */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
     background-color: #FAE8ED;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 .dashboard {
@@ -16,10 +14,9 @@ body {
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-h1, h2 {
+h2 {
     color: #FFA2B9;
 }
-
 a {
     display: inline-block;
     margin-top: 20px;

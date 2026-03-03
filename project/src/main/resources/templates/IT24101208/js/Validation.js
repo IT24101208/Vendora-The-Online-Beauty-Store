@@ -24,13 +24,33 @@ if(registerForm){
 
 // LOGIN VALIDATION
 const loginForm = document.getElementById("loginForm");
-if(loginForm){
-    loginForm.addEventListener("submit", function(e){
-        e.preventDefault();
+
+loginForm.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    fetch("http://localhost:8080/api/customers/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email: email, password: password })
+    })
+    .then(res => {
+        if(!res.ok) throw new Error("Invalid login");
+        return res.json();
+    })
+    .then(data => {
         alert("Login Successful!");
+        // Optionally save token or user info
         window.location.href = "dashboard.html";
+    })
+    .catch(err => {
+        alert("Login Failed: " + err.message);
     });
-}
+});
 
 // UPDATE PASSWORD
 const updateForm = document.getElementById("updatePasswordForm");

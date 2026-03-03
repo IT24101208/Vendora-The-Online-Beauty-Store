@@ -1,46 +1,6 @@
 body {
-    background-color: #FAE8ED;
-    font-family: Arial, sans-serif;
-}
-
-.form-container {
-    width: 400px;
-    margin: 80px auto;
-    background: #FFFFFF;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-h2 {
-    text-align: center;
-    color: #FFA2B9;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #FFC2D1;
-    border-radius: 8px;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #FFB2C5;
-    border: none;
-    color: white;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #FFA2B9;
-}
-
-a {
-    color: #FFA2B9;
-    text-decoration: none;
+    background-image: url('images/login-background.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }

@@ -1,0 +1,17 @@
+com\vendora\service\impl\UserServiceImpl.class
+com\vendora\model\Role.class
+com\vendora\VendoraApplication.class
+com\vendora\repository\RoleRepository.class
+com\vendora\common\ApiResponse.class
+com\vendora\model\User.class
+com\vendora\dto\RegisterRequest.class
+com\vendora\exception\GlobalExceptionHandler.class
+com\vendora\config\CorsConfig$1.class
+com\vendora\repository\UserRepository.class
+com\vendora\dto\LoginRequest.class
+com\vendora\service\UserService.class
+com\vendora\config\SecurityConfig.class
+DatabaseConfig.class
+com\vendora\config\CorsConfig.class
+com\vendora\controller\AuthController.class
+com\vendora\common\UserRole.class

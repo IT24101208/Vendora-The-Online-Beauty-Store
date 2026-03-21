@@ -10,9 +10,8 @@
 }
 
 .feedback-layout {
-
     display: grid;
-    grid-template-columns: 70% 30%; /* PERFECT BALANCE */
+    grid-template-columns: 70% 30%; /* Perfect balance */
     gap: 20px;
 }
 
@@ -24,9 +23,8 @@
     width: 100%;
 }
 
-/* Grid already from layout.css (grid-3) */
-/* Just spacing tweak */
 #feedbackGrid {
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
@@ -82,6 +80,23 @@
     right: 0;
 }
 
+/* Minimize button inside panel */
+#minimizeBtn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+    transition: transform 0.2s;
+}
+
+#minimizeBtn:hover {
+    transform: scale(1.2);
+}
+
 /* ============================= */
 /* FORM INSIDE PANEL */
 /* ============================= */
@@ -90,6 +105,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-top: 30px; /* space for minimize button */
 }
 
 #loggedUser {
@@ -101,9 +117,10 @@
 /* FLOATING BUTTON */
 /* ============================= */
 
+/* Top-right floating button above footer */
 .floating-btn {
     position: fixed;
-    bottom: 30px;
+    top: 30px; /* top position */
     right: 30px;
     width: 55px;
     height: 55px;
@@ -114,6 +131,7 @@
     font-size: 28px;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 1100;
     transition: 0.3s;
 }
 
@@ -133,5 +151,19 @@
 
     .feedback-panel {
         width: 100%;
+    }
+
+    .floating-btn {
+        top: 15px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 500px) {
+    #feedbackGrid {
+        grid-template-columns: 1fr;
     }
 }

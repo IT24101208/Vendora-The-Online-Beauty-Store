@@ -6,94 +6,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendora | Feedback</title>
 
-    <!-- Base CSS -->
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/form.css">
-    <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
-
-    <!-- Feedback Specific CSS (we will create next) -->
     <link rel="stylesheet" href="../css/feedback.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
 
-<!-- HEADER -->
-<header>
-    <h2>Vendora Feedback</h2>
-</header>
+<div class="page-wrapper">
+    <header class="feedback-header"><br>
+        <h2>What People Think About Us</h2>
+    </header>
 
-<!-- FILTER BUTTONS -->
-<section class="container">
-    <div class="feedback-filters">
-        <button data-filter="all" class="active">All</button>
-        <button data-filter="customer">Customer</button>
-        <button data-filter="supplier">Supplier</button>
-        <button data-filter="delivery">Delivery</button>
-    </div>
-</section>
+    <!-- FILTER BUTTONS -->
+    <section class="container">
+        <div class="feedback-filters">
+            <button data-filter="all" class="active">All</button>
+            <button data-filter="customer">Customer</button>
+            <button data-filter="supplier">Supplier</button>
+            <button data-filter="delivery">Delivery</button>
+        </div>
+    </section>
 
-<!-- MAIN LAYOUT -->
-<section class="container feedback-layout">
-
-    <!-- LEFT SIDE (Feedback Display) -->
-    <div class="feedback-display">
-
-        <div id="feedbackGrid" class="grid-3">
-            <!-- JS will inject cards here -->
+    <section class="container feedback-layout">
+        <div class="feedback-display">
+            <div id="feedbackGrid" class="grid-3">
+                <!-- JS will inject cards here -->
+            </div>
         </div>
 
-    </div>
+        <!-- RIGHT SIDE (Slide Form Panel) -->
+        <div id="feedbackPanel" class="feedback-panel">
+            <form id="feedbackForm" class="form-card">
+                <h3>We Value Your Feedback ♥</h3>
+                <p id="loggedUser">Current User: Guest</p>
 
-    <!-- RIGHT SIDE (Slide Form Panel) -->
-    <div id="feedbackPanel" class="feedback-panel">
+                <!-- Rating -->
+                <label for="rating">Rating</label>
+                <select id="rating" required>
+                    <option value="">Select Rating</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★☆</option>
+                    <option value="3">★★★☆☆</option>
+                    <option value="2">★★☆☆☆</option>
+                    <option value="1">★☆☆☆☆</option>
+                </select>
 
-        <form id="feedbackForm" class="form-card">
+                <!-- Message -->
+                <label for="message">Message</label>
+                <textarea id="message" rows="4" placeholder="What you think about us?" required></textarea>
 
-            <h3>Give Feedback ♥</h3>
+                <!-- Buttons -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Submit</button>
+                    <button type="button" id="cancelBtn" class="btn-cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </section>
 
-            <p id="loggedUser">Logged in as: Guest</p>
+    <!-- FLOAT BUTTON (Open Form) -->
+    <button id="openPanelBtn" class="floating-btn">+</button>
 
-            <!-- Rating -->
-            <label for="rating">Rating</label>
-            <select id="rating" required>
-                <option value="">Select Rating</option>
-                <option value="5">★★★★★</option>
-                <option value="4">★★★★☆</option>
-                <option value="3">★★★☆☆</option>
-                <option value="2">★★☆☆☆</option>
-                <option value="1">★☆☆☆☆</option>
-            </select>
-
-            <!-- Message -->
-            <label for="message">Message</label>
-            <textarea id="message" rows="4" required></textarea>
-
-            <!-- Buttons -->
-            <div class="form-actions">
-                <button type="submit" class="btn-primary">Submit</button>
-                <button type="button" id="cancelBtn" class="btn-cancel">Cancel</button>
-            </div>
-
-        </form>
-
-    </div>
-
-</section>
-
-<!-- FLOAT BUTTON (Open Form) -->
-<button id="openPanelBtn" class="floating-btn">+</button>
+</div> <!-- END page-wrapper -->
 
 <!-- FOOTER -->
-<footer>
-    <p>© 2026 Vendora</p>
+<footer class="footer">
+    <div class="footer-grid">
+        <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
+    </div>
 </footer>
 
-<!-- JS -->
 <script src="../js/feedback.js"></script>
-
+<script src="../js/main.js"></script>
 </body>
-
 </html>

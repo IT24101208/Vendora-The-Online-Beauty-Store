@@ -1,28 +1,13 @@
 /* Footer Styles */
 
-/* Bottom Section */
-.footer-bottom {
-    border-top: 1px solid #333;
-    padding-top: 20px;
-    margin-top: 40px;
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #cccccc;
-}
-
-.footer-bottom button {
-    background: none;
-    border: none;
-    color: var(--brand-color);
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0;
-    margin-left: 5px;
-}
-
-.footer-bottom button:hover {
-    text-decoration: underline;
+/* Main Container */
+.footer {
+    background: #1A1A1A;
+    color: #ffffff;
+    padding: 50px 60px;
+    width: 100%;
+    font-family: 'Roboto Condensed', sans-serif;
+    box-sizing: border-box;
 }
 
 /* Grid Layout */
@@ -32,6 +17,14 @@
     gap: 40px;
     max-width: 1200px;
     margin: auto;
+}
+
+/* Section Titles */
+.footer h4 {
+    margin-bottom: 15px;
+    color: #FFF36E;
+    font-size: 16px;
+    letter-spacing: 0.5px;
 }
 
 /* Links */
@@ -46,25 +39,6 @@
 
 .footer a:hover {
     color: #ffffff;
-}
-
-/* Main Container */
-.footer {
-    background: #1A1A1A;
-    color: #ffffff;
-    padding: 50px 60px;
-    width: 100%;
-    font-family: 'Roboto Condensed', sans-serif;
-    position: relative;
-    z-index: 1;
-}
-
-/* Section Titles */
-.footer h4 {
-    margin-bottom: 15px;
-    color: #FFF36E;
-    font-size: 16px;
-    letter-spacing: 0.5px;
 }
 
 /* Social Icons */
@@ -92,11 +66,27 @@
     transform: scale(1.1);
 }
 
-/* Subscribe Inputs */
+/* Subscribe Section */
+.footer-subscribe {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .subscribe-input {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+}
+
+.subscribe-input input {
+    flex: 1;
+    padding: 10px 12px;
+    border: none;
+    outline: none;
+    background: #dddddd;
+    border-radius: 5px;
+    font-size: 14px;
 }
 
 .subscribe-input button {
@@ -113,26 +103,34 @@
     opacity: 0.9;
 }
 
-.subscribe-input input {
-    flex: 1;
-    padding: 10px 12px;
-    border: none;
-    outline: none;
-    background: #dddddd;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-/* Subscribe Section */
-.footer-subscribe {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
 .footer-subscribe p {
     font-size: 14px;
     color: #cccccc;
+}
+
+/* Bottom Section */
+.footer-bottom {
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #cccccc;
+}
+
+.footer-bottom button {
+    background: none;
+    border: none;
+    color: var(--brand-color);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.footer-bottom button:hover {
+    text-decoration: underline;
 }
 
 /* Responsive Footer */

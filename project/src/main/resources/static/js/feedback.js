@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const loggedUserText = document.getElementById("loggedUser");
-    loggedUserText.textContent = `Logged in as: ${user.name} (${user.role})`;
+    loggedUserText.textContent = `Current User: ${user.name} (${user.role})`;
 
     /* =========================
        ELEMENTS
@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const panel = document.getElementById("feedbackPanel");
     const openBtn = document.getElementById("openPanelBtn");
     const cancelBtn = document.getElementById("cancelBtn");
+    const minimizeBtn = document.getElementById("minimizeBtn");
     const filterBtns = document.querySelectorAll(".feedback-filters button");
 
     /* =========================
@@ -87,10 +88,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* =========================
+       MINIMIZE PANEL
+    ========================== */
+    minimizeBtn.addEventListener("click", () => {
+        panel.classList.remove("active");
+    });
+
+    /* =========================
        CANCEL BUTTON
     ========================== */
     cancelBtn.addEventListener("click", () => {
-        window.location.href = "../index.html";
+        panel.classList.remove("active");
     });
 
     /* =========================
@@ -102,7 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const rating = document.getElementById("rating").value;
         const message = document.getElementById("message").value.trim();
 
-        // validation
         if (!rating || message === "") {
             alert("Please fill all fields");
             return;

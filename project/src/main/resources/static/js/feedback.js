@@ -1,141 +1,83 @@
+// feedback.js
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* =========================
-       FAKE LOGGED-IN USER
-    ========================== */
-    const user = {
-        name: "Venom",
-        role: "customer" // change: customer | supplier | delivery
-    };
-
-    const loggedUserText = document.getElementById("loggedUser");
-    loggedUserText.textContent = `Current User: ${user.name} (${user.role})`;
-
-    /* =========================
-       ELEMENTS
-    ========================== */
-    const grid = document.getElementById("feedbackGrid");
-    const form = document.getElementById("feedbackForm");
-    const panel = document.getElementById("feedbackPanel");
-    const openBtn = document.getElementById("openPanelBtn");
+    /* ---------------- ELEMENTS ---------------- */
+    const feedbackGrid = document.getElementById("homeFeedbackGrid") || document.getElementById("feedbackGrid");
+    const feedbackPanel = document.getElementById("feedbackPanel");
+    const openPanelBtn = document.getElementById("openPanelBtn");
     const cancelBtn = document.getElementById("cancelBtn");
-    const minimizeBtn = document.getElementById("minimizeBtn");
-    const filterBtns = document.querySelectorAll(".feedback-filters button");
+    const feedbackForm = document.getElementById("feedbackForm");
 
-    /* =========================
-       LOAD FROM STORAGE
-    ========================== */
-    let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
+    /* ---------------- LOCAL STORAGE ---------------- */
+    let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [
+        { name: "Alice", role: "customer", rating: 5, message: "Great website! Easy to use and love the products." },
+        { name: "Bob", role: "delivery", rating: 4, message: "Delivery was fast and the packaging is excellent." },
+        { name: "Carol", role: "customer", rating: 5, message: "I love the custom routine feature. It helps me pick the right products." }
+    ];
 
-    /* =========================
-       DISPLAY FUNCTION
-    ========================== */
-    function displayFeedback(list) {
-        grid.innerHTML = "";
+    /* ---------------- RENDER FEEDBACK ---------------- */
+    function renderFeedback(filter = "all", targetGrid = feedbackGrid) {
+        if (!targetGrid) return;
+        targetGrid.innerHTML = "";
 
-        if (list.length === 0) {
-            grid.innerHTML = "<p>No feedback yet.</p>";
-            return;
-        }
-
-        list.forEach(f => {
-            const card = document.createElement("div");
-            card.classList.add("feedback-card");
-            card.setAttribute("data-role", f.role);
-
-            card.innerHTML = `
-                <h4>${f.name}</h4>
-                <span class="feedback-role">${f.role}</span>
-                <div class="feedback-rating">${"★".repeat(f.rating)}${"☆".repeat(5 - f.rating)}</div>
-                <p class="feedback-message">${f.message}</p>
-            `;
-
-            grid.appendChild(card);
-        });
+        // Filter feedbacks
+        feedbacks
+            .filter(fb => filter === "all" || fb.role === filter)
+            .slice(-4) // show latest 4
+            .reverse()
+            .forEach(fb => {
+                const stars = "★".repeat(fb.rating) + "☆".repeat(5 - fb.rating);
+                const card = document.createElement("div");
+                card.classList.add("feedback-card");
+                card.dataset.role = fb.role;
+                card.innerHTML = `
+                    <h4>${fb.name}</h4>
+                    <div class="feedback-role">${fb.role}</div>
+                    <div class="feedback-rating">${stars}</div>
+                    <div class="feedback-message">${fb.message}</div>
+                `;
+                targetGrid.appendChild(card);
+            });
     }
 
-    /* =========================
-       INITIAL LOAD
-    ========================== */
-    displayFeedback(feedbacks);
+    renderFeedback();
 
-    /* =========================
-       FILTER SYSTEM
-    ========================== */
-    filterBtns.forEach(btn => {
+    /* ---------------- FILTER BUTTONS ---------------- */
+    document.querySelectorAll(".feedback-filters button").forEach(btn => {
         btn.addEventListener("click", () => {
-
-            // active button UI
-            filterBtns.forEach(b => b.classList.remove("active"));
+            document.querySelectorAll(".feedback-filters button").forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
-
-            const type = btn.dataset.filter;
-
-            if (type === "all") {
-                displayFeedback(feedbacks);
-            } else {
-                const filtered = feedbacks.filter(f => f.role === type);
-                displayFeedback(filtered);
-            }
+            renderFeedback(btn.dataset.filter);
         });
     });
 
-    /* =========================
-       OPEN PANEL
-    ========================== */
-    openBtn.addEventListener("click", () => {
-        panel.classList.add("active");
-    });
+    /* ---------------- PANEL TOGGLE ---------------- */
+    openPanelBtn?.addEventListener("click", () => feedbackPanel?.classList.add("open"));
+    cancelBtn?.addEventListener("click", () => feedbackPanel?.classList.remove("open"));
 
-    /* =========================
-       MINIMIZE PANEL
-    ========================== */
-    minimizeBtn.addEventListener("click", () => {
-        panel.classList.remove("active");
-    });
-
-    /* =========================
-       CANCEL BUTTON
-    ========================== */
-    cancelBtn.addEventListener("click", () => {
-        panel.classList.remove("active");
-    });
-
-    /* =========================
-       FORM SUBMIT
-    ========================== */
-    form.addEventListener("submit", (e) => {
+    /* ---------------- SUBMIT FEEDBACK ---------------- */
+    feedbackForm?.addEventListener("submit", e => {
         e.preventDefault();
 
-        const rating = document.getElementById("rating").value;
-        const message = document.getElementById("message").value.trim();
+        const name = prompt("Enter your name (simulate registered user)", "Guest");
+        if (!name) return alert("Only registered users can submit feedback.");
 
-        if (!rating || message === "") {
-            alert("Please fill all fields");
-            return;
-        }
+        const rating = parseInt(document.getElementById("rating")?.value || 0);
+        if (!rating || rating < 1 || rating > 5) return alert("Please select a rating (1-5).");
 
-        const newFeedback = {
-            name: user.name,
-            role: user.role,
-            rating: parseInt(rating),
-            message: message
-        };
+        const message = document.getElementById("message")?.value.trim();
+        if (!message) return alert("Please enter a message.");
 
-        feedbacks.push(newFeedback);
+        const category = document.querySelector(".feedback-filters button.active")?.dataset.filter || "customer";
 
+        // Add new feedback
+        feedbacks.push({ name, role: category, rating, message });
         localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
 
-        // refresh UI
-        displayFeedback(feedbacks);
-
-        // reset form
-        form.reset();
-
-        // close panel
-        panel.classList.remove("active");
-
-        alert("Feedback submitted!");
+        renderFeedback(category);
+        feedbackForm.reset();
+        feedbackPanel?.classList.remove("open");
+        alert("Feedback submitted successfully!");
     });
 
 });

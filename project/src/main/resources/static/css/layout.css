@@ -8,24 +8,23 @@
     padding: 0 20px;
 }
 
-{
+*, *::before, *::after {
     box-sizing: border-box;
 }
 
-/* Form Container */
 .form-container {
     background-image: url('../images/b2.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-attachment: fixed; /* optional: remove if you want it to scroll */
+    background-attachment: fixed;
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     box-sizing: border-box;
     width: 100%;
-    max-width: 800px;  /* optional: limit form width */
-    margin: 0 auto;    /* center the form */
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 /* Grid System */
@@ -40,7 +39,7 @@
 
 #feedbackGrid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
@@ -48,6 +47,7 @@
 .about-section,
 .beauty-promise-section,
 .mission-section,
+.product-section,
 .why-choose-section {
     display: flex;
     justify-content: center;
@@ -60,47 +60,23 @@
     box-sizing: border-box;
 }
 
-/* Shift section titles 1.5 inches to the right */
-.section-title {
-    margin-left: 1.5in; /* 1.5 inches from the left */
-    margin-top: 30px;
-    margin-bottom: 10px; /* small gap between title and content */
-    font-size: 28px;     /* optional: adjust size if needed */
-    font-weight: 600;    /* optional */
-    padding: 60px 0;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
-    /* Container padding adjustment */
     .container {
-        padding: 30px 15px;  /* smaller padding for mobile */
+        padding: 30px 15px;
     }
-
-    /* Feedback */
     .grid-3 {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
     }
-
-@media (max-width: 900px) {
-    .grid-3 {
-        grid-template-columns: 1fr;
-    }
-}
-
-    /* Grids stack vertically on mobile */
     .category-grid,
     .partner-grid,
     .product-grid,
     .routine-grid {
-        display: grid;
-        grid-template-columns: 1fr;  /* single column */
-        gap: 20px;                  /* consistent spacing */
+        grid-template-columns: 1fr;
     }
 
-    /* Section images full width and responsive */
     .about-section img,
     .mission-section img,
     .why-choose-section img,
@@ -114,16 +90,20 @@
         display: block;
     }
 
-    /* Form container adjustments for mobile */
     .form-container {
         padding: 20px;
-        background-attachment: scroll; /* fixed backgrounds can be buggy on mobile */
+        background-attachment: scroll;
         border-radius: 8px;
     }
 
-    /* Reduce font size slightly on mobile */
     body {
         font-size: 14px;
         line-height: 1.5;
+    }
+}
+
+@media (max-width: 900px) {
+    .grid-3 {
+        grid-template-columns: 1fr;
     }
 }

@@ -8,10 +8,10 @@
     <title>Vendora | Customer Service</title>
 
     <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/layout.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
 
@@ -35,8 +35,10 @@
         <a href="service.html">Service</a>
     </nav>
 
-    <div class="header-right">
-        <input type="text" placeholder="Search..." class="search-input">
+    <div class="header-search">
+        <label for="searchInput" class="sr-only">Search products</label>
+        <input id="searchInput" type="text" placeholder="Search products..." class="search-input">
+        <div class="icon-btn"><i class="fa-solid fa-cart-shopping"></i></div>
     </div>
 
 </header>
@@ -147,6 +149,8 @@
     </div>
 
 </footer>
+
+<script src="../js/form.js"></script>
 <script src="../js/main.js"></script>
 </body>
 </html>

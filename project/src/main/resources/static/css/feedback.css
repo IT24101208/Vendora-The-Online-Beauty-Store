@@ -1,7 +1,4 @@
-/* ============================= */
 /* Feedback Page Layout */
-/* ============================= */
-
 .container {
     width: 100%;
     max-width: 1300px;
@@ -11,28 +8,11 @@
 
 .feedback-layout {
     display: grid;
-    grid-template-columns: 70% 30%; /* Perfect balance */
+    grid-template-columns: 70% 30%;
     gap: 20px;
 }
 
-/* ============================= */
-/* LEFT SIDE - Feedback Display */
-/* ============================= */
-
-.feedback-display {
-    width: 100%;
-}
-
-#feedbackGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-/* ============================= */
-/* FILTER BUTTONS */
-/* ============================= */
-
+/* Filter Buttons */
 .feedback-filters {
     display: flex;
     gap: 10px;
@@ -56,32 +36,39 @@
     background: #000;
     color: #fff;
 }
-
-/* ============================= */
-/* RIGHT SIDE - Slide Panel */
-/* ============================= */
-
-.feedback-panel {
-    position: fixed;
-    top: 0;
-    width: 30%;
-    right: -30%;
-    height: 100%;
-    background: #fff;
-    box-shadow: -4px 0 15px rgba(0,0,0,0.15);
-    padding: 20px;
-    transition: 0.3s ease;
-    z-index: 1000;
-    overflow-y: auto;
+.feedback-display {     /* LEFT SIDE - Feedback Display */
+    width: 100%;
 }
 
-/* Active state */
-.feedback-panel.active {
+#feedbackGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.feedback-panel {       /* RIGHT SIDE - Slide Panel */
+    position: fixed;
+    right: -380px;
+    top: 80px;
+    width: 350px;
+    max-width: 90%;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.feedback-panel.open {
+    right: 20px;
+}
+
+.feedback-panel.active {    /* Active state */
     right: 0;
 }
 
-/* Minimize button inside panel */
-#minimizeBtn {
+#minimizeBtn {      /* Minimize button inside panel */
     position: absolute;
     top: 10px;
     left: 10px;
@@ -97,15 +84,11 @@
     transform: scale(1.2);
 }
 
-/* ============================= */
-/* FORM INSIDE PANEL */
-/* ============================= */
-
-.form-card {
+.form-card {    /* Form Inside Panel */
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: 30px; /* space for minimize button */
+    margin-top: 30px;
 }
 
 #loggedUser {
@@ -113,36 +96,28 @@
     color: #555;
 }
 
-/* ============================= */
 /* FLOATING BUTTON */
-/* ============================= */
-
-/* Top-right floating button above footer */
-.floating-btn {
+.floating-btn {     /* Top-right floating button above footer */
     position: fixed;
-    top: 30px; /* top position */
-    right: 30px;
-    width: 55px;
-    height: 55px;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    border: none;
-    background: #000;
+    background: black;
     color: #fff;
-    font-size: 28px;
+    font-size: 30px;
+    border: none;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1100;
-    transition: 0.3s;
 }
 
 .floating-btn:hover {
     transform: scale(1.1);
 }
 
-/* ============================= */
 /* RESPONSIVE */
-/* ============================= */
-
 @media (max-width: 900px) {
 
     .feedback-layout {

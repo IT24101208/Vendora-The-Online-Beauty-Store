@@ -1,40 +1,43 @@
+// delivery.js
 document.addEventListener("DOMContentLoaded", () => {
-    // Vehicle Sections
+
+    /* ---------------- VEHICLE SELECTION ---------------- */
     const vehicleSelect = document.getElementById("vehicleFilter");
-    const sections = {
+    const vehicleSections = {
         bike: document.querySelector(".bike"),
         car: document.querySelector(".car"),
         van: document.querySelector(".van")
     };
-    const inputs = {
+    const vehicleInputs = {
         bike: ["bikeModel", "bikePlate"],
         car: ["carModel", "carPlate"],
         van: ["vanModel", "vanPlate"]
     };
 
-    // Hide all sections initially
-    Object.values(sections).forEach(sec => sec.style.display = "none");
+    // Hide all vehicle sections initially
+    Object.values(vehicleSections).forEach(sec => sec.style.display = "none");
 
-    vehicleSelect.addEventListener("change", () => {
-        Object.keys(sections).forEach(type => {
-            sections[type].style.display = "none";
-            inputs[type].forEach(id => {
+    // Show selected vehicle section
+    vehicleSelect?.addEventListener("change", () => {
+        Object.keys(vehicleSections).forEach(type => {
+            const sec = vehicleSections[type];
+            sec.style.display = "none"; // hide all
+            vehicleInputs[type].forEach(id => {
                 const input = document.getElementById(id);
-                input.required = false;
-                input.value = ""; // clear previous input
+                input.required = false; // remove required
+                input.value = "";       // clear input
             });
         });
 
         const selected = vehicleSelect.value;
-        if (sections[selected]) {
-            sections[selected].style.display = "block";
-            inputs[selected].forEach(id => {
-                document.getElementById(id).required = true;
-            });
+        if (vehicleSections[selected]) {
+            const sec = vehicleSections[selected];
+            sec.style.display = "block"; // show selected
+            vehicleInputs[selected].forEach(id => document.getElementById(id).required = true);
         }
     });
 
-    // Province → District logic
+    /* ---------------- PROVINCE → DISTRICT LOGIC ---------------- */
     const province = document.getElementById("deliveryProvince");
     const district = document.getElementById("district");
 
@@ -50,15 +53,18 @@ document.addEventListener("DOMContentLoaded", () => {
         sabaragamuwa: ["Ratnapura", "Kegalle"]
     };
 
-    province.addEventListener("change", () => {
-        district.innerHTML = '<option value="">Select District</option>';
-        if (districts[province.value]) {
-            districts[province.value].forEach(d => {
-                const opt = document.createElement("option");
-                opt.value = d;
-                opt.textContent = d;
-                district.appendChild(opt);
-            });
-        }
+    province?.addEventListener("change", () => {
+        district.innerHTML = '<option value="">Select District</option>'; // reset
+        if (!province.value || !districts[province.value]) return;
+        districts[province.value].forEach(d => {
+            const opt = document.createElement("option");
+            opt.value = d;
+            opt.textContent = d;
+            district.appendChild(opt);
+        });
     });
+
+    /* ---------------- INITIALIZATION ---------------- */
+    // Optional: pre-select first option or reset fields
+    vehicleSelect?.dispatchEvent(new Event("change"));
 });

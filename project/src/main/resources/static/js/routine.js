@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!window.location.pathname.includes("routine.html")) return;
 
-    /* ===== READ CATEGORY FROM URL ===== */
+    /* ---------------- URL PARAMETER: CATEGORY ---------------- */
     const params = new URLSearchParams(window.location.search);
     const category = params.get("category");
 
@@ -14,97 +14,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!category || !concernForm || !categoryTitle || !concernsContainer) return;
 
-    // Show form
     concernForm.style.display = "block";
     categoryTitle.textContent = `Selected: ${category.toUpperCase()}`;
 
-    /* ===== CONCERNS DATA ===== */
+    /* ---------------- CONCERNS DATA ---------------- */
     const concernsData = {
-        skincare: [
-            "Oily/combination skin",
-            "Acne & clogged pores",
-            "Hyperpigmentation",
-            "Dehydration",
-            "Fungal infections",
-            "Heat rashes"
-        ],
-        haircare: [
-            "Hair fall",
-            "Dandruff",
-            "Frizz",
-            "Dry/damaged hair",
-            "Oily scalp",
-            "Split ends"
-        ],
-        bodycare: [
-            "Body acne",
-            "Fungal infections",
-            "Body odor",
-            "Dark areas",
-            "Dry skin",
-            "Heat rashes"
-        ]
+        skincare: ["Oily/combination skin", "Acne & clogged pores", "Hyperpigmentation", "Dehydration", "Fungal infections", "Heat rashes"],
+        haircare: ["Hair fall", "Dandruff", "Frizz", "Dry/damaged hair", "Oily scalp", "Split ends"],
+        bodycare: ["Body acne", "Fungal infections", "Body odor", "Dark areas", "Dry skin", "Heat rashes"]
     };
 
-    // Generate concern checkboxes
-    concernsContainer.innerHTML = "";
-    if (concernsData[category]) {
-        concernsData[category].forEach(c => {
-            const label = document.createElement("label");
-            label.innerHTML = `<input type="checkbox" value="${c}"> ${c}`;
-            concernsContainer.appendChild(label);
-        });
-
-        // Add Other option
-        const otherLabel = document.createElement("label");
-        otherLabel.innerHTML = `<input type="checkbox" id="otherCheck"> Other (custom)`;
-        concernsContainer.appendChild(otherLabel);
-
-        const otherInput = document.createElement("input");
-        otherInput.type = "text";
-        otherInput.id = "otherText";
-        otherInput.placeholder = "Enter your concern";
-        otherInput.style.display = "none";
-        concernsContainer.appendChild(otherInput);
-
-        document.getElementById("otherCheck").addEventListener("change", function () {
-            otherInput.style.display = this.checked ? "block" : "none";
-        });
-    }
-
-    /* ===== ROUTINE TEMPLATES ===== */
     const routineTemplates = {
         skincare: {
-            "Oily/combination skin": {
-                symptoms: "Shiny forehead, nose, or chin; enlarged pores.",
-                causes: "Overactive sebaceous glands, hormones, or diet.",
-                routine: "Morning: Gentle cleanser + Oil-free moisturizer\nNight: Clay mask weekly + Light moisturizer"
-            },
-            "Acne & clogged pores": {
-                symptoms: "Blackheads, whiteheads, red pimples.",
-                causes: "Excess oil, bacteria, hormonal changes.",
-                routine: "Morning: Salicylic acid cleanser + Non-comedogenic moisturizer\nNight: Spot treatment + Moisturizer"
-            },
-            "Hyperpigmentation": {
-                symptoms: "Dark spots, uneven skin tone.",
-                causes: "Sun exposure, acne scars, hormones.",
-                routine: "Morning: Sunscreen + Vitamin C serum\nNight: Retinol or brightening serum"
-            },
-            "Dehydration": {
-                symptoms: "Tight, flaky skin; dull appearance.",
-                causes: "Low water intake, harsh products, environment.",
-                routine: "Morning: Hydrating cleanser + Moisturizer\nNight: Hydrating serum + Moisturizer"
-            },
-            "Fungal infections": {
-                symptoms: "Red itchy patches, sometimes scaling.",
-                causes: "Yeast overgrowth due to moisture or heat.",
-                routine: "Keep area dry, antifungal creams, gentle cleanser"
-            },
-            "Heat rashes": {
-                symptoms: "Red bumps, itching, irritation.",
-                causes: "Blocked sweat ducts from heat and sweat.",
-                routine: "Cool compress, breathable clothing, mild cleanser"
-            }
+            "Oily/combination skin": { symptoms: "Shiny forehead, nose, or chin; enlarged pores.", causes: "Overactive sebaceous glands, hormones, or diet.", routine: "Morning: Gentle cleanser + Oil-free moisturizer\nNight: Clay mask weekly + Light moisturizer" },
+            "Acne & clogged pores": { symptoms: "Blackheads, whiteheads, red pimples.", causes: "Excess oil, bacteria, hormonal changes.", routine: "Morning: Salicylic acid cleanser + Non-comedogenic moisturizer\nNight: Spot treatment + Moisturizer" },
+            "Hyperpigmentation": { symptoms: "Dark spots, uneven skin tone.", causes: "Sun exposure, acne scars, hormones.", routine: "Morning: Sunscreen + Vitamin C serum\nNight: Retinol or brightening serum" },
+            "Dehydration": { symptoms: "Tight, flaky skin; dull appearance.", causes: "Low water intake, harsh products, environment.", routine: "Morning: Hydrating cleanser + Moisturizer\nNight: Hydrating serum + Moisturizer" },
+            "Fungal infections": { symptoms: "Red itchy patches, sometimes scaling.", causes: "Yeast overgrowth due to moisture or heat.", routine: "Keep area dry, antifungal creams, gentle cleanser" },
+            "Heat rashes": { symptoms: "Red bumps, itching, irritation.", causes: "Blocked sweat ducts from heat and sweat.", routine: "Cool compress, breathable clothing, mild cleanser" }
         },
         haircare: {
             "Hair fall": { symptoms: "Excessive shedding, thinning hair.", causes: "Stress, nutrition, genetics.", routine: "Mild shampoo, protein treatments, balanced diet" },
@@ -124,15 +51,40 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    /* ===== FORM SUBMISSION ===== */
-    concernForm.addEventListener("submit", function (e) {
+    /* ---------------- GENERATE CONCERN CHECKBOXES ---------------- */
+    concernsContainer.innerHTML = "";
+    if (concernsData[category]) {
+        concernsData[category].forEach(c => {
+            const label = document.createElement("label");
+            label.innerHTML = `<input type="checkbox" value="${c}"> ${c}`;
+            concernsContainer.appendChild(label);
+        });
+
+        // Add "Other" option
+        const otherLabel = document.createElement("label");
+        otherLabel.innerHTML = `<input type="checkbox" id="otherCheck"> Other (custom)`;
+        concernsContainer.appendChild(otherLabel);
+
+        const otherInput = document.createElement("input");
+        otherInput.type = "text";
+        otherInput.id = "otherText";
+        otherInput.placeholder = "Enter your concern";
+        otherInput.style.display = "none";
+        concernsContainer.appendChild(otherInput);
+
+        document.getElementById("otherCheck").addEventListener("change", function () {
+            otherInput.style.display = this.checked ? "block" : "none";
+        });
+    }
+
+    /* ---------------- FORM SUBMISSION ---------------- */
+    concernForm.addEventListener("submit", e => {
         e.preventDefault();
 
         const name = document.querySelector("#fullName").value.trim();
-        const ageInput = document.querySelector("#age").value.trim();
-        const age = parseInt(ageInput);
+        const age = parseInt(document.querySelector("#age").value.trim());
 
-        if (!name || !ageInput || isNaN(age) || age < 16 || age > 75) {
+        if (!name || isNaN(age) || age < 16 || age > 75) {
             alert("Please enter a valid name and age (16-75).");
             return;
         }
@@ -140,9 +92,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Collect selected concerns
         const selected = Array.from(concernsContainer.querySelectorAll("input[type=checkbox]:checked"))
             .map(cb => cb.value);
-
-        const otherInput = document.getElementById("otherText");
-        if (otherInput && otherInput.value.trim() !== "") selected.push(otherInput.value.trim());
+        const otherVal = document.getElementById("otherText")?.value.trim();
+        if (otherVal) selected.push(otherVal);
 
         if (selected.length === 0) {
             alert("Please select at least one concern.");
@@ -154,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         resultDiv.innerHTML = "<div class='loading'>Generating your routine...</div>";
 
         setTimeout(() => {
-            // Generate routine
+            // Generate routine output
             let output = `Hello ${name}! Here’s a personalized ${category} routine for age ${age}:\n\n`;
             selected.forEach(c => {
                 const template = (routineTemplates[category] && routineTemplates[category][c]) || {
@@ -164,21 +115,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 output += `🔹 Concern: ${c}\n   • Symptoms: ${template.symptoms}\n   • Causes: ${template.causes}\n   • Routine:\n       ${template.routine.replace(/\n/g,"\n       ")}\n\n`;
             });
-            output += `💡 Tips:\n- Stay hydrated\n- Follow a consistent routine\n- Adjust to your body type\n\n⚠️ This was AI generated. Meet a doctor before choosing products.`;
 
-            resultDiv.innerHTML = `<pre style="white-space: pre-wrap;">${output}</pre>`;
+            output += `💡 Tips:\n- Stay hydrated\n- Follow a consistent routine\n- Adjust to your body type\n\n⚠️ this message was created by AI. Always consult your doctor before choosing or using products.`;
 
-            // After generating routine
             resultDiv.innerHTML = `<pre style="white-space: pre-wrap;">${output}</pre>`;
 
             // Show feedback section
-            feedbackSection.style.display = "block";
+            if (feedbackSection) feedbackSection.style.display = "block";
 
-            // Attach event listeners (no need to dynamically create elements)
-            document.getElementById("submitFeedback").addEventListener("click", () => {
-                const rating = document.getElementById("feedbackRating").value;
-                const message = document.getElementById("feedbackMessage").value.trim();
-
+            // Feedback submission (temporary)
+            document.getElementById("submitFeedback")?.addEventListener("click", () => {
+                const rating = document.getElementById("feedbackRating")?.value;
+                const message = document.getElementById("feedbackMessage")?.value.trim();
                 if (!rating) return alert("Please select a rating.");
 
                 feedbackSection.innerHTML = `
@@ -190,33 +138,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(() => window.location.href = "index.html", 2000);
             });
 
-            document.getElementById("exitButton").addEventListener("click", () => {
+            document.getElementById("exitButton")?.addEventListener("click", () => {
                 window.location.href = "index.html";
             });
 
         }, 1000);
     });
 
-    const user = JSON.parse(localStorage.getItem("loggedUser"));
-
-    let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
-
-    feedbacks.push({
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        rating: rating,
-        message: message,
-        image: user.image || "",
-        source: "routine",
-        date: new Date().toLocaleDateString()
-    });
-
-    localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
-
 });
 
-// Cancel Function
+/* ---------------- GLOBAL CANCEL FUNCTION ---------------- */
 function cancelForm() {
     if (confirm("Cancel registration? All entered data will be lost.")) {
         window.location.href = "index.html";

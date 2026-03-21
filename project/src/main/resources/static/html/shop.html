@@ -7,10 +7,10 @@
     <title>Vendora | The Online Beauty Store</title>
 
     <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/layout.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -36,7 +36,8 @@
 
     <!-- Search + Cart -->
     <div class="header-search">
-        <input type="text" placeholder="Search products..." class="search-input">
+        <label for="searchInput" class="sr-only">Search products</label>
+        <input id="searchInput" type="text" placeholder="Search products..." class="search-input">
         <div class="icon-btn"><i class="fa-solid fa-cart-shopping"></i></div>
     </div>
 </header>
@@ -53,7 +54,7 @@
             <label><input type="checkbox" value="haircare"> Haircare</label>
             <label><input type="checkbox" value="bodycare"> Bodycare</label>
             <label><input type="checkbox" value="fragrance"> Fragrance</label>
-            <label><input type="checkbox" value="beautytools"> Beauty Tools</label>
+            <label><input type="checkbox" value="beautyTools"> Beauty Tools</label>
         </div>
 
     <!-- Product Grid (3x4 from each category)-->
@@ -176,6 +177,7 @@
     </div>
 </footer>
 
+<script src="../js/form.js"></script>
 <script src="../js/main.js"></script>
 </body>
 </html>

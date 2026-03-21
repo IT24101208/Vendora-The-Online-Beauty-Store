@@ -1,17 +1,30 @@
 /* Footer Styles */
 
-/* Main Container */
-.footer {
-    background: #1A1A1A;
-    color: #ffffff;
-    padding: 50px 60px;
-    width: 100%;
-    font-family: 'Roboto Condensed', sans-serif;
-    box-sizing: border-box;
+.footer-bottom {        /* Bottom Section */
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #cccccc;
 }
 
-/* Grid Layout */
-.footer-grid {
+.footer-bottom button {
+    background: none;
+    border: none;
+    color: var(--brand-color);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.footer-bottom button:hover {
+    text-decoration: underline;
+}
+
+.footer-grid {      /* Grid Layout */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 40px;
@@ -19,16 +32,7 @@
     margin: auto;
 }
 
-/* Section Titles */
-.footer h4 {
-    margin-bottom: 15px;
-    color: #FFF36E;
-    font-size: 16px;
-    letter-spacing: 0.5px;
-}
-
-/* Links */
-.footer a {
+.footer a {     /* Links */
     color: #cccccc;
     display: block;
     margin-bottom: 8px;
@@ -41,8 +45,23 @@
     color: #ffffff;
 }
 
-/* Social Icons */
-.social-icons {
+.footer {       /* Main Container */
+    background: #1A1A1A;
+    color: #ffffff;
+    padding: 50px 60px;
+    width: 100%;
+    font-family: 'Roboto Condensed', sans-serif;
+    box-sizing: border-box;
+}
+
+.footer h4 {    /* Section Titles */
+    margin-bottom: 15px;
+    color: #FFF36E;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+.social-icons {     /* Social Icons */
     display: flex;
     gap: 12px;
     margin-top: 15px;
@@ -66,8 +85,7 @@
     transform: scale(1.1);
 }
 
-/* Subscribe Section */
-.footer-subscribe {
+.footer-subscribe {     /* Subscribe Section */
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -106,31 +124,6 @@
 .footer-subscribe p {
     font-size: 14px;
     color: #cccccc;
-}
-
-/* Bottom Section */
-.footer-bottom {
-    border-top: 1px solid #333;
-    padding-top: 20px;
-    margin-top: 40px;
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #cccccc;
-}
-
-.footer-bottom button {
-    background: none;
-    border: none;
-    color: var(--brand-color);
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0;
-    margin-left: 5px;
-}
-
-.footer-bottom button:hover {
-    text-decoration: underline;
 }
 
 /* Responsive Footer */

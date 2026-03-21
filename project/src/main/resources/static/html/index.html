@@ -28,11 +28,10 @@
         <a href="about.html">About</a>
         <a href="../../templates/IT24101208/html/login.html">Login</a>
         <a href="../../templates/IT24101208/html/signup.html">Sign Up</a>
+        <img id="navProfileImg" src="../../../resources/Profile_Pictures/PP1.jpg " alt="Profile">
         <a href="../../templates/IT24101208/html/profile.html"> 👤 </a>
 
         <div class="profile-menu">
-            <img id="navProfileImg" src="../../../resources/Profile_Pictures/PP1.jpg " alt="Profile">
-
             <div id="profileDropdown" class="dropdown hidden">
                 <p id="navUserName"></p>
                 <button id="goProfile">My Profile</button>
@@ -42,7 +41,8 @@
     </nav>
 
     <div class="header-search">
-        <input type="text" placeholder="Search products..." class="search-input">
+        <label for="searchInput" class="sr-only">Search products</label>
+        <input id="searchInput" type="text" placeholder="Search products..." class="search-input">
         <div class="icon-btn"><i class="fa-solid fa-cart-shopping"></i></div>
     </div>
 </header>
@@ -62,7 +62,7 @@
 <!-- FEATURED PRODUCTS -->
 <section class="products">
     <div class="container">
-    <h2 class="section-title">Featured Products</h2>
+    <h2>Featured Products</h2>
     <div class="product-grid">
         <div class="product-card">
             <img src="../images/sp1.jpg" alt="Blush">
@@ -95,7 +95,7 @@
 <!-- ROUTINE SECTION -->
     <section class="routine-section">
         <div class="container">
-            <h2 class="routine-title">Don't know where to start?</h2>
+            <h2>Don't know where to start?</h2>
             <div class="routine-grid">
                 <div class="routine-card">
                     <img src="../images/skincare.jpg" alt="Skincare">
@@ -129,7 +129,7 @@
 <!-- Supplier & Delivery Network -->
 <section class="partner">
     <div class="container">
-    <h2 class="partner-title">Join Our Supplier & Delivery Network</h2>
+    <h2>Join Our Supplier & Delivery Network</h2>
     <div class="partner-grid grid-3">
         <div class="partner-card">
             <img src="../images/supplier.jpg" alt="Supplier">
@@ -150,11 +150,15 @@
 </section>
 
 <!-- FEEDBACK / CATEGORY -->
-<section class="category-section">
+<section id="feedbackSection">
     <div class="container">
-        <h2 class="section-title">What people think about us...</h2>
-        <div class="feedback-grid" id="homeFeedbackGrid"></div>
-        <a href="feedback.html" class="btn">See More</a>
+        <h2>What People Think About Us</h2>
+        <div class="feedback-grid" id="feedbackGrid">
+            <!-- Feedback cards will be injected here via JS -->
+        </div>
+        <div class="partner-content"><br>
+            <a href="feedback.html">See More &gt;</a>
+        </div>
     </div>
 </section>
 
@@ -225,6 +229,10 @@
     </div>
 </footer>
 
+<script src="../js/feedback.js"></script>
+<script src="../js/form.js"></script>
+<script src="../js/hero.js"></script>
 <script src="../js/main.js"></script>
+<script src="../js/routine.js"></script>
 </body>
 </html>

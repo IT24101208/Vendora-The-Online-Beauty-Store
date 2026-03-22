@@ -4,74 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="Updated Database">
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/images/b2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/controller/PageController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/css/base.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/css/components.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/css/feedback.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/css/footer.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/css/form.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/css/header.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/css/layout.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/html/about.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/html/delivery.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/html/feedback.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/html/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/html/routine.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/html/service.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/html/shop.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/html/subscribe.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/html/supplier.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/Banner.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/Deliver Banner_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/Deliver Banner_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/Mission.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/Vendora.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/about_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/about_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/b2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/beauty_tips.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/bodycare.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/choose.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/delivery.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/haircare.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/i1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/i2.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/ingredients.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/makeup.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/promise.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/skincare.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/sp1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/sp2.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/sp3.avif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/sp4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/images/supplier.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/js/delivery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/js/feedback.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/js/form.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/js/hero.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/js/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/static/js/routine.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/HTML/signup.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/maven-archiver/pom.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/vendora-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/target/vendora-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
+    <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="Updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/background 2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/images/b1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/cart-logo.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/login-background.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/p10.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/p6.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/p7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/p8.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/p9.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/product1.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/product2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/product3.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/product4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/product5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/images/vendora-Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/html/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/html/profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/html/signup.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -272,7 +209,23 @@
       <option name="project" value="LOCAL" />
       <updated>1774138765962</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Updated">
+      <option name="closed" value="true" />
+      <created>1774153135361</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1774153135361</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Updated">
+      <option name="closed" value="true" />
+      <created>1774153974444</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1774153974444</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers>
       <JIRA url="https://vendora2026ise.atlassian.net">
         <option name="jiraVersion" value="1001.0.0-SNAPSHOT" />
@@ -303,6 +256,7 @@
     <MESSAGE value="Frontend Finalised - II" />
     <MESSAGE value="Frontend Finalised - III" />
     <MESSAGE value="Updated Database" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Database" />
+    <MESSAGE value="Updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated" />
   </component>
 </project>

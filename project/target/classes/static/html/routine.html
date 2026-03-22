@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendora | Personal Beauty Routine</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/form.css">
+    <link rel="stylesheet" href="../css/layout.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<section class="form-container">
+    <h2>Find Your Personal Routine</h2>
+
+    <form class="card" id="concernForm" style="display:none;">
+        <h3>Personal Information</h3>
+
+        <label for="fullName">Full Name</label>
+        <input id="fullName" name="fullName" required placeholder="Enter your full name">
+
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" required min="16" max="75" placeholder="Enter age (16-75)">
+
+        <label for="photo">Upload Photo</label>
+        <input id="photo" type="file" accept="image/*">
+
+        <!-- Selected category title -->
+        <h3 id="categoryTitle"></h3>
+
+        <!-- Concerns checkboxes generated dynamically -->
+        <div id="concernsContainer" class="checkbox-grid"></div>
+
+        <button type="submit">Get My Routine</button>
+    </form>
+
+    <!-- Generated routine output -->
+    <div id="result" class="card"></div>
+
+    <!-- Feedback section -->
+    <div id="feedbackSection" class="card" style="display:none;">
+        <h3>Feedback</h3>
+        <p>How was your routine?</p>
+        <select id="feedbackRating">
+            <option value="">Select rating</option>
+            <option value="5">😊 Very Happy</option>
+            <option value="4">🙂 Happy</option>
+            <option value="3">😐 Neutral</option>
+            <option value="2">🙁 Sad</option>
+            <option value="1">😢 Very Sad</option>
+        </select>
+        <textarea id="feedbackMessage" placeholder="Write your feedback here..." rows="2"></textarea>
+        <div class="form-actions">
+            <button id="submitFeedback" type="button">Submit Feedback</button>
+            <button id="exitButton" type="button">Exit</button>
+        </div>
+    </div>
+</section>
+
+<script src="../js/delivery.js"></script>
+<script src="../js/form.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/routine.js"></script>
+<script src="../js/feedback.js"></script>
+</body>
+</html>

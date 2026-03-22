@@ -1,0 +1,144 @@
+/* Feedback Page Layout */
+.container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.feedback-layout {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    gap: 20px;
+}
+
+/* Filter Buttons */
+.feedback-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.feedback-filters button {
+    padding: 8px 14px;
+    border: none;
+    background: #eee;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.feedback-filters button:hover {
+    background: #ddd;
+}
+
+.feedback-filters button.active {
+    background: #000;
+    color: #fff;
+}
+.feedback-display {     /* LEFT SIDE - Feedback Display */
+    width: 100%;
+}
+
+#feedbackGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.feedback-panel {       /* RIGHT SIDE - Slide Panel */
+    position: fixed;
+    right: -380px;
+    top: 80px;
+    width: 350px;
+    max-width: 90%;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+.feedback-panel.open {
+    right: 20px;
+}
+
+.feedback-panel.active {    /* Active state */
+    right: 0;
+}
+
+#minimizeBtn {      /* Minimize button inside panel */
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+    transition: transform 0.2s;
+}
+
+#minimizeBtn:hover {
+    transform: scale(1.2);
+}
+
+.form-card {    /* Form Inside Panel */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+#loggedUser {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* FLOATING BUTTON */
+.floating-btn {     /* Top-right floating button above footer */
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: black;
+    color: #fff;
+    font-size: 30px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1100;
+}
+
+.floating-btn:hover {
+    transform: scale(1.1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+
+    .feedback-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .feedback-panel {
+        width: 100%;
+    }
+
+    .floating-btn {
+        top: 15px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 500px) {
+    #feedbackGrid {
+        grid-template-columns: 1fr;
+    }
+}

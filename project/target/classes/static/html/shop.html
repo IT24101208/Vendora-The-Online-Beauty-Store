@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendora | The Online Beauty Store</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/layout.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="home-bg">
+<div class="page-overlay"></div>
+<!-- HEADER -->
+<header class="header-grid">
+    <!-- Logo -->
+    <div class="logo">
+        <img src="../images/vendora-Logo.png" alt="Vendora Logo">
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="routine.html">Learn</a>
+        <a href="about.html">About</a>
+        <a href="login.html">Login</a>
+        <a href="Signup.html">Signup</a>
+    </nav>
+
+    <!-- Search + Cart -->
+    <div class="header-search">
+        <label for="searchInput" class="sr-only">Search products</label>
+        <input id="searchInput" type="text" placeholder="Search products..." class="search-input">
+        <div class="icon-btn"><i class="fa-solid fa-cart-shopping"></i></div>
+    </div>
+</header>
+
+<!-- SHOP FILTERS -->
+<section class="products">
+    <h3 class="section-title">What type of product are you looking for</h3>
+
+    <!-- Filters -->
+    <label>Supplier Category</label>
+        <div class="category-checkboxes">
+            <label><input type="checkbox" value="cosmetics"> Cosmetics</label>
+            <label><input type="checkbox" value="skincare"> Skincare</label>
+            <label><input type="checkbox" value="haircare"> Haircare</label>
+            <label><input type="checkbox" value="bodycare"> Bodycare</label>
+            <label><input type="checkbox" value="fragrance"> Fragrance</label>
+            <label><input type="checkbox" value="beautyTools"> Beauty Tools</label>
+        </div>
+
+    <!-- Product Grid (3x4 from each category)-->
+    <div class="product-grid">
+
+        <!-- Cosmetics -->
+        <div class="product-card" data-category="cosmetics">
+            <img src="../images/C1.jpg" alt="Cosmetics">
+            <div class="product-name">___</div>
+            <div class="product-price">Rs. 0</div>
+            <a href="#" class="btn-primary">Add to Cart</a>
+        </div>
+
+        <!-- Skincare -->
+        <div class="product-card" data-category="skincare">
+            <img src="../images/S1.jpg" alt="Skincare">
+            <div class="product-name">___</div>
+            <div class="product-price">Rs. 0</div>
+            <a href="#" class="btn-primary">Add to Cart</a>
+        </div>
+
+        <!-- Bodycare -->
+        <div class="product-card" data-category="bodycare">
+            <img src="../images/B1.png" alt="Bodycare">
+            <div class="product-name">___</div>
+            <div class="product-price">Rs. 0</div>
+            <a href="#" class="btn-primary">Add to Cart</a>
+        </div>
+
+        <!-- Haircare -->
+        <div class="product-card" data-category="haircare">
+            <img src="../images/H1.jpg" alt="Haircare">
+            <div class="product-name">___</div>
+            <div class="product-price">Rs. 0</div>
+            <a href="#" class="btn-primary">Add to Cart</a>
+        </div>
+
+        <!-- Fragrance -->
+        <div class="product-card" data-category="fragrance">
+            <img src="../images/F1.jpg" alt="Fragrance">
+            <div class="product-name">___</div>
+            <div class="product-price">Rs. 0</div>
+            <a href="#" class="btn-primary">Add to Cart</a>
+        </div>
+
+        <!-- Beauty Tools -->
+        <div class="product-card" data-category="beauty tools">
+            <img src="../images/BT1.jpg" alt="Beauty Tools">
+            <div class="product-name">___</div>
+            <div class="product-price">Rs. 0</div>
+            <a href="#" class="btn-primary">Add to Cart</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-grid">
+
+        <!-- SUBSCRIBE -->
+        <div class="footer-subscribe">
+            <h4>SUBSCRIBE</h4>
+            <p>Get blog updates and exclusive discounts.</p>
+
+            <!-- Email -->
+            <div class="subscribe-input">
+                <label for="subscribeEmail" class="visually-hidden">Email for subscription</label>
+                <input type="email" id="subscribeEmail" placeholder="Enter your email">
+                <button>➤</button>
+            </div>
+
+            <!-- Phone -->
+            <div class="subscribe-input">
+                <label for="subscribePhone" class="visually-hidden">Phone number for subscription</label>
+                <input type="tel" id="subscribePhone" placeholder="Enter your phone number">
+            </div>
+
+            <div>
+                <button>SUBSCRIBE</button>
+            </div>
+
+            <!-- SOCIAL ICONS -->
+            <div class="social-icons">
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+        </div>
+
+        <!-- SHOP -->
+        <div>
+            <h4>Shop</h4>
+            <a href="shop.html">Makeup</a>
+            <a href="shop.html">Skin Care</a>
+            <a href="shop.html">Hair Care</a>
+            <a href="shop.html">Body Care</a>
+        </div>
+
+        <!-- ABOUT -->
+        <div>
+            <h4>ABOUT US</h4>
+            <a href="about.html">Our Mission</a>
+            <a href="about.html">Support</a>
+        </div>
+
+        <!-- CUSTOMER SERVICE -->
+        <div>
+            <h4>Customer Service</h4>
+            <a href="#">My Account</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Delivery Location</a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 Vendora | The Online Beauty Store</p>
+        <p>Terms & Conditions | Privacy Policy | Cookie Policy | Do Not Sell My Personal Information | Vendora</p>
+        <p>If you are having problems using this website, please <button>CLICK HERE</button> for assistance.</p>
+    </div>
+</footer>
+
+<script src="../js/form.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

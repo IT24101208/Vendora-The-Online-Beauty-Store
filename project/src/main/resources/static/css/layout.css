@@ -48,7 +48,8 @@
 .beauty-promise-section,
 .mission-section,
 .product-section,
-.why-choose-section {
+.why-choose-section,
+.service-section    {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,6 +59,11 @@
     padding: 40px 20px;
     width: 100%;
     box-sizing: border-box;
+}
+
+.page-header {
+    text-align: center;
+    margin: 40px 0;
 }
 
 /* Responsive */
@@ -88,6 +94,10 @@
         height: auto;
         object-fit: cover;
         display: block;
+    }
+
+    .service-section {
+        padding: 15px;
     }
 
     .form-container {

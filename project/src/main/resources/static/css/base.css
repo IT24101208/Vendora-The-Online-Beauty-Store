@@ -89,3 +89,14 @@ ul, ol {        /* Lists */
 p {     /* Typography Helpers */
     margin-bottom: 1rem;
 }
+
+/* SERVICE PAGE TEXT */
+.service-section h2 {
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+}
+
+.service-section ul li {
+    margin: 8px 0;
+    line-height: 1.6;
+}

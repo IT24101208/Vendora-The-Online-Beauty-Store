@@ -1,156 +1,117 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vendora | Customer Service</title>
+    <title>Vendora Services</title>
 
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/form.css">
     <link rel="stylesheet" href="../css/layout.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body class="home-bg">
+<body>
 
-<!-- HEADER -->
-
-<header class="header">
-
-    <div class="logo">
-        <img src="../images/vendora-Logo.png" alt="Vendora Logo">
-    </div>
-
-    <nav class="navbar">
-        <a href="index.html">Home</a>
-        <a href="shop.html">Shop</a>
-        <a href="routine.html">Learn</a>
-        <a href="about.html">About</a>
-        <a href="service.html">Service</a>
-    </nav>
-
-    <div class="header-search">
-        <label for="searchInput" class="sr-only">Search products</label>
-        <input id="searchInput" type="text" placeholder="Search products..." class="search-input">
-        <div class="icon-btn"><i class="fa-solid fa-cart-shopping"></i></div>
-    </div>
-
-</header>
-
-<!-- MY ACCOUNT -->
-
-<section class="container">
-
-    <h2 class="section-title">My Account</h2>
-
-    <div class="card">
-
-        <label>Username</label> <input type="text">
-
-        <label>Email</label> <input type="email">
-
-        <label>Password</label> <input type="password">
-
-        <br><br>
-
-        <button class="btn-primary">Update Account</button>
-
-    </div>
-
+<!-- PAGE HEADER -->
+<section class="page-header">
+    <h1>Our Services</h1>
+    <p>Explore the services available on Vendora</p>
 </section>
 
-<!-- CONTACT US -->
-
-<section class="container">
-
-    <h2 class="section-title">Contact Us</h2>
-
-    <div class="card">
-
-        <label>Full Name</label> <input type="text">
-
-        <label>Email</label> <input type="email">
-
-        <label>Message</label>
-
-        <textarea rows="5"></textarea>
-
-        <br><br>
-
-        <button class="btn-primary">Send Message</button>
-
-    </div>
-
+<!-- GENERAL SERVICES -->
+<section class="service-section" id="generalServices">
+    <h2>🌍 General Services</h2>
+    <ul>
+        <li>Browse beauty and cosmetic products</li>
+        <li>View product categories</li>
+        <li>Read FAQs</li>
+        <li>Learn about Vendora</li>
+    </ul>
 </section>
 
-<!-- TRACK DELIVERY -->
+<!-- CONTACT & SUPPORT -->
+<section class="service-section" id="supportServices">
+    <h2>📧 Contact & Support</h2>
+    <ul>
+        <li>Contact Vendora support team</li>
+        <li>Send messages to Admin (Login required)</li>
+        <li>Report issues or complaints</li>
+    </ul>
 
-<section class="container">
-
-    <h2 class="section-title">Track Delivery</h2>
-
-    <div class="card">
-
-        <label>Order Number</label> <input type="text" placeholder="Enter your order ID">
-
-        <br><br>
-
-        <button class="btn-primary">Track Order</button>
-
-        <p class="text-small">
-            Delivery updates will appear here once the tracking number is submitted.
-        </p>
-
+    <!-- CONTACT FORM -->
+    <div class="contact-form">
+        <h3>Send a Message</h3>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Write your message..." required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
     </div>
-
 </section>
 
-<!-- FOOTER -->
+<!-- ACCOUNT SERVICES -->
+<section class="service-section hidden" id="accountServices">
+    <h2>🔐 Account & Profile Services</h2>
+    <ul>
+        <li>View profile details</li>
+        <li>Edit profile information</li>
+        <li>Change password</li>
+    </ul>
+</section>
+
+<!-- CUSTOMER SERVICES -->
+<section class="service-section hidden role-section" id="customerServices">
+    <h2>🛍️ Customer Services</h2>
+    <ul>
+        <li>View order history</li>
+        <li>Track delivery status</li>
+        <li>Cancel orders (before shipping)</li>
+        <li>Add products to cart</li>
+    </ul>
+</section>
+
+<!-- PAYMENT SERVICES -->
+<section class="service-section hidden role-section" id="paymentServices">
+    <h2>💳 Payment Services</h2>
+    <ul>
+        <li>Pay using Credit/Debit Card</li>
+        <li>Cash on Delivery (COD)</li>
+        <li>View payment status</li>
+    </ul>
+</section>
+
+<!-- SUPPLIER SERVICES -->
+<section class="service-section hidden role-section" id="supplierServices">
+    <h2>🏭 Supplier Services</h2>
+    <ul>
+        <li>Add new products</li>
+        <li>Update product details</li>
+        <li>Manage stock levels</li>
+    </ul>
+</section>
+
+<!-- DELIVERY SERVICES -->
+<section class="service-section hidden role-section" id="deliveryServices">
+    <h2>🚚 Delivery Services</h2>
+    <ul>
+        <li>View assigned deliveries</li>
+        <li>Update delivery status</li>
+        <li>Manage delivery tasks</li>
+    </ul>
+</section>
+
 
 <footer class="footer">
-
-    <div class="footer-grid">
-
-        <div>
-            <h4>Shop</h4>
-            <a href="shop.html">Skincare</a>
-            <a href="shop.html">Haircare</a>
-            <a href="shop.html">Foundation</a>
-            <a href="shop.html">Bodycare</a>
-        </div>
-
-        <div>
-            <h4>Company</h4>
-            <a href="about.html">About Us</a>
-            <a href="routine.html">Beauty Learning</a>
-        </div>
-
-        <div>
-            <h4>Customer</h4>
-            <a href="service.html">My Account</a>
-            <a href="service.html">Contact</a>
-        </div>
-
-        <div>
-            <h4>Support</h4>
-            <p>Need help? Our team is here for you.</p>
-        </div>
-
-    </div>
-
-    <div class="footer-bottom">
-        © 2026 Vendora | The Online Beauty Store
-    </div>
-
+    <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
 </footer>
-
-<script src="../js/form.js"></script>
-<script src="../js/main.js"></script>
+<script src="../js/service.js"></script>
 </body>
 </html>

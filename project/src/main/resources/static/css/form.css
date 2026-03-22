@@ -62,6 +62,13 @@ button.secondary:hover {
     padding: 60px 20px;
 }
 
+/* SERVICE CONTACT FORM */
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 /* Form Grid Layout */
 .form-grid {
     display: grid;
@@ -97,6 +104,13 @@ button.secondary:hover {
 #feedbackMessage,
 textarea {
     resize: none;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
 }
 
 /* Labels */
@@ -140,6 +154,15 @@ textarea {
 
 .btn-primary:hover {
     background: #333;
+}
+
+.contact-form button {
+    padding: 10px;
+    border: none;
+    background: var(--brand-color);
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
 /* Responsive form */

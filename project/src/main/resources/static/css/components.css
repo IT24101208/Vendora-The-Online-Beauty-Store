@@ -26,6 +26,18 @@ button {
     transition: transform 0.2s ease;
 }
 
+/* SERVICE CARDS */
+.service-section {
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.28);
+    transition: 0.3s ease;
+    width: 80px;
+}
+
+.service-section:hover {
+    transform: translateY(-5px);
+}
+
 .partner-card:hover,
 .product-card:hover,
 .routine-card:hover {
@@ -239,6 +251,14 @@ button {
     width: 100%;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     margin: 20px 0;
+}
+
+/* CONTACT FORM BOX */
+.contact-form {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
 }
 
 /* PROFILE DROPDOWN */

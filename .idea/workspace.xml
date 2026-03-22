@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="Updated">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/html/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/html/profile.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/IT24101208/html/signup.html" beforeDir="false" />
-    </list>
+    <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="Updated (NEW)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -225,7 +220,23 @@
       <option name="project" value="LOCAL" />
       <updated>1774153974444</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Updated">
+      <option name="closed" value="true" />
+      <created>1774155394780</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1774155394780</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Updated (NEW)">
+      <option name="closed" value="true" />
+      <created>1774155642043</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1774155642043</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers>
       <JIRA url="https://vendora2026ise.atlassian.net">
         <option name="jiraVersion" value="1001.0.0-SNAPSHOT" />
@@ -257,6 +268,7 @@
     <MESSAGE value="Frontend Finalised - III" />
     <MESSAGE value="Updated Database" />
     <MESSAGE value="Updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated" />
+    <MESSAGE value="Updated (NEW)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated (NEW)" />
   </component>
 </project>

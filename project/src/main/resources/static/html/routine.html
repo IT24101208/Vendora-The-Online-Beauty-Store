@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vendora | Personal Beauty Routine</title>
+    <title>Vendora | Custom Routine</title>
 
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/feedback.css">
     <link rel="stylesheet" href="../css/form.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/layout.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
@@ -62,16 +63,22 @@
         <textarea id="feedbackMessage" placeholder="Write your feedback here..." rows="2"></textarea>
 
         <div class="form-actions">
-            <button id="submitFeedback" type="button">Submit Feedback</button>
-            <button id="exitButton" type="button">Exit</button>
+            <button type="submit" class="btn-primary">Send Feedback</button>
+            <button type="button" class="btn-cancel" onclick="cancelForm()">Cancel</button>
         </div>
     </div>
 </section>
 
-<script src="../js/delivery.js"></script>
-<script src="../js/form.js"></script>
+<footer class="footer">
+    <div class="footer-bottom">
+        <p>© 2026 Vendora | The Online Beauty Store</p>
+        <p><button><a href="terms.html">Terms & Conditions</a></button> | <button><a href="privacy.html">Privacy Policy</a></button> | <button><a href="cookie.html">Cookie Policy</a></button> | Do Not Sell My Personal Information | Vendora</p>
+        <p>If you are having problems using this website, please <button><a href="service.html">CLICK HERE</a></button> for assistance.</p>
+    </div>
+</footer>
 <script src="../js/main.js"></script>
-<script src="../js/routine.js"></script>
+<script src="../js/form.js"></script>
 <script src="../js/feedback.js"></script>
+<script src="../js/routine.js"></script>
 </body>
 </html>

@@ -1,85 +1,144 @@
-/* Footer Styles */
-
-.footer-bottom {        /* Bottom Section */
-    border-top: 1px solid #333;
-    padding-top: 20px;
-    margin-top: 40px;
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #cccccc;
+/* Footer layout, links, subscribe form, social icons, and responsive footer styles */
+.footer {
+    background: #111;
+    color: #ccc;
+    padding: 25px 20px; /* Reduced padding for compact look */
+    width: 100%;
+    font-family: 'Roboto Condensed', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
+/* GRID LAYOUT */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px; /* Reduced gap */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* TITLES & LINKS */
+.footer h4 {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #fff36e;
+    letter-spacing: 0.3px;
+}
+
+.footer a {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+    color: #ccc;
+    transition: color var(--transition);
+}
+
+.footer a:hover {
+    color: var(--brand-color);
+}
+
+/* FOOTER BOTTOM - Sticky */
+.footer-bottom {
+    margin-top: 20px;
+    padding: 4px 0; /* Compact padding */
+    border-top: 1px solid #333;
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* Optional interactive button inside footer-bottom */
 .footer-bottom button {
-    background: none;
-    border: none;
     color: var(--brand-color);
     font-weight: 600;
+    padding: 0 4px;
+    background: none;
+    border: none;
     cursor: pointer;
-    padding: 0;
-    margin-left: 5px;
 }
 
 .footer-bottom button:hover {
     text-decoration: underline;
 }
 
-.footer-grid {      /* Grid Layout */
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 40px;
-    max-width: 1600px;
-    margin: auto;
-    text-align: center;
-}
-
-.footer a {     /* Links */
-    color: #cccccc;
-    display: block;
-    margin-bottom: 8px;
-    text-decoration: none;
-    text-align: center;
-    font-size: 17px;
-    transition: color 0.2s ease;
-}
-
-.footer a:hover {
-    color: #ffffff;
-}
-
-.footer {       /* Main Container */
-    background: #1A1A1A;
-    color: #ffffff;
-    padding: 50px 60px;
-    width: 100%;
-    font-family: 'Roboto Condensed', sans-serif;
-    box-sizing: border-box;
-}
-
-.footer h4 {    /* Section Titles */
-    margin-bottom: 15px;
-    color: #FFF36E;
-    font-size: 16px;
-    letter-spacing: 0.5px;
-}
-
-.social-icons {     /* Social Icons */
+/* SUBSCRIBE */
+.footer-subscribe {
     display: flex;
-    gap: 12px;
-    margin-top: 15px;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 280px;
+}
+
+.footer-subscribe p {
+    font-size: 12px;
+}
+
+/* Form */
+.subscribe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.subscribe-form input {
+    padding: 8px 10px;
+    border-radius: 4px;
+    border: 1px solid #444;
+    background: #1e1e1e;
+    color: #fff;
+    font-size: 13px;
+}
+
+.subscribe-form input::placeholder {
+    color: #888;
+}
+
+.subscribe-form input:focus {
+    border-color: var(--brand-color);
+}
+
+/* Button */
+.btn-subscribe {
+    padding: 8px;
+    border-radius: 4px;
+    background: var(--brand-color);
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-subscribe:hover {
+    opacity: 0.9;
+}
+
+/* Message */
+.subscribe-message {
+    font-size: 11px;
+    margin-top: 2px;
+    color: #4caf50;
+}
+
+/* SOCIAL ICONS */
+.social-icons {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
 }
 
 .social-icons a {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: #333333;
-    color: #ffffff;
-    font-size: 16px;
-    transition: background 0.2s, transform 0.2s;
+    background: #333;
+    color: #fff;
+    font-size: 13px;
+    transition: var(--transition);
 }
 
 .social-icons a:hover {
@@ -87,69 +146,30 @@
     transform: scale(1.1);
 }
 
-.footer-subscribe {     /* Subscribe Section */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.subscribe-input {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.subscribe-input input {
-    flex: 1;
-    padding: 10px 12px;
-    border: none;
-    outline: none;
-    background: #dddddd;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-.subscribe-input button {
-    background: var(--brand-color);
-    color: #fff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-}
-
-.subscribe-input button:hover {
-    opacity: 0.9;
-}
-
-.footer-subscribe p {
-    font-size: 14px;
-    color: #cccccc;
-}
-
-/* Responsive Footer */
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .footer {
-        padding: 40px 25px;
-    }
-
-    .footer-bottom {
-        font-size: 13px;
-        line-height: 1.5;
+        padding: 20px 15px;
     }
 
     .footer-grid {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 20px;
         text-align: center;
     }
 
     .social-icons {
         justify-content: center;
     }
+}
 
-    .subscribe-input {
-        flex-direction: column;
-    }
+/* Sticky Footer Implementation */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1; /* Pushes footer to bottom */
 }

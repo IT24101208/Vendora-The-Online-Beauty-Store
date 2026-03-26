@@ -4,23 +4,61 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/privacy.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/terms.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/js/service.js" afterDir="false" />
+    <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="Frontend - VII">
+      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/cookie.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/images/COD.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/images/OP.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/images/b3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/js/policy.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/js/shop.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/common/UserRole.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/LoginRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/RegisterRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/UserResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/RoleRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/service/AuthService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/service/UserServiceImpl.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/css/base.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/components.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/css/components.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/feedback.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/css/feedback.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/footer.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/css/footer.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/form.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/css/form.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/css/header.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/css/layout.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/delivery.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/delivery.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/delivery.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/feedback.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/privacy.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/privacy.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/routine.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/routine.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/service.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/service.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/supplier.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/supplier.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/shop.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/shop.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/subscribe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/supplier.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/terms.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/terms.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/b1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/beauty_tips.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/eye_shadow_palette.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/glow_foundation.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/i1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/i2.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/ingredients.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/login-background.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/rose_lipstick.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/delivery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/feedback.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/js/feedback.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/js/form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/hero.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/routine.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/js/routine.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/js/service.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +122,7 @@
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/SLIIT University/Year 2 - Semester 2/IE2091 - IS Project/Assignment/Vendora-The-Online-Beauty-Store&quot;,
@@ -221,7 +259,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774138765962</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Frontend - VII">
+      <option name="closed" value="true" />
+      <created>1774205394492</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1774205394492</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers>
       <JIRA url="https://vendora2026ise.atlassian.net">
         <option name="jiraVersion" value="1001.0.0-SNAPSHOT" />
@@ -253,6 +299,7 @@
     <MESSAGE value="Frontend Finalised - III" />
     <MESSAGE value="Updated Database" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
+    <MESSAGE value="Frontend - VII" />
+    <option name="LAST_COMMIT_MESSAGE" value="Frontend - VII" />
   </component>
 </project>

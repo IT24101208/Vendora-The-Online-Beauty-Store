@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendora | Sign Up</title>
+
+    <link rel="stylesheet" href="../../../static/css/base.css">
+    <link rel="stylesheet" href="../../../static/css/components.css">
+    <link rel="stylesheet" href="../../../static/css/footer.css">
+    <link rel="stylesheet" href="../../../static/css/header.css">
+    <link rel="stylesheet" href="../../../static/css/form.css">
+    <link rel="stylesheet" href="../../../static/css/layout.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="page-bg">
+<div class="page-wrapper">
+    <header class="header-grid">
+        <div class="logo">
+            <img src="../../../static/images/Vendora.png" alt="Vendora Logo">
+        </div>
+        <nav class="navbar">
+            <a href="../../../static/html/index.html">Home</a>
+            <a href="../../../static/html/shop.html">Shop</a>
+            <a href="../../../static/html/about.html">About</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title">Create Account</h1>
+
+        <form id="signupForm" class="form-card" autocomplete="off">
+            <label for="name">Full Name</label>
+            <input id="name" name="name" type="text" required placeholder="Your name">
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@example.com">
+
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required placeholder="Your password">
+
+            <button type="submit" class="btn-primary">Sign Up</button>
+
+            <p class="form-note">
+                Already have an account?
+                <a href="login.html">Log in</a>
+            </p>
+
+            <p id="signupStatus" class="form-status" aria-live="polite"></p>
+        </form>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
+        </div>
+    </footer>
+</div>
+
+<script src="../../../static/js/main.js"></script>
+<script>
+    const form = document.getElementById("signupForm");
+    const statusEl = document.getElementById("signupStatus");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        if (!name || !email || !password) {
+            statusEl.textContent = "Please fill in all fields.";
+            return;
+        }
+
+        statusEl.textContent = "Creating account...";
+
+        try {
+            const res = await fetch("/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            const json = await res.json().catch(() => ({}));
+
+            if (!res.ok) {
+                statusEl.textContent = json?.message || "Signup failed. Continuing locally...";
+            } else {
+                statusEl.textContent = json?.message || "Account created!";
+            }
+
+            // Regardless of backend availability, set local user for frontend navigation.
+            localStorage.setItem("loggedUser", JSON.stringify({ name: json?.data?.name || name, email }));
+            window.location.href = "index.html";
+        } catch (err) {
+            // If backend/MySQL is not reachable, still allow local navigation.
+            localStorage.setItem("loggedUser", JSON.stringify({ name, email }));
+            statusEl.textContent = "Backend not reachable. Logged in locally for frontend preview.";
+            window.location.href = "index.html";
+        }
+    });
+</script>
+</body>
+
+</html>
+

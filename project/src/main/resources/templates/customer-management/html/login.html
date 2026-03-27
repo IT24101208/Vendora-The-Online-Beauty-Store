@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendora | Login</title>
+
+    <link rel="stylesheet" href="../../../static/css/base.css">
+    <link rel="stylesheet" href="../../../static/css/components.css">
+    <link rel="stylesheet" href="../../../static/css/footer.css">
+    <link rel="stylesheet" href="../../../static/css/header.css">
+    <link rel="stylesheet" href="../../../static/css/form.css">
+    <link rel="stylesheet" href="../../../static/css/layout.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="page-bg">
+<div class="page-wrapper">
+    <header class="header-grid">
+        <div class="logo">
+            <img src="../../../static/images/Vendora.png" alt="Vendora Logo">
+        </div>
+        <nav class="navbar">
+            <a href="../../../static/html/index.html">Home</a>
+            <a href="../../../static/html/shop.html">Shop</a>
+            <a href="../../../static/html/about.html">About</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title">Login</h1>
+
+        <form id="loginForm" class="form-card" autocomplete="off">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@example.com">
+
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required placeholder="Your password">
+
+            <button type="submit" class="btn-primary">Login</button>
+
+            <p class="form-note">
+                No account?
+                <a href="signup.html">Sign up</a>
+            </p>
+
+            <p id="loginStatus" class="form-status" aria-live="polite"></p>
+        </form>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
+        </div>
+    </footer>
+</div>
+
+<script src="../../../static/js/main.js"></script>
+<script>
+    const form = document.getElementById("loginForm");
+    const statusEl = document.getElementById("loginStatus");
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        // This project currently focuses on frontend access; authentication is temporarily disabled.
+        // So for local navigation, we create a simple local "loggedUser" entry.
+        if (!email || !password) {
+            statusEl.textContent = "Please enter email and password.";
+            return;
+        }
+
+        const nameGuess = email.includes("@") ? email.split("@")[0] : email;
+        localStorage.setItem("loggedUser", JSON.stringify({ name: nameGuess, email }));
+        window.location.href = "index.html";
+    });
+</script>
+</body>
+
+</html>
+

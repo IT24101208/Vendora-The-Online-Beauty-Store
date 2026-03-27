@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vendora | Supplier Registration</title>
+    <title>Vendora | Supplier Partnership</title>
 
-    <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/form.css">
-    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../../../static/css/base.css">
+    <link rel="stylesheet" href="../../../static/css/components.css">
+    <link rel="stylesheet" href="../../../static/css/feedback.css">
+    <link rel="stylesheet" href="../../../static/css/footer.css">
+    <link rel="stylesheet" href="../../../static/css/form.css">
+    <link rel="stylesheet" href="../../../static/css/layout.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -24,7 +25,6 @@
 
     <form class="card" id="registrationForm" enctype="multipart/form-data">
 
-        <!-- Personal Information -->
         <h3>Personal Information</h3>
         <label for="fullName">Full Name</label>
         <input id="fullName" type="text" name="fullName" placeholder="Rajapaksha Mudiyanselage Avishka Fernando" required>
@@ -47,7 +47,7 @@
         <label for="profilePicture">Profile Picture</label>
         <input id="profilePicture" type="file" name="profilePicture" accept="image/*" required>
 
-        <!-- Business Information -->
+
         <h3>Business Information</h3>
         <label for="businessName">Business Name</label>
         <input id="businessName" type="text" name="businessName" placeholder="BeautyCo Pvt Ltd" required>
@@ -58,7 +58,7 @@
         <label for="taxNumber">Tax Identification Number (TIN)</label>
         <input id="taxNumber" type="text" name="taxNumber" placeholder="1234567890" required>
 
-        <!-- Product Category -->
+
         <h3>Product Categories</h3>
         <p>Select the product types you want to supply:</p>
         <div class="category-checkboxes">
@@ -70,7 +70,6 @@
             <label><input type="checkbox" name="productCategories[]" value="beautyTools"> Beauty Tools</label>
         </div>
 
-        <!-- Product Details -->
         <h3>Product Details</h3>
         <div class="form-grid">
             <div class="routine cosmetics" data-category="cosmetics" style="display:none;">
@@ -99,7 +98,6 @@
             </div>
         </div>
 
-        <!-- Upload Documents -->
         <h3>Upload Documents</h3>
         <label for="businessCert">Business Registration Certificate</label>
         <input id="businessCert" type="file" name="businessCert" accept=".pdf,.jpg,.png" required>
@@ -110,22 +108,20 @@
         <label for="certifications">Regulatory / Compliance Certificates (Optional)</label>
         <input id="certifications" type="file" name="certifications" accept=".pdf,.jpg,.png">
 
-        <!-- Policies -->
+
         <h3>Policies</h3>
         <p>Please review our policies before submitting your supplier registration.</p>
         <div class="policy-buttons">
-            <a href="Terms.html" class="btn-secondary" target="_blank">View Terms & Conditions</a>
-            <a href="Privacy.html" class="btn-secondary" target="_blank">View Privacy Policy</a>
+            <a href="../../../static/html/terms.html" class="btn-secondary" target="_blank">View Terms & Conditions</a>
+            <a href="../../../static/html/privacy.html" class="btn-secondary" target="_blank">View Privacy Policies</a>
         </div>
 
-        <!-- Agreement -->
         <h3>Agreement</h3>
         <label class="checkbox">
             <input type="checkbox" name="agreement" required>
             I confirm that all information provided is accurate, and I agree to Vendora Terms and Privacy Policy.
         </label>
 
-        <!-- Form Buttons -->
         <div class="form-actions">
             <button type="submit" class="btn-primary">Submit Registration</button>
             <button type="button" class="btn-cancel" onclick="cancelForm()">Cancel</button>
@@ -134,11 +130,14 @@
 </section>
 
 <footer class="footer">
-    <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
+    <div class="footer-bottom">
+        <p>© 2026 Vendora | The Online Beauty Store</p>
+        <p><button><a href="../../../static/html/terms.html">Terms & Conditions</a></button> | <button><a href="../../../static/html/privacy.html">Privacy Policy</a></button> | <button><a href="../../../static/html/cookie.html">Cookie Policy</a></button> | Do Not Sell My Personal Information | Vendora</p>
+        <p>If you are having problems using this website, please <button><a href="../../../static/html/service.html">CLICK HERE</a></button> for assistance.</p>
+    </div>
 </footer>
-
-<script src="../js/form.js"></script>
-<script src="../js/main.js"></script>
-<script src="../js/delivery.js"></script>
+<script src="../../../static/js/main.js"></script>
+<script src="../../../static/js/form.js"></script>
+<script src="../../../static/js/feedback.js"></script>
 </body>
 </html>

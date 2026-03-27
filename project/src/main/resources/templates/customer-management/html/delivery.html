@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vendora | Delivery Partner Registration</title>
+    <title>Vendora | Delivery Partnership</title>
 
-    <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/form.css">
-    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../../../static/css/base.css">
+    <link rel="stylesheet" href="../../../static/css/components.css">
+    <link rel="stylesheet" href="../../../static/css/feedback.css">
+    <link rel="stylesheet" href="../../../static/css/footer.css">
+    <link rel="stylesheet" href="../../../static/css/form.css">
+    <link rel="stylesheet" href="../../../static/css/layout.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -24,7 +25,6 @@
 
     <form class="card" id="deliveryForm" enctype="multipart/form-data">
 
-        <!-- Personal Information -->
         <h3>Personal Information</h3>
         <label for="fullName">Full Name</label>
         <input id="fullName" type="text" name="fullName" placeholder="Rajapaksha Mudiyanselage Avishka Fernando" required>
@@ -50,7 +50,7 @@
         <label for="profilePicture">Profile Picture</label>
         <input id="profilePicture" type="file" name="profilePicture" accept="image/*" required>
 
-        <!-- Emergency Contact -->
+
         <h3>Emergency Contact</h3>
         <label for="emergencyName">Contact Name</label>
         <input id="emergencyName" type="text" name="emergencyName" placeholder="Emergency Name" required>
@@ -58,7 +58,7 @@
         <label for="emergencyPhone">Contact Phone</label>
         <input id="emergencyPhone" type="tel" name="emergencyPhone" placeholder="0123456789" pattern="0[0-9]{9}" required>
 
-        <!-- Vehicle Information -->
+
         <h3>Vehicle Information</h3>
         <label for="vehicleFilter">Select Vehicle</label>
         <select id="vehicleFilter" name="vehicle" required>
@@ -94,7 +94,7 @@
             </div>
         </div>
 
-        <!-- Delivery Area -->
+
         <h3>Delivery Area</h3>
         <label for="deliveryProvince">Select Province</label>
         <select id="deliveryProvince" name="province" required>
@@ -115,7 +115,7 @@
             <option value="">Select District</option>
         </select>
 
-        <!-- Upload Documents -->
+
         <h3>Upload Documents</h3>
         <label for="license">Driving License</label>
         <input id="license" type="file" name="license" accept="image/*,application/pdf" required>
@@ -123,22 +123,20 @@
         <label for="vehicleReg">Vehicle Registration</label>
         <input id="vehicleReg" type="file" name="vehicleReg" accept="image/*,application/pdf" required>
 
-        <!-- Policies -->
+
         <h3>Policies</h3>
         <p>Please review our policies before submitting your delivery registration.</p>
         <div class="policy-buttons">
-            <a href="Terms.html" class="btn-secondary" target="_blank">View Terms & Conditions</a>
-            <a href="Privacy.html" class="btn-secondary" target="_blank">View Privacy Policy</a>
+            <a href="../../../static/html/terms.html" class="btn-secondary" target="_blank">View Terms & Conditions</a>
+            <a href="../../../static/html/privacy.html" class="btn-secondary" target="_blank">View Privacy Policies</a>
         </div>
 
-        <!-- Agreement -->
         <h3>Agreement</h3>
         <label class="checkbox">
             <input type="checkbox" name="agreement" required>
             I confirm that I have read and agree to Vendora Terms and Privacy Policy
         </label>
 
-        <!-- Form Buttons -->
         <div class="form-actions">
             <button type="submit" class="btn-primary">Submit Registration</button>
             <button type="button" class="btn-cancel" onclick="cancelForm()">Cancel</button>
@@ -147,11 +145,14 @@
 </section>
 
 <footer class="footer">
-    <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
+    <div class="footer-bottom">
+        <p>© 2026 Vendora | The Online Beauty Store</p>
+        <p><button><a href="../../../static/html/terms.html">Terms & Conditions</a></button> | <button><a href="../../../static/html/privacy.html">Privacy Policy</a></button> | <button><a href="../../../static/html/cookie.html">Cookie Policy</a></button> | Do Not Sell My Personal Information | Vendora</p>
+        <p>If you are having problems using this website, please <button><a href="../../../static/html/service.html">CLICK HERE</a></button> for assistance.</p>
+    </div>
 </footer>
-
-<script src="../js/delivery.js"></script>
-<script src="../js/form.js"></script>
-<script src="../js/main.js"></script>
+<script src="../../../static/js/main.js"></script>
+<script src="../../../static/js/form.js"></script>
+<script src="../../../static/js/feedback.js"></script>
 </body>
 </html>

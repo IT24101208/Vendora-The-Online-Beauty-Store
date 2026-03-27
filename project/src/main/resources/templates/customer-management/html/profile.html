@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendora | My Profile</title>
+
+    <link rel="stylesheet" href="../../../static/css/base.css">
+    <link rel="stylesheet" href="../../../static/css/components.css">
+    <link rel="stylesheet" href="../../../static/css/footer.css">
+    <link rel="stylesheet" href="../../../static/css/header.css">
+    <link rel="stylesheet" href="../../../static/css/form.css">
+    <link rel="stylesheet" href="../../../static/css/layout.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="page-bg">
+<div class="page-wrapper">
+    <header class="header-grid">
+        <div class="logo">
+            <img src="../../../static/images/Vendora.png" alt="Vendora Logo">
+        </div>
+        <nav class="navbar">
+            <a href="../../../static/html/index.html">Home</a>
+            <a href="../../../static/html/shop.html">Shop</a>
+            <a href="../../../static/html/">Log Out</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title">My Profile</h1>
+
+        <section class="form-card">
+            <p><strong>Name:</strong> <span id="profileName">Guest</span></p>
+            <p><strong>Email:</strong> <span id="profileEmail">-</span></p>
+
+            <div class="form-actions" style="margin-top: 16px;">
+                <button type="button" class="btn-primary" id="logoutBtn">Logout</button>
+                <a class="btn-secondary" href="../../../static/html/index.html" style="text-decoration: none;">Back to Home</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
+        </div>
+    </footer>
+</div>
+
+<script>
+    const user = JSON.parse(localStorage.getItem("loggedUser"));
+    document.getElementById("profileName").textContent = user?.name || "Guest";
+    document.getElementById("profileEmail").textContent = user?.email || "-";
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("loggedUser");
+        window.location.href = "login.html";
+    });
+</script>
+</body>
+
+</html>
+

@@ -8,22 +8,22 @@ public class PageController {
 
     @GetMapping("/")
     public String home(){
-        return "index";
+        return "forward:/html/index.html";
     }
 
     @GetMapping("/shop")
     public String shop(){
-        return "shop";
+        return "forward:/html/shop.html";
     }
 
     @GetMapping("/about")
     public String about(){
-        return "about";
+        return "forward:/html/about.html";
     }
 
     @GetMapping("/learn")
     public String learn(){
-        return "learn";
+        return "forward:/html/service.html";
     }
 
 }

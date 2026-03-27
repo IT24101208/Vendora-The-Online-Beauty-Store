@@ -3,11 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendora | About Us</title>
 
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/feedback.css">
+    <link rel="stylesheet" href="../css/form.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/layout.css">
@@ -23,25 +24,39 @@
         <img src="../images/Vendora.png" alt="Vendora Logo">
     </div>
 
-    <nav class="navbar">
+    <nav class="navbar" id="navbarLinks">
+        <!-- Default (Unregistered) -->
         <a href="index.html">Home</a>
-        <a href="#">Shop</a>
-        <a href="#">Login</a>
-        <a href="#">Sign Up</a>
-        <a href="#"> 👤 </a>
-    </nav>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About</a>
+        <div class="auth-links" id="authLinks">
+            <a href="#">Login</a>
+            <a href="#">Sign Up</a>
+        </div>
+        <!-- Profile -->
+        <div class="profile-menu" id="profileMenu">
 
-    <div class="header-search">
-        <label for="searchInput" class="sr-only">Search products</label>
-        <input id="searchInput" type="text" placeholder="Search products..." class="search-input">
-        <div class="icon-btn"><i class="fa-solid fa-cart-shopping"></i></div>
-    </div>
+            <button class="profile-trigger" id="profileTrigger">
+                <img src="https://yourdomain.com/images/user1.jpg" alt="Profile" id="profileImg">
+                <span class="user-name" id="userName"></span>
+            </button>
+            <!-- Dropdown -->
+            <div class="dropdown hidden" id="dropdownMenu">
+                <button id="viewProfileBtn">View Profile</button>
+                <button id="changePasswordBtn">Change Password</button>
+                <button id="logoutBtn">Logout</button>
+            </div>
+        </div>
+        <div class="user-section hidden" id="userSection">
+            <div class="icon-btn" title="Notifications">🔔</div>
+        </div>
+    </nav>
 </header>
 
 <!-- ABOUT SECTION -->
 <section class="about-hero">
-    <h2 class="section-title">Vendora | About Us</h2>
     <div class="about-card bottom-text">
+        <h2 class="section-title">Vendora | About Us</h2>
         <img src="../images/about_1.png" class="about-bg" alt="About Vendora">
         <div class="about-text">
             <p>
@@ -64,8 +79,8 @@
 
 <!-- MISSION SECTION -->
 <section class="about-hero">
-    <h2 class="section-title">Our Mission</h2>
     <div class="about-card right-text">
+        <h2 class="section-title">Our Mission</h2>
         <img src="../images/Mission.png" class="about-bg" alt="Mission Vendora">
         <div class="about-text">
             <p>Our mission is to make beauty shopping simple, reliable, and accessible for everyone.</p>
@@ -77,8 +92,8 @@
 
 <!-- WHY CHOOSE VENDORA -->
 <section class="about-hero">
-    <h2 class="section-title">Why Choose Vendora?</h2>
     <div class="about-card right-text">
+        <h2 class="section-title">Why Choose Vendora?</h2>
         <img src="../images/choose.jpg" class="about-bg" alt="Choose Vendora">
         <div class="about-text">
             <ul>
@@ -94,8 +109,8 @@
 
 <!-- PROMISE SECTION -->
 <section class="about-hero">
-    <h2 class="section-title">Our Beauty Promise</h2>
     <div class="about-card center-text">
+        <h2 class="section-title">Our Promise</h2>
         <img src="../images/promise.webp" class="about-bg" alt="Promise Vendora">
         <div class="about-text">
             <p>
@@ -113,65 +128,15 @@
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
-    <div class="footer-grid">
-        <div class="footer-subscribe">
-            <h4>SUBSCRIBE</h4>
-            <p>Get blog updates and exclusive discounts.</p>
-
-            <div class="subscribe-input">
-                <label for="subscribeEmail" class="visually-hidden">Email</label>
-                <input type="email" id="subscribeEmail" placeholder="Enter your email">
-                <button>➤</button>
-            </div>
-            <div class="subscribe-input">
-                <label for="subscribePhone" class="visually-hidden">Phone</label>
-                <input type="tel" id="subscribePhone" placeholder="Enter your phone number">
-            </div>
-            <div>
-                <button>SUBSCRIBE</button>
-            </div>
-            <div class="social-icons">
-                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
-            </div>
-        </div>
-
-        <div>
-            <h4>PRODUCT NAVIGATOR</h4>
-            <a href="shop.html?category=Cosmetics">Cosmetics</a>
-            <a href="shop.html?category=Skin Care">Skin Care</a>
-            <a href="shop.html?category=Hair Care">Hair Care</a>
-            <a href="shop.html?category=Body Care">Body Care</a>
-            <a href="shop.html?category=Fragrance">Fragrance</a>
-            <a href="shop.html?category=Beauty Tools">Beauty Tools</a>
-        </div>
-
-        <div>
-            <h4>ABOUT US</h4>
-            <a href="about.html">Our Mission</a>
-            <a href="#">Contact Us</a>
-        </div>
-
-        <div>
-            <h4>CUSTOMER SERVICE</h4>
-            <a href="#">Visit My Account</a>
-            <a href="#">Support</a>
-            <a href="#">Delivery Location</a>
-        </div>
-    </div>
-
     <div class="footer-bottom">
         <p>© 2026 Vendora | The Online Beauty Store</p>
-        <p>Terms & Conditions | Privacy Policy | Cookie Policy | Do Not Sell My Personal Information | Vendora</p>
-        <p>If you are having problems using this website, please <button>CLICK HERE</button> for assistance.</p>
+        <p><button><a href="terms.html">Terms & Conditions</a></button> | <button><a href="privacy.html">Privacy Policy</a></button> | <button><a href="cookie.html">Cookie Policy</a></button> | Do Not Sell My Personal Information | Vendora</p>
+        <p>If you are having problems using this website, please <button><a href="service.html">CLICK HERE</a></button> for assistance.</p>
     </div>
 </footer>
-
-<script src="../js/form.js"></script>
 <script src="../js/main.js"></script>
+<script src="../js/policy.js"></script>
+<script src="../js/service.js"></script>
 </body>
 </html>

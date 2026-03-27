@@ -1,31 +1,37 @@
-/* Feedback Page Layout */
-.container {
-    width: 100%;
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 20px;
+/* =========================
+   FEEDBACK PAGE
+========================= */
+
+/* PAGE WRAPPER */
+.feedback-wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 24px;
 }
 
-.feedback-layout {
-    display: grid;
-    grid-template-columns: 70% 30%;
-    gap: 20px;
-}
-
-/* Filter Buttons */
-.feedback-filters {
-    display: flex;
-    gap: 10px;
+/* HEADER */
+.feedback-header h2 {
+    font-size: 26px;
     margin-bottom: 20px;
 }
 
+/* =========================
+   FILTER BUTTONS
+========================= */
+.feedback-filters {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
 .feedback-filters button {
-    padding: 8px 14px;
-    border: none;
-    background: #eee;
+    padding: 6px 14px;
     border-radius: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+    background: #f1f1f1;
+    font-size: 13px;
+    transition: var(--transition);
 }
 
 .feedback-filters button:hover {
@@ -36,26 +42,80 @@
     background: #000;
     color: #fff;
 }
-.feedback-display {     /* LEFT SIDE - Feedback Display */
-    width: 100%;
-}
 
+/* =========================
+   GRID
+========================= */
 #feedbackGrid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
 }
 
-.feedback-panel {       /* RIGHT SIDE - Slide Panel */
-    position: fixed;
-    right: -380px;
-    top: 80px;
-    width: 350px;
-    max-width: 90%;
+/* =========================
+   FEEDBACK CARD
+========================= */
+.feedback-card {
     background: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 16px;
     border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    transition: var(--transition);
+}
+
+.feedback-card:hover {
+    transform: translateY(-4px);
+}
+
+/* CONTENT */
+.feedback-card h4 {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.feedback-role {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+.feedback-role::before {
+    content: "● ";
+    font-size: 9px;
+}
+
+.feedback-rating {
+    font-size: 13px;
+    color: #f5a623;
+    margin-bottom: 6px;
+}
+
+.feedback-message {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.5;
+}
+
+/* ROLE COLORS */
+.feedback-card[data-role="customer"] .feedback-role { color: #2a7be4; }
+.feedback-card[data-role="supplier"] .feedback-role { color: #28a745; }
+.feedback-card[data-role="delivery"] .feedback-role { color: #ff9800; }
+.feedback-card[data-role="routine"]  .feedback-role { color: #9c27b0; }
+
+/* =========================
+   SIDE PANEL
+========================= */
+.feedback-panel {
+    position: fixed;
+    top: 80px;
+    right: -380px; /* hidden */
+    width: 340px;
+
+    background: #fff;
     padding: 20px;
+    border-radius: 10px;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
     transition: right 0.3s ease;
     z-index: 1000;
 }
@@ -64,81 +124,81 @@
     right: 20px;
 }
 
-.feedback-panel.active {    /* Active state */
-    right: 0;
-}
-
-#minimizeBtn {      /* Minimize button inside panel */
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: #333;
-    transition: transform 0.2s;
-}
-
-#minimizeBtn:hover {
-    transform: scale(1.2);
-}
-
-.form-card {    /* Form Inside Panel */
+/* =========================
+   FORM
+========================= */
+.form-card {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: 30px;
+}
+
+.form-card h3 {
+    margin-bottom: 5px;
 }
 
 #loggedUser {
-    font-size: 0.9rem;
-    color: #555;
+    font-size: 12px;
+    color: #777;
 }
 
-/* FLOATING BUTTON */
-.floating-btn {     /* Top-right floating button above footer */
+/* =========================
+   FLOATING BUTTON
+========================= */
+.floating-btn {
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 60px;
-    height: 60px;
+
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
-    background: black;
+
+    background: #000;
     color: #fff;
-    font-size: 30px;
-    border: none;
+    font-size: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
     z-index: 1100;
 }
 
 .floating-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
+/* =========================
+   RESPONSIVE
+========================= */
 
-    .feedback-layout {
+/* Tablet */
+@media (max-width: 1000px) {
+    #feedbackGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    #feedbackGrid {
         grid-template-columns: 1fr;
     }
 
     .feedback-panel {
+        right: -100%;
         width: 100%;
+        top: 0;
+        height: 100%;
+        border-radius: 0;
     }
 
-    .floating-btn {
-        top: 15px;
-        right: 15px;
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-    }
-}
-
-@media (max-width: 500px) {
-    #feedbackGrid {
-        grid-template-columns: 1fr;
+    .feedback-panel.open {
+        right: 0;
     }
 }

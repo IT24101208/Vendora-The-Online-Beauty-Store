@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Run only on routine page
     if (!window.location.pathname.includes("routine.html")) return;
 
-    /* ---------------- URL PARAMETER: CATEGORY ---------------- */
+    /* ---------------- URL PARAMETER ---------------- */
     const params = new URLSearchParams(window.location.search);
     const category = params.get("category");
 
+    /* ---------------- DOM ELEMENTS ---------------- */
     const concernForm = document.getElementById("concernForm");
     const categoryTitle = document.getElementById("categoryTitle");
     const concernsContainer = document.getElementById("concernsContainer");
@@ -17,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     concernForm.style.display = "block";
     categoryTitle.textContent = `Selected: ${category.toUpperCase()}`;
 
-    /* ---------------- CONCERNS DATA ---------------- */
+    /* ---------------- DATA ---------------- */
     const concernsData = {
         skincare: ["Oily/combination skin", "Acne & clogged pores", "Hyperpigmentation", "Dehydration", "Fungal infections", "Heat rashes"],
         haircare: ["Hair fall", "Dandruff", "Frizz", "Dry/damaged hair", "Oily scalp", "Split ends"],
@@ -51,103 +53,125 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    /* ---------------- GENERATE CONCERN CHECKBOXES ---------------- */
+    /* ---------------- GENERATE CHECKBOXES ---------------- */
     concernsContainer.innerHTML = "";
-    if (concernsData[category]) {
-        concernsData[category].forEach(c => {
-            const label = document.createElement("label");
-            label.innerHTML = `<input type="checkbox" value="${c}"> ${c}`;
-            concernsContainer.appendChild(label);
-        });
 
-        // Add "Other" option
-        const otherLabel = document.createElement("label");
-        otherLabel.innerHTML = `<input type="checkbox" id="otherCheck"> Other (custom)`;
-        concernsContainer.appendChild(otherLabel);
+    const categoryConcerns = concernsData[category];
+    if (!categoryConcerns) return;
 
-        const otherInput = document.createElement("input");
-        otherInput.type = "text";
-        otherInput.id = "otherText";
-        otherInput.placeholder = "Enter your concern";
-        otherInput.style.display = "none";
-        concernsContainer.appendChild(otherInput);
+    categoryConcerns.forEach(concern => {
+        const label = document.createElement("label");
+        label.innerHTML = `<input type="checkbox" value="${concern}"> ${concern}`;
+        concernsContainer.appendChild(label);
+    });
 
-        document.getElementById("otherCheck").addEventListener("change", function () {
-            otherInput.style.display = this.checked ? "block" : "none";
-        });
-    }
+    // Other option
+    const otherLabel = document.createElement("label");
+    otherLabel.innerHTML = `<input type="checkbox" id="otherCheck"> Other (custom)`;
+    concernsContainer.appendChild(otherLabel);
 
-    /* ---------------- FORM SUBMISSION ---------------- */
-    concernForm.addEventListener("submit", e => {
+    const otherInput = document.createElement("input");
+    otherInput.type = "text";
+    otherInput.id = "otherText";
+    otherInput.placeholder = "Enter your concern";
+    otherInput.style.display = "none";
+    concernsContainer.appendChild(otherInput);
+
+    const otherCheck = document.getElementById("otherCheck");
+    otherCheck.addEventListener("change", () => {
+        otherInput.style.display = otherCheck.checked ? "block" : "none";
+    });
+
+    /* ---------------- FORM SUBMIT ---------------- */
+    concernForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        const name = document.querySelector("#fullName").value.trim();
-        const age = parseInt(document.querySelector("#age").value.trim());
+        const name = document.getElementById("fullName").value.trim();
+        const age = parseInt(document.getElementById("age").value.trim(), 10);
 
         if (!name || isNaN(age) || age < 16 || age > 75) {
-            alert("Please enter a valid name and age (16-75).");
+            alert("Please enter a valid name and age (16–75).");
             return;
         }
 
-        // Collect selected concerns
-        const selected = Array.from(concernsContainer.querySelectorAll("input[type=checkbox]:checked"))
-            .map(cb => cb.value);
-        const otherVal = document.getElementById("otherText")?.value.trim();
-        if (otherVal) selected.push(otherVal);
+        // Collect concerns
+        const selected = Array.from(
+            concernsContainer.querySelectorAll("input[type=checkbox]:checked")
+        )
+        .filter(cb => cb.id !== "otherCheck")
+        .map(cb => cb.value);
+
+        const otherVal = otherInput.value.trim();
+        if (otherCheck.checked && otherVal) selected.push(otherVal);
 
         if (selected.length === 0) {
             alert("Please select at least one concern.");
             return;
         }
 
-        // Show loading
+        // Loading UI
         resultDiv.style.display = "block";
         resultDiv.innerHTML = "<div class='loading'>Generating your routine...</div>";
 
         setTimeout(() => {
-            // Generate routine output
+
             let output = `Hello ${name}! Here’s a personalized ${category} routine for age ${age}:\n\n`;
-            selected.forEach(c => {
-                const template = (routineTemplates[category] && routineTemplates[category][c]) || {
+
+            selected.forEach(concern => {
+                const template = routineTemplates[category]?.[concern] || {
                     symptoms: "Varies depending on individual",
                     causes: "Unknown or multiple factors",
                     routine: "General care: cleanse, moisturize, avoid irritants"
                 };
-                output += `🔹 Concern: ${c}\n   • Symptoms: ${template.symptoms}\n   • Causes: ${template.causes}\n   • Routine:\n       ${template.routine.replace(/\n/g,"\n       ")}\n\n`;
+
+                output += `🔹 Concern: ${concern}\n   • Symptoms: ${template.symptoms}\n   • Causes: ${template.causes}\n   • Routine:\n       ${template.routine.replace(/\n/g, "\n       ")}\n\n`;
             });
 
-            output += `💡 Tips:\n- Stay hydrated\n- Follow a consistent routine\n- Adjust to your body type\n\n⚠️ this message was created by AI. Always consult your doctor before choosing or using products.`;
+            output += `💡 Tips:
+- Stay hydrated
+- Follow a consistent routine
+- Adjust to your body type
+
+⚠️ This message was created by AI. Always consult your doctor before using products.`;
 
             resultDiv.innerHTML = `<pre style="white-space: pre-wrap;">${output}</pre>`;
 
-            // Show feedback section
+            // Show feedback
             if (feedbackSection) feedbackSection.style.display = "block";
 
-            // Feedback submission (temporary)
-            document.getElementById("submitFeedback")?.addEventListener("click", () => {
+            const submitFeedbackBtn = document.getElementById("submitFeedback");
+            const exitButton = document.getElementById("exitButton");
+
+            submitFeedbackBtn?.addEventListener("click", () => {
                 const rating = document.getElementById("feedbackRating")?.value;
                 const message = document.getElementById("feedbackMessage")?.value.trim();
-                if (!rating) return alert("Please select a rating.");
+
+                if (!rating) {
+                    alert("Please select a rating.");
+                    return;
+                }
 
                 feedbackSection.innerHTML = `
                     <p>Thank you for your feedback!</p>
                     <p>Rating: ${rating}/5</p>
-                    ${message ? `<p>Message: ${message}</p>` : ''}
+                    ${message ? `<p>Message: ${message}</p>` : ""}
                 `;
 
-                setTimeout(() => window.location.href = "index.html", 2000);
-            });
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 2000);
+            }, { once: true });
 
-            document.getElementById("exitButton")?.addEventListener("click", () => {
+            exitButton?.addEventListener("click", () => {
                 window.location.href = "index.html";
-            });
+            }, { once: true });
 
-        }, 1000);
+        }, 800); // slightly smoother UX
     });
 
 });
 
-/* ---------------- GLOBAL CANCEL FUNCTION ---------------- */
+/* ---------------- GLOBAL CANCEL ---------------- */
 function cancelForm() {
     if (confirm("Cancel registration? All entered data will be lost.")) {
         window.location.href = "index.html";

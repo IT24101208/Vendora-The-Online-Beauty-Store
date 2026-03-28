@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendora · My Orders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --rose-50:  #fff1f5;
+            --rose-100: #ffe0ea;
+            --rose-200: #ffc2d4;
+            --rose-400: #f77fab;
+            --rose-500: #f04f86;
+            --rose-600: #d63070;
+            --rose-700: #b01f5a;
+            --blush:    #fdf2f6;
+            --petal:    #fce8f0;
+            --text:     #2d1520;
+            --muted:    #7a4a5e;
+            --border:   #f0ccd9;
+            --white:    #ffffff;
+        }
+
+        body { font-family: 'DM Sans', sans-serif; background: var(--blush); color: var(--text); min-height: 100vh; }
+
+        /* ── Top bar ── */
+        .topbar {
+            background: var(--white); border-bottom: 1px solid var(--border);
+            padding: 0 2rem; height: 64px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 50;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 1rem; }
+        .brand { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--rose-700); }
+        .brand-dot { width: 8px; height: 8px; background: var(--rose-400); border-radius: 50%; }
+        .topbar-title { font-size: .9rem; color: var(--muted); }
+        .topbar-right { display: flex; align-items: center; gap: .75rem; }
+        .badge-role { background: var(--petal); color: var(--rose-700); padding: .28rem .75rem; border-radius: 20px; font-size: .75rem; font-weight: 500; }
+        .btn-logout { background: none; border: 1.5px solid var(--border); padding: .32rem .85rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .82rem; color: var(--muted); cursor: pointer; transition: all .15s; }
+        .btn-logout:hover { border-color: var(--rose-400); color: var(--rose-700); }
+
+        /* ── Hero strip ── */
+        .hero {
+            background: linear-gradient(130deg, #f77fab 0%, #f04f86 40%, #b01f5a 100%);
+            padding: 2.5rem 2rem 3.5rem;
+            text-align: center; color: #fff;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; top: -60px; right: -60px;
+            width: 240px; height: 240px; border-radius: 50%;
+            background: rgba(255,255,255,.08);
+        }
+        .hero-title { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: .4rem; }
+        .hero-sub { font-size: .95rem; opacity: .85; }
+
+        /* ── Stats row ── */
+        .stats-row {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+            max-width: 900px; margin: -1.75rem auto 0;
+            padding: 0 1.5rem; position: relative; z-index: 1;
+        }
+        .stat {
+            background: var(--white); border: 1px solid var(--border);
+            border-radius: 14px; padding: 1rem 1.25rem;
+            box-shadow: 0 4px 16px rgba(45,21,32,.07);
+            text-align: center;
+        }
+        .stat-val { font-size: 1.6rem; font-weight: 500; color: var(--rose-600); }
+        .stat-lbl { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-top: .15rem; }
+
+        /* ── Content ── */
+        .content { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+        /* ── Filter tabs ── */
+        .tabs { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .tab { padding: .38rem .9rem; border-radius: 20px; border: 1.5px solid var(--border); font-size: .82rem; font-family: 'DM Sans', sans-serif; cursor: pointer; background: var(--white); color: var(--muted); transition: all .15s; }
+        .tab.active, .tab:hover { background: var(--rose-500); color: #fff; border-color: var(--rose-500); }
+
+        /* ── Timeline card ── */
+        .order-card {
+            background: var(--white); border: 1px solid var(--border);
+            border-radius: 18px; margin-bottom: 1.25rem;
+            overflow: hidden; transition: box-shadow .2s;
+        }
+        .order-card:hover { box-shadow: 0 6px 28px rgba(240,79,134,.1); }
+
+        .order-head {
+            padding: 1.25rem 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+        }
+        .order-code { font-weight: 500; font-size: 1rem; }
+        .order-id { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+        .order-head-right { display: flex; align-items: center; gap: .75rem; }
+        .chevron { color: var(--muted); font-size: .85rem; transition: transform .2s; }
+        .order-card.open .chevron { transform: rotate(180deg); }
+
+        .order-body { display: none; padding: 1.25rem 1.5rem; }
+        .order-card.open .order-body { display: block; }
+
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem 1.5rem; margin-bottom: 1.25rem; }
+        .info-item {}
+        .info-lbl { font-size: .75rem; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); font-weight: 500; }
+        .info-val { font-size: .9rem; color: var(--text); margin-top: .15rem; }
+
+        /* ── Tracking progress ── */
+        .track-bar { display: flex; align-items: center; margin: 1.25rem 0; overflow-x: auto; padding-bottom: .25rem; }
+        .track-step { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 70px; }
+        .track-dot {
+            width: 28px; height: 28px; border-radius: 50%;
+            border: 2px solid var(--border); background: var(--white);
+            display: flex; align-items: center; justify-content: center;
+            font-size: .75rem; color: var(--muted); position: relative; z-index: 1;
+        }
+        .track-dot.done  { background: var(--rose-500); border-color: var(--rose-500); color: #fff; }
+        .track-dot.cur   { background: var(--white); border-color: var(--rose-500); color: var(--rose-500); box-shadow: 0 0 0 4px var(--rose-100); }
+        .track-line { flex: 1; height: 2px; background: var(--border); margin: 0 -2px; position: relative; top: -14px; z-index: 0; }
+        .track-line.done { background: var(--rose-400); }
+        .track-lbl { font-size: .68rem; color: var(--muted); margin-top: .35rem; text-align: center; line-height: 1.2; white-space: nowrap; }
+        .track-lbl.done, .track-lbl.cur { color: var(--rose-600); font-weight: 500; }
+
+        .note-box { background: var(--rose-50); border: 1px solid var(--rose-200); border-radius: 10px; padding: .75rem 1rem; font-size: .85rem; color: var(--muted); margin-bottom: 1rem; }
+        .note-box strong { color: var(--rose-700); }
+
+        /* ── Action buttons ── */
+        .order-actions { padding-top: 1rem; border-top: 1px solid var(--border); display: flex; gap: .75rem; flex-wrap: wrap; }
+        .btn { padding: .5rem 1.1rem; border-radius: 10px; font-size: .85rem; font-family: 'DM Sans', sans-serif; cursor: pointer; border: 1.5px solid; font-weight: 500; transition: all .15s; }
+        .btn-rose { background: var(--rose-500); color: #fff; border-color: var(--rose-500); }
+        .btn-rose:hover { background: var(--rose-600); }
+        .btn-outline { background: transparent; color: var(--rose-600); border-color: var(--rose-200); }
+        .btn-outline:hover { background: var(--rose-50); }
+
+        /* ── Status badges ── */
+        .badge { display: inline-flex; align-items: center; gap: .3rem; padding: .25rem .7rem; border-radius: 20px; font-size: .75rem; font-weight: 500; }
+        .badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+        .badge-pending    { background: #fff7ed; color: #b45309; } .badge-pending::before    { background: #f59e0b; }
+        .badge-assigned   { background: #eff6ff; color: #1d4ed8; } .badge-assigned::before   { background: #3b82f6; }
+        .badge-accepted   { background: #f0fdf4; color: #15803d; } .badge-accepted::before   { background: #22c55e; }
+        .badge-in_transit { background: var(--petal); color: var(--rose-700); } .badge-in_transit::before { background: var(--rose-500); }
+        .badge-delivered  { background: #f0fdf4; color: #15803d; } .badge-delivered::before  { background: #16a34a; }
+        .badge-failed     { background: #fff1f2; color: #b91c1c; } .badge-failed::before     { background: #ef4444; }
+        .badge-rejected   { background: #fff1f2; color: #b91c1c; } .badge-rejected::before   { background: #f97316; }
+        .badge-return_requested  { background: #fdf4ff; color: #7e22ce; } .badge-return_requested::before  { background: #a855f7; }
+        .badge-return_in_transit { background: #fdf4ff; color: #7e22ce; } .badge-return_in_transit::before { background: #d946ef; }
+        .badge-returned          { background: #f0fdf4; color: #15803d; } .badge-returned::before          { background: #10b981; }
+
+        /* ── Modal ── */
+        .overlay { position: fixed; inset: 0; background: rgba(45,21,32,.45); display: none; align-items: center; justify-content: center; z-index: 200; }
+        .overlay.open { display: flex; }
+        .modal { background: var(--white); border-radius: 18px; width: 100%; max-width: 400px; padding: 1.75rem; box-shadow: 0 20px 50px rgba(45,21,32,.2); }
+        .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+        .modal-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+        .modal-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--muted); }
+        .field label { display: block; font-size: .78rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; margin-bottom: .4rem; }
+        .field input { width: 100%; padding: .65rem .9rem; border: 1.5px solid var(--border); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .9rem; color: var(--text); background: var(--rose-50); outline: none; }
+        .field input:focus { border-color: var(--rose-500); background: var(--white); }
+        .btn-primary { padding: .7rem 1.4rem; background: linear-gradient(135deg, var(--rose-500), var(--rose-700)); color: #fff; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .9rem; font-weight: 500; cursor: pointer; }
+
+        /* ── Toast ── */
+        .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--text); color: #fff; padding: .75rem 1.25rem; border-radius: 12px; font-size: .875rem; z-index: 999; transform: translateY(80px); opacity: 0; transition: transform .3s, opacity .3s; pointer-events: none; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { background: #15803d; }
+        .toast.error   { background: #b91c1c; }
+
+        .empty { text-align: center; padding: 3rem; color: var(--muted); }
+        .empty-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+
+        @media (max-width: 600px) {
+            .stats-row { grid-template-columns: 1fr 1fr; }
+            .info-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="topbar">
+    <div class="topbar-left">
+        <div class="brand">Vendora</div>
+        <div class="brand-dot"></div>
+        <div class="topbar-title">My Orders</div>
+    </div>
+    <div class="topbar-right">
+        <span class="badge-role">Customer</span>
+        <button class="btn-logout" onclick="logout()">Sign out</button>
+    </div>
+</header>
+
+<div class="hero">
+    <div class="hero-title">Track Your Deliveries</div>
+    <div class="hero-sub">Stay updated on every shipment in real time</div>
+</div>
+
+<div class="stats-row">
+    <div class="stat"><div class="stat-val" id="st-total">—</div><div class="stat-lbl">Total</div></div>
+    <div class="stat"><div class="stat-val" id="st-active">—</div><div class="stat-lbl">Active</div></div>
+    <div class="stat"><div class="stat-val" id="st-delivered">—</div><div class="stat-lbl">Delivered</div></div>
+    <div class="stat"><div class="stat-val" id="st-returns">—</div><div class="stat-lbl">Returns</div></div>
+</div>
+
+<div class="content">
+    <div class="tabs">
+        <button class="tab active" onclick="filter('ALL', this)">All</button>
+        <button class="tab" onclick="filter('PENDING', this)">Processing</button>
+        <button class="tab" onclick="filter('IN_TRANSIT', this)">In Transit</button>
+        <button class="tab" onclick="filter('DELIVERED', this)">Delivered</button>
+        <button class="tab" onclick="filter('FAILED', this)">Issues</button>
+        <button class="tab" onclick="filter('RETURN_REQUESTED', this)">Returns</button>
+    </div>
+    <div id="orderList"></div>
+</div>
+
+<!-- Return Request Modal -->
+<div class="overlay" id="returnModal">
+    <div class="modal">
+        <div class="modal-head">
+            <span class="modal-title">Request Return</span>
+            <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <p style="color:var(--muted);font-size:.875rem;margin-bottom:1.25rem;">Please tell us the reason for your return request.</p>
+        <div class="field">
+            <label>Reason</label>
+            <input id="returnNote" placeholder="e.g. Wrong item received, damaged packaging…">
+        </div>
+        <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:1rem;">
+            <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+            <button class="btn-primary" id="returnConfirmBtn">Submit Return</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    const API   = 'http://localhost:8080';
+    const token = localStorage.getItem('vnd_token');
+    if (!token) window.location.href = 'login.html';
+    const authH = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
+
+    let allDeliveries = [];
+    let returnTarget  = null;
+
+    function logout() { localStorage.clear(); window.location.href = 'login.html'; }
+
+    async function load() {
+        try {
+            allDeliveries = await apiFetch('/user/deliveries');
+            renderStats();
+            renderOrders(allDeliveries);
+        } catch (e) { toast('Failed to load orders', 'error'); }
+    }
+
+    async function apiFetch(path, method = 'GET', body = null) {
+        const opts = { method, headers: authH };
+        if (body) opts.body = JSON.stringify(body);
+        const r = await fetch(API + path, opts);
+        if (!r.ok) throw new Error(await r.text());
+        return r.json();
+    }
+
+    function toast(msg, type = '') {
+        const el = document.getElementById('toast');
+        el.textContent = msg; el.className = 'toast show ' + type;
+        setTimeout(() => el.classList.remove('show'), 3000);
+    }
+
+    function renderStats() {
+        const activeStatuses = ['PENDING','ASSIGNED','ACCEPTED','IN_TRANSIT'];
+        const returnStatuses = ['RETURN_REQUESTED','RETURN_IN_TRANSIT','RETURNED'];
+        document.getElementById('st-total').textContent     = allDeliveries.length;
+        document.getElementById('st-active').textContent    = allDeliveries.filter(d => activeStatuses.includes(d.status)).length;
+        document.getElementById('st-delivered').textContent = allDeliveries.filter(d => d.status === 'DELIVERED').length;
+        document.getElementById('st-returns').textContent   = allDeliveries.filter(d => returnStatuses.includes(d.status)).length;
+    }
+
+    function filter(status, btn) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        renderOrders(status === 'ALL' ? allDeliveries : allDeliveries.filter(d => d.status === status));
+    }
+
+    function renderOrders(list) {
+        const el = document.getElementById('orderList');
+        if (!list.length) {
+            el.innerHTML = `<div class="empty"><div class="empty-icon">🌸</div>No orders found</div>`;
+            return;
+        }
+        el.innerHTML = list.map(d => orderCard(d)).join('');
+    }
+
+    // Track steps and which statuses count as "done" / "current"
+    const TRACK_STEPS = [
+        { label: 'Order\nPlaced',   statuses: ['PENDING'] },
+        { label: 'Agent\nAssigned', statuses: ['ASSIGNED','REJECTED'] },
+        { label: 'Accepted',        statuses: ['ACCEPTED'] },
+        { label: 'In Transit',      statuses: ['IN_TRANSIT'] },
+        { label: 'Delivered',       statuses: ['DELIVERED','FAILED'] },
+    ];
+    const RETURN_STEPS = [
+        { label: 'Return\nRequested', statuses: ['RETURN_REQUESTED'] },
+        { label: 'Picked Up',         statuses: ['RETURN_IN_TRANSIT'] },
+        { label: 'Returned',          statuses: ['RETURNED'] },
+    ];
+
+    function orderCard(d) {
+        const isReturn = ['RETURN_REQUESTED','RETURN_IN_TRANSIT','RETURNED'].includes(d.status);
+        const steps    = isReturn ? RETURN_STEPS : TRACK_STEPS;
+        const curIdx   = steps.findIndex(s => s.statuses.includes(d.status));
+
+        const trackHtml = `
+      <div class="track-bar">
+        ${steps.map((s, i) => {
+            const done = curIdx === -1 ? false : i < curIdx;
+            const cur  = i === curIdx;
+            const cls  = done ? 'done' : (cur ? 'cur' : '');
+            const icon = done ? '✓' : (cur ? '●' : (i + 1));
+            return `
+            ${i > 0 ? `<div class="track-line ${done ? 'done' : ''}"></div>` : ''}
+            <div class="track-step">
+              <div class="track-dot ${cls}">${icon}</div>
+              <div class="track-lbl ${cls}">${s.label.replace('\n','<br>')}</div>
+            </div>`;
+        }).join('')}
+      </div>`;
+
+        const noteHtml = d.failureReason
+            ? `<div class="note-box"><strong>Note:</strong> ${d.failureReason}</div>`
+            : '';
+
+        const actionHtml = d.status === 'DELIVERED'
+            ? `<div class="order-actions"><button class="btn btn-outline" onclick="openReturn(${d.id})">Request Return</button></div>`
+            : '';
+
+        return `
+    <div class="order-card" id="card-${d.id}">
+      <div class="order-head" onclick="toggleCard(${d.id})">
+        <div>
+          <div class="order-code">${d.deliveryCode || 'DEL-' + d.id}</div>
+          <div class="order-id">Order #${d.id} · ${d.agentName ? 'Agent: ' + d.agentName : 'Awaiting agent'}</div>
+        </div>
+        <div class="order-head-right">
+          ${badge(d.status)}
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="order-body">
+        ${trackHtml}
+        <div class="info-grid">
+          <div class="info-item"><div class="info-lbl">Delivery Address</div><div class="info-val">${d.address}</div></div>
+          ${d.province ? `<div class="info-item"><div class="info-lbl">Area</div><div class="info-val">${d.province}${d.district ? ', ' + d.district : ''}</div></div>` : ''}
+          ${d.trackingNumber ? `<div class="info-item"><div class="info-lbl">Tracking No.</div><div class="info-val">${d.trackingNumber}</div></div>` : ''}
+          ${d.deliveryDate ? `<div class="info-item"><div class="info-lbl">Delivery Date</div><div class="info-val">${d.deliveryDate}</div></div>` : ''}
+          <div class="info-item"><div class="info-lbl">Created</div><div class="info-val">${fmtDate(d.createdAt)}</div></div>
+          <div class="info-item"><div class="info-lbl">Last Update</div><div class="info-val">${fmtDate(d.updatedAt)}</div></div>
+        </div>
+        ${noteHtml}
+        ${actionHtml}
+      </div>
+    </div>`;
+    }
+
+    function toggleCard(id) {
+        document.getElementById('card-' + id).classList.toggle('open');
+    }
+
+    function openReturn(id) {
+        returnTarget = id;
+        document.getElementById('returnNote').value = '';
+        document.getElementById('returnConfirmBtn').onclick = submitReturn;
+        document.getElementById('returnModal').classList.add('open');
+    }
+    async function submitReturn() {
+        const note = document.getElementById('returnNote').value.trim();
+        if (!note) { toast('Please enter a reason', 'error'); return; }
+        closeModal();
+        try {
+            await apiFetch(`/user/deliveries/${returnTarget}/return`, 'POST', { note });
+            toast('Return request submitted!', 'success');
+            load();
+        } catch (e) { toast('Failed to submit return', 'error'); }
+    }
+    function closeModal() { document.getElementById('returnModal').classList.remove('open'); }
+
+    function badge(status) {
+        return `<span class="badge badge-${status.toLowerCase()}">${status.replace(/_/g,' ')}</span>`;
+    }
+    function fmtDate(iso) {
+        if (!iso) return '—';
+        return new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    load();
+</script>
+</body>
+</html>

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vendora · Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --rose-50:  #fff1f5;
+      --rose-100: #ffe0ea;
+      --rose-200: #ffc2d4;
+      --rose-400: #f77fab;
+      --rose-500: #f04f86;
+      --rose-600: #d63070;
+      --rose-700: #b01f5a;
+      --blush:    #fdf2f6;
+      --petal:    #fce8f0;
+      --text:     #2d1520;
+      --muted:    #7a4a5e;
+      --border:   #f0ccd9;
+      --white:    #ffffff;
+      --sidebar:  220px;
+    }
+
+    body { font-family: 'DM Sans', sans-serif; background: var(--blush); color: var(--text); display: flex; min-height: 100vh; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar);
+      background: linear-gradient(175deg, #b01f5a 0%, #7a1040 100%);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; height: 100vh;
+      z-index: 100;
+    }
+    .sidebar-brand {
+      padding: 1.75rem 1.5rem 1.25rem;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+    .sidebar-brand .logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: #fff; display: block;
+    }
+    .sidebar-brand .logo-sub {
+      font-size: .72rem; color: rgba(255,255,255,.55);
+      letter-spacing: .8px; text-transform: uppercase; margin-top: 2px;
+    }
+    .nav { flex: 1; padding: 1rem 0; }
+    .nav-item {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .7rem 1.5rem;
+      color: rgba(255,255,255,.7);
+      cursor: pointer;
+      font-size: .9rem;
+      border-left: 3px solid transparent;
+      transition: all .15s;
+    }
+    .nav-item:hover { background: rgba(255,255,255,.08); color: #fff; }
+    .nav-item.active { background: rgba(255,255,255,.12); color: #fff; border-left-color: var(--rose-200); }
+    .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
+    .nav-section {
+      padding: .5rem 1.5rem .25rem;
+      font-size: .68rem; letter-spacing: 1px; text-transform: uppercase;
+      color: rgba(255,255,255,.35); margin-top: .5rem;
+    }
+    .sidebar-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .btn-logout {
+      width: 100%; padding: .6rem;
+      background: rgba(255,255,255,.1);
+      color: rgba(255,255,255,.8);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .85rem; cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-logout:hover { background: rgba(255,255,255,.18); color: #fff; }
+
+    /* ── Main ── */
+    .main { margin-left: var(--sidebar); flex: 1; padding: 2rem 2.5rem; max-width: calc(100vw - var(--sidebar)); }
+
+    .page-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 2rem;
+    }
+    .page-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--text); }
+    .page-sub { color: var(--muted); font-size: .9rem; margin-top: .2rem; }
+
+    /* ── Stat cards ── */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card {
+      background: var(--white); border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--border);
+    }
+    .stat-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); }
+    .stat-value { font-size: 2rem; font-weight: 500; color: var(--text); margin-top: .2rem; line-height: 1; }
+    .stat-card.accent { background: linear-gradient(135deg, var(--rose-500), var(--rose-700)); border-color: transparent; }
+    .stat-card.accent .stat-label, .stat-card.accent .stat-value { color: #fff; }
+
+    /* ── Section panel ── */
+    .panel { background: var(--white); border-radius: 18px; border: 1px solid var(--border); overflow: hidden; }
+    .panel-head {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .panel-title { font-weight: 500; font-size: 1rem; color: var(--text); }
+
+    /* ── Filter tabs ── */
+    .filter-tabs { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .tab {
+      padding: .35rem .9rem;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      font-size: .82rem; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; background: var(--white); color: var(--muted);
+      transition: all .15s;
+    }
+    .tab.active, .tab:hover { background: var(--rose-500); color: #fff; border-color: var(--rose-500); }
+
+    /* ── Table ── */
+    .tbl-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { background: var(--rose-50); }
+    th {
+      text-align: left; padding: .75rem 1rem;
+      font-size: .75rem; text-transform: uppercase; letter-spacing: .6px;
+      color: var(--muted); font-weight: 500; white-space: nowrap;
+    }
+    td { padding: .85rem 1rem; border-top: 1px solid var(--border); font-size: .9rem; color: var(--text); vertical-align: middle; }
+    tr:hover td { background: var(--rose-50); }
+
+    /* ── Status badges ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: .3rem;
+      padding: .25rem .7rem; border-radius: 20px;
+      font-size: .75rem; font-weight: 500; white-space: nowrap;
+    }
+    .badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+    .badge-pending    { background: #fff7ed; color: #b45309; } .badge-pending::before    { background: #f59e0b; }
+    .badge-assigned   { background: #eff6ff; color: #1d4ed8; } .badge-assigned::before   { background: #3b82f6; }
+    .badge-accepted   { background: #f0fdf4; color: #15803d; } .badge-accepted::before   { background: #22c55e; }
+    .badge-in_transit { background: var(--petal); color: var(--rose-700); } .badge-in_transit::before { background: var(--rose-500); }
+    .badge-delivered  { background: #f0fdf4; color: #15803d; } .badge-delivered::before  { background: #16a34a; }
+    .badge-failed     { background: #fff1f2; color: #b91c1c; } .badge-failed::before     { background: #ef4444; }
+    .badge-rejected   { background: #fff1f2; color: #b91c1c; } .badge-rejected::before   { background: #f97316; }
+    .badge-return_requested  { background: #fdf4ff; color: #7e22ce; } .badge-return_requested::before  { background: #a855f7; }
+    .badge-return_in_transit { background: #fdf4ff; color: #7e22ce; } .badge-return_in_transit::before { background: #d946ef; }
+    .badge-returned          { background: #f0fdf4; color: #15803d; } .badge-returned::before          { background: #10b981; }
+
+    /* ── Action buttons ── */
+    .actions { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .btn-sm {
+      padding: .3rem .75rem;
+      border-radius: 8px;
+      font-size: .8rem; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; border: 1.5px solid;
+      transition: all .15s;
+    }
+    .btn-rose    { background: var(--rose-500); color: #fff; border-color: var(--rose-500); }
+    .btn-rose:hover { background: var(--rose-600); border-color: var(--rose-600); }
+    .btn-outline { background: transparent; color: var(--rose-600); border-color: var(--rose-200); }
+    .btn-outline:hover { background: var(--rose-50); }
+    .btn-danger  { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
+    .btn-danger:hover { background: #fecaca; }
+
+    /* ── Form inputs (modal / add agent) ── */
+    .field { margin-bottom: 1rem; }
+    .field label { display: block; font-size: .78rem; font-weight: 500; color: var(--muted); letter-spacing: .4px; text-transform: uppercase; margin-bottom: .4rem; }
+    .field input, .field select {
+      width: 100%; padding: .65rem .9rem;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      font-family: 'DM Sans', sans-serif; font-size: .9rem;
+      color: var(--text); background: var(--rose-50); outline: none;
+      transition: border-color .2s;
+    }
+    .field input:focus, .field select:focus { border-color: var(--rose-500); background: var(--white); }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* ── Modal ── */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(45,21,32,.45);
+      display: none; align-items: center; justify-content: center; z-index: 200;
+    }
+    .overlay.open { display: flex; }
+    .modal {
+      background: var(--white); border-radius: 20px;
+      width: 100%; max-width: 560px; max-height: 90vh;
+      overflow-y: auto; padding: 2rem;
+      box-shadow: 0 24px 60px rgba(45,21,32,.2);
+    }
+    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .modal-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--text); }
+    .modal-close { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--muted); line-height: 1; }
+    .modal-close:hover { color: var(--text); }
+    .btn-primary {
+      padding: .75rem 1.5rem;
+      background: linear-gradient(135deg, var(--rose-500), var(--rose-700));
+      color: #fff; border: none; border-radius: 10px;
+      font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 500;
+      cursor: pointer; transition: opacity .15s;
+    }
+    .btn-primary:hover { opacity: .9; }
+    .btn-primary:disabled { opacity: .55; cursor: not-allowed; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      background: var(--text); color: #fff;
+      padding: .75rem 1.25rem; border-radius: 12px;
+      font-size: .875rem; z-index: 999;
+      transform: translateY(80px); opacity: 0;
+      transition: transform .3s, opacity .3s;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: #15803d; }
+    .toast.error   { background: #b91c1c; }
+
+    /* ── Empty state ── */
+    .empty { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+    .empty-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+
+    /* ── Hidden views ── */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    select { appearance: none; }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <span class="logo-name">Vendora</span>
+    <span class="logo-sub">Admin Portal</span>
+  </div>
+  <nav class="nav">
+    <div class="nav-section">Deliveries</div>
+    <div class="nav-item active" onclick="showView('deliveries')" id="nav-deliveries">
+      <span class="nav-icon">📦</span> All Deliveries
+    </div>
+    <div class="nav-item" onclick="showView('agents')" id="nav-agents">
+      <span class="nav-icon">🛵</span> Delivery Agents
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn-logout" onclick="logout()">Sign out</button>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+
+  <!-- ── Deliveries View ── -->
+  <div class="view active" id="view-deliveries">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Deliveries</div>
+        <div class="page-sub">Manage and assign all orders</div>
+      </div>
+    </div>
+
+    <div class="stats" id="statsBar">
+      <div class="stat-card accent"><div class="stat-label">Total</div><div class="stat-value" id="st-total">—</div></div>
+      <div class="stat-card"><div class="stat-label">Pending</div><div class="stat-value" id="st-pending">—</div></div>
+      <div class="stat-card"><div class="stat-label">In Transit</div><div class="stat-value" id="st-transit">—</div></div>
+      <div class="stat-card"><div class="stat-label">Delivered</div><div class="stat-value" id="st-delivered">—</div></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-title">All Orders</span>
+        <div class="filter-tabs">
+          <button class="tab active" onclick="filterDeliveries('ALL', this)">All</button>
+          <button class="tab" onclick="filterDeliveries('PENDING', this)">Pending</button>
+          <button class="tab" onclick="filterDeliveries('ASSIGNED', this)">Assigned</button>
+          <button class="tab" onclick="filterDeliveries('IN_TRANSIT', this)">In Transit</button>
+          <button class="tab" onclick="filterDeliveries('DELIVERED', this)">Delivered</button>
+          <button class="tab" onclick="filterDeliveries('FAILED', this)">Failed</button>
+          <button class="tab" onclick="filterDeliveries('RETURN_REQUESTED', this)">Returns</button>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Code</th>
+            <th>Address</th>
+            <th>Agent</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody id="deliveryBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Agents View ── -->
+  <div class="view" id="view-agents">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Delivery Agents</div>
+        <div class="page-sub">Register and manage your delivery partners</div>
+      </div>
+      <button class="btn-primary" onclick="openAddAgent()">+ Add Agent</button>
+    </div>
+    <div class="panel">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Vehicle</th>
+            <th>Province</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody id="agentBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── Assign Agent Modal ── -->
+<div class="overlay" id="assignModal">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Assign Agent</span>
+      <button class="modal-close" onclick="closeModal('assignModal')">×</button>
+    </div>
+    <p style="color:var(--muted);font-size:.9rem;margin-bottom:1.25rem;">Select an available agent for delivery <strong id="assignDeliveryCode"></strong></p>
+    <div class="field">
+      <label>Delivery Agent</label>
+      <select id="agentSelect"></select>
+    </div>
+    <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.25rem;">
+      <button class="btn-sm btn-outline" onclick="closeModal('assignModal')">Cancel</button>
+      <button class="btn-primary" onclick="submitAssign()">Assign</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Add Agent Modal ── -->
+<div class="overlay" id="addAgentModal">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Register New Agent</span>
+      <button class="modal-close" onclick="closeModal('addAgentModal')">×</button>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Full Name</label><input id="ag-name" placeholder="Amara Silva"></div>
+      <div class="field"><label>Email</label><input id="ag-email" type="email" placeholder="agent@email.com"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Password</label><input id="ag-password" type="password" placeholder="••••••••"></div>
+      <div class="field"><label>Phone</label><input id="ag-phone" placeholder="+94 77 000 0000"></div>
+    </div>
+    <div class="field"><label>Address</label><input id="ag-address" placeholder="123 Delivery Lane, Colombo"></div>
+    <div class="field-row">
+      <div class="field"><label>Province</label><input id="ag-province" placeholder="Western"></div>
+      <div class="field"><label>District</label><input id="ag-district" placeholder="Colombo"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Vehicle Type</label><input id="ag-vtype" placeholder="Motorbike"></div>
+      <div class="field"><label>Vehicle Model</label><input id="ag-vmodel" placeholder="Honda CB150"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>License Plate</label><input id="ag-plate" placeholder="WP CAB-1234"></div>
+      <div class="field"><label>Emergency Contact</label><input id="ag-ecname" placeholder="Contact name"></div>
+    </div>
+    <div class="field"><label>Emergency Phone</label><input id="ag-ecphone" placeholder="+94 77 111 1111"></div>
+    <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.25rem;">
+      <button class="btn-sm btn-outline" onclick="closeModal('addAgentModal')">Cancel</button>
+      <button class="btn-primary" id="addAgentBtn" onclick="submitAddAgent()">Register Agent</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Note Modal (reject / fail) ── -->
+<div class="overlay" id="noteModal">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-head">
+      <span class="modal-title" id="noteModalTitle">Add Note</span>
+      <button class="modal-close" onclick="closeModal('noteModal')">×</button>
+    </div>
+    <div class="field">
+      <label>Note</label>
+      <input id="noteInput" placeholder="Reason…">
+    </div>
+    <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="btn-sm btn-outline" onclick="closeModal('noteModal')">Cancel</button>
+      <button class="btn-primary" id="noteConfirmBtn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const API   = 'http://localhost:8080';
+  const token = localStorage.getItem('vnd_token');
+  if (!token) window.location.href = 'login.html';
+
+  const authH = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
+
+  let allDeliveries = [];
+  let allAgents     = [];
+  let assignTarget  = null;
+
+  // ── Auth ──────────────────────────────────────────────────────────────────
+  function logout() { localStorage.clear(); window.location.href = 'login.html'; }
+
+  // ── Views ─────────────────────────────────────────────────────────────────
+  function showView(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    document.getElementById('nav-' + name).classList.add('active');
+    if (name === 'deliveries') loadDeliveries();
+    if (name === 'agents')     loadAgents();
+  }
+
+  // ── Fetch helpers ─────────────────────────────────────────────────────────
+  async function get(path) {
+    const r = await fetch(API + path, { headers: authH });
+    if (!r.ok) throw new Error(await r.text());
+    return r.json();
+  }
+  async function post(path, body) {
+    const r = await fetch(API + path, { method: 'POST', headers: authH, body: JSON.stringify(body) });
+    if (!r.ok) throw new Error(await r.text());
+    return r.json();
+  }
+
+  // ── Toast ─────────────────────────────────────────────────────────────────
+  function toast(msg, type = '') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'toast show ' + type;
+    setTimeout(() => el.classList.remove('show'), 3000);
+  }
+
+  // ── Deliveries ────────────────────────────────────────────────────────────
+  async function loadDeliveries() {
+    try {
+      allDeliveries = await get('/admin/deliveries');
+      renderStats();
+      renderDeliveries(allDeliveries);
+    } catch (e) { toast('Failed to load deliveries', 'error'); }
+  }
+
+  function renderStats() {
+    document.getElementById('st-total').textContent     = allDeliveries.length;
+    document.getElementById('st-pending').textContent   = allDeliveries.filter(d => d.status === 'PENDING').length;
+    document.getElementById('st-transit').textContent   = allDeliveries.filter(d => d.status === 'IN_TRANSIT').length;
+    document.getElementById('st-delivered').textContent = allDeliveries.filter(d => d.status === 'DELIVERED').length;
+  }
+
+  function filterDeliveries(status, btn) {
+    document.querySelectorAll('.filter-tabs .tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const list = status === 'ALL' ? allDeliveries : allDeliveries.filter(d => d.status === status);
+    renderDeliveries(list);
+  }
+
+  function renderDeliveries(list) {
+    const tbody = document.getElementById('deliveryBody');
+    if (!list.length) {
+      tbody.innerHTML = `<tr><td colspan="7"><div class="empty"><div class="empty-icon">📭</div>No deliveries found</div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = list.map(d => `
+      <tr>
+        <td style="color:var(--muted);font-size:.8rem">#${d.id}</td>
+        <td><strong>${d.deliveryCode || '—'}</strong></td>
+        <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${d.address}">${d.address}</td>
+        <td>${d.agentName || '<span style="color:var(--muted)">Unassigned</span>'}</td>
+        <td>${badge(d.status)}</td>
+        <td style="color:var(--muted);font-size:.82rem">${d.deliveryDate || fmtDate(d.createdAt)}</td>
+        <td><div class="actions">${adminActions(d)}</div></td>
+      </tr>`).join('');
+  }
+
+  function adminActions(d) {
+    const btns = [];
+    if (d.status === 'PENDING')
+      btns.push(`<button class="btn-sm btn-rose" onclick="openAssign(${d.id}, '${d.deliveryCode}')">Assign</button>`);
+    if (d.status === 'REJECTED' || d.status === 'FAILED')
+      btns.push(`<button class="btn-sm btn-outline" onclick="openAssign(${d.id}, '${d.deliveryCode}')">Reassign</button>`);
+    return btns.join('') || '<span style="color:var(--muted);font-size:.8rem">—</span>';
+  }
+
+  // ── Assign ────────────────────────────────────────────────────────────────
+  async function openAssign(id, code) {
+    assignTarget = id;
+    document.getElementById('assignDeliveryCode').textContent = code;
+    if (!allAgents.length) allAgents = await get('/admin/agents');
+    const sel = document.getElementById('agentSelect');
+    sel.innerHTML = allAgents.map(a => `<option value="${a.id}">${a.name} — ${a.email}</option>`).join('');
+    openModal('assignModal');
+  }
+
+  async function submitAssign() {
+    const agentId = +document.getElementById('agentSelect').value;
+    try {
+      await post(`/admin/deliveries/${assignTarget}/assign`, { agentId });
+      toast('Agent assigned successfully', 'success');
+      closeModal('assignModal');
+      loadDeliveries();
+    } catch (e) { toast('Failed to assign agent', 'error'); }
+  }
+
+  // ── Agents ────────────────────────────────────────────────────────────────
+  async function loadAgents() {
+    try {
+      allAgents = await get('/admin/agents');
+      renderAgents();
+    } catch (e) { toast('Failed to load agents', 'error'); }
+  }
+
+  function renderAgents() {
+    const tbody = document.getElementById('agentBody');
+    if (!allAgents.length) {
+      tbody.innerHTML = `<tr><td colspan="6"><div class="empty"><div class="empty-icon">🛵</div>No agents registered yet</div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = allAgents.map(a => `
+      <tr>
+        <td><strong>${a.name}</strong></td>
+        <td style="color:var(--muted)">${a.email}</td>
+        <td>${a.phone || '—'}</td>
+        <td>${a.vehicleType || '—'} ${a.vehicleModel ? '· ' + a.vehicleModel : ''}</td>
+        <td>${a.province || '—'}</td>
+        <td>${a.status === 'ACTIVE'
+            ? '<span class="badge badge-accepted">Active</span>'
+            : '<span class="badge badge-failed">Inactive</span>'}</td>
+      </tr>`).join('');
+  }
+
+  function openAddAgent() { openModal('addAgentModal'); }
+
+  async function submitAddAgent() {
+    const btn = document.getElementById('addAgentBtn');
+    btn.disabled = true; btn.textContent = 'Registering…';
+    const body = {
+      name: v('ag-name'), email: v('ag-email'), password: v('ag-password'),
+      phone: v('ag-phone'), address: v('ag-address'),
+      province: v('ag-province'), district: v('ag-district'),
+      vehicleType: v('ag-vtype'), vehicleModel: v('ag-vmodel'),
+      licensePlate: v('ag-plate'),
+      emergencyContactName: v('ag-ecname'), emergencyContactPhone: v('ag-ecphone')
+    };
+    if (!body.name || !body.email || !body.password) {
+      toast('Name, email and password are required', 'error');
+      btn.disabled = false; btn.textContent = 'Register Agent';
+      return;
+    }
+    try {
+      await post('/admin/agents', body);
+      toast('Agent registered!', 'success');
+      closeModal('addAgentModal');
+      loadAgents();
+    } catch (e) { toast('Failed to register agent', 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Register Agent'; }
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  function v(id) { return document.getElementById(id).value.trim(); }
+
+  function badge(status) {
+    const cls = 'badge badge-' + status.toLowerCase();
+    return `<span class="${cls}">${status.replace(/_/g,' ')}</span>`;
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    return new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+
+  function openModal(id)  { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+  loadDeliveries();
+</script>
+</body>
+</html>

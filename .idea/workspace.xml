@@ -5,32 +5,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="Frontend - VII">
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/templates/customer-management/html/delivery.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/templates/customer-management/html/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/templates/customer-management/html/profile.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/templates/customer-management/html/signup.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/templates/customer-management/html/supplier.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Vendora-The-Online-Beauty-Store.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Vendora-The-Online-Beauty-Store.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/AdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/DeliveryAgentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/AddNoteDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/AssignAgentDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/CreateDeliveryPersonDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/DeliveryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/DeliveryPersonDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/Delivery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/DeliveryPerson.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/DeliveryStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/DeliveryPersonRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/DeliveryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/service/DeliveryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_27_03_2026_14_32__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_27_03_2026_19_46__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_28_03_2026_00_20__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/VendoraApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/config/DatabaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/config/DatabaseConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/PageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/PageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/common/ApiResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/common/Constants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/config/CorsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/config/DatabaseConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/exception/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/exception/ResourceNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/security/JwtFilter" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/security/JwtUtil" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/security/SecurityConfig.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/shop.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/shop.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/customer-management/epic1" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/DatabaseConfig.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/VendoraApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/VendoraApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/common/ApiResponse.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/common/UserRole.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/config/CorsConfig$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/config/CorsConfig.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/config/SecurityConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/controller/AuthController.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/controller/PageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/controller/PageController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/dto/LoginRequest.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/dto/RegisterRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/exception/GlobalExceptionHandler.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/model/Role.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/model/User.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/repository/RoleRepository.class" beforeDir="false" />
@@ -85,13 +105,6 @@
       <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/product4.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/product5.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/vendora-Logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/vendora-0.0.1-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/vendora-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,6 +115,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -113,7 +128,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="customer-management" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -124,12 +139,12 @@
     &quot;assignee&quot;: &quot;IT24101208&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/IT24101208/Vendora-The-Online-Beauty-Store.git&quot;,
-    &quot;accountId&quot;: &quot;c8b7bc0b-2b19-4736-afbe-2bc02e4750f8&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/IT24101208/Vendora-The-Online-Beauty-Store.git",
+    "accountId": "a94d2f43-5824-41cc-8f03-27ebebf855a2"
   }
-}</component>
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/project/src/main/resources/static/html/supplier.html" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -161,18 +176,29 @@
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "develop",
+    "Spring Boot.VendoraApplication.executor": "Run",
+    "git-widget-placeholder": "Delivery-Tracking",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/SLIIT University/Year 2 - Semester 2/IE2091 - IS Project/Assignment/Vendora-The-Online-Beauty-Store",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -186,6 +212,23 @@
       <recent name="D:\SLIIT University\Year 2 - Semester 2\IE2091 - IS Project\Assignment\Vendora-The-Online-Beauty-Store\project\src\main\resources\templates\IT24101208\images" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="VendoraApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="vendora" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.vendora.VendoraApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="" />
@@ -193,6 +236,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1772013291786</updated>
+      <workItem from="1774679427985" duration="3828000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Project Push">
       <option name="closed" value="true" />
@@ -293,10 +337,15 @@
     <option name="localTasksCounter" value="13" />
     <servers>
       <JIRA url="https://vendora2026ise.atlassian.net">
+        <option name="apiType" value="REST_2_0" />
+        <option name="inCloud" value="true" />
         <option name="jiraVersion" value="1001.0.0-SNAPSHOT" />
         <username>it24101208@my.sllit.lk</username>
       </JIRA>
     </servers>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

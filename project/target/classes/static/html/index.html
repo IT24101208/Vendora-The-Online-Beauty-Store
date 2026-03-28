@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/feedback.css">
+    <link rel="stylesheet" href="../css/form.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/layout.css">
@@ -23,20 +25,31 @@
         <img src="../images/Vendora.png" alt="Vendora Logo">
     </div>
 
-    <nav class="navbar">
+    <nav class="navbar" id="navbarLinks">
+        <!-- Default (Unregistered) -->
+        <a href="index.html">Home</a>
         <a href="shop.html">Shop</a>
         <a href="about.html">About</a>
-        <a href="../../templates/IT24101208/html/login.html">Login</a>
-        <a href="../../templates/IT24101208/html/signup.html">Sign Up</a>
-        <img id="navProfileImg" src="../../../resources/Profile_Pictures/PP1.jpg " alt="Profile">
-        <a href="../../templates/IT24101208/html/profile.html"> 👤 </a>
+        <div class="auth-links" id="authLinks">
+            <a href="#">Login</a>
+            <a href="#">Sign Up</a>
+        </div>
+        <!-- Profile -->
+        <div class="profile-menu" id="profileMenu">
 
-        <div class="profile-menu">
-            <div id="profileDropdown" class="dropdown hidden">
-                <p id="navUserName"></p>
-                <button id="goProfile">My Profile</button>
+            <button class="profile-trigger" id="profileTrigger">
+                <img src="https://yourdomain.com/images/user1.jpg" alt="Profile" id="profileImg">
+                <span class="user-name" id="userName"></span>
+            </button>
+            <!-- Dropdown -->
+            <div class="dropdown hidden" id="dropdownMenu">
+                <button id="viewProfileBtn">View Profile</button>
+                <button id="changePasswordBtn">Change Password</button>
                 <button id="logoutBtn">Logout</button>
             </div>
+        </div>
+        <div class="user-section hidden" id="userSection">
+            <div class="icon-btn" title="Notifications">🔔</div>
         </div>
     </nav>
 
@@ -54,10 +67,9 @@
     <div class="hero-content">
         <h1>Discover Natural Beauty</h1>
         <p>Discover clean skincare and cosmetics</p>
-        <a href="shop.html" class="btn-primary">Shop Now</a>
+        <a href="shop.html" class="btn-primary"><h2>Shop Now</h2></a>
     </div>
 </section>
-<script src="../js/hero.js"></script>
 
 <!-- FEATURED PRODUCTS -->
 <section class="products">
@@ -74,56 +86,55 @@
             <img src="../images/sp2.webp" alt="Serum">
             <div class="product-name">ESPA - Optimal Skin Pro Serum</div>
             <div class="product-price">Rs. 1,500</div>
-            <a href="shop.html" class="btn-primary">Add to Cart</a>
+            <a href="#" class="btn-primary">Add to Cart</a>
         </div>
         <div class="product-card">
             <img src="../images/sp3.avif" alt="Men Deserve">
             <div class="product-name">Men Deserve Beauty Pack</div>
             <div class="product-price">Rs. 3,850</div>
-            <a href="shop.html" class="btn-primary">Add to Cart</a>
+            <a href="#" class="btn-primary">Add to Cart</a>
         </div>
         <div class="product-card">
             <img src="../images/sp4.jpg" alt="Serum">
             <div class="product-name">Beauty of Joeson - Deep Serum</div>
             <div class="product-price">Rs. 1,750</div>
-            <a href="shop.html" class="btn-primary">Add to Cart</a>
+            <a href="#" class="btn-primary">Add to Cart</a>
         </div>
     </div>
     </div>
 </section>
 
 <!-- ROUTINE SECTION -->
-    <section class="routine-section">
-        <div class="container">
-            <h2>Don't know where to start?</h2>
-            <div class="routine-grid">
-                <div class="routine-card">
-                    <img src="../images/skincare.jpg" alt="Skincare">
-                    <div class="routine-content">
-                        <h3>Find my personal Skincare Routine</h3>
-                        <p>Discover the perfect skincare routine for your skin type.</p>
-                        <a href="routine.html?category=skincare">Get Started</a>
-                    </div>
-                </div>
-                <div class="routine-card">
-                    <br>
-                    <img src="../images/bodycare.jpg" alt="Bodycare">
-                    <div class="routine-content">
-                        <h3>Find my personal Bodycare</h3>
-                        <p>Discover the perfect bodycare routine for your skin type.</p>
-                        <a href="routine.html?category=bodycare">Get Started</a>
-                    </div>
-                </div>
-                <div class="routine-card">
-                    <img src="../images/haircare.webp" alt="Haircare">
-                    <div class="routine-content">
-                        <h3>Find my personal Haircare</h3>
-                        <p>Discover tips and products for healthy, beautiful hair.</p><br>
-                        <a href="routine.html?category=haircare">Get Started</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section class="routine-section">
+    <div class="container">
+    <h2>Don't know where to start?</h2>
+    <div class="routine-grid">
+         <div class="routine-card">
+         <img src="../images/skincare.jpg" alt="Skincare">
+              <div class="routine-content">
+              <h3>Find my personal Skincare Routine</h3>
+                  <p>Discover the perfect skincare routine for your skin type.</p>
+                  <a href="routine.html?category=skincare">Get Started</a>
+              </div>
+         </div>
+         <div class="routine-card"><br>
+         <img src="../images/bodycare.jpg" alt="Bodycare">
+              <div class="routine-content">
+              <h3>Find my personal Bodycare</h3>
+                  <p>Discover the perfect bodycare routine for your skin type.</p>
+                  <a href="routine.html?category=bodycare">Get Started</a>
+              </div>
+         </div>
+         <div class="routine-card">
+         <img src="../images/haircare.webp" alt="Haircare">
+              <div class="routine-content">
+              <h3>Find my personal Haircare</h3>
+                   <p>Discover tips and products for healthy, beautiful hair.</p><br>
+                   <a href="routine.html?category=haircare">Get Started</a>
+              </div>
+         </div>
+    </div>
+    </div>
     </section>
 
 <!-- Supplier & Delivery Network -->
@@ -135,14 +146,14 @@
             <img src="../images/supplier.jpg" alt="Supplier">
             <div class="partner-content">
                 <h3>I am a Supplier</h3>
-                <a href="supplier.html">Join Now</a>
+                <a href="../../templates/customer-management/html/supplier.html">Join Now</a>
             </div>
         </div>
         <div class="partner-card">
             <img src="../images/delivery.webp" alt="Delivery">
             <div class="partner-content">
                 <h3>I am a Delivery Person</h3>
-                <a href="delivery.html">Join Now</a>
+                <a href="../../templates/customer-management/html/delivery.html">Join Now</a>
             </div>
         </div>
     </div>
@@ -156,83 +167,73 @@
         <div class="feedback-grid" id="feedbackGrid">
             <!-- Feedback cards will be injected here via JS -->
         </div>
-        <div class="partner-content"><br>
-            <a href="feedback.html">See More &gt;</a>
+        <div class="partner-content">
+            <a href="feedback.html">See More</a>
         </div>
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
     <div class="footer-grid">
-
-        <!-- SUBSCRIBE -->
         <div class="footer-subscribe">
             <h4>SUBSCRIBE</h4>
-            <p>Get blog updates and exclusive discounts.</p>
+            <p>Get beauty tips, product updates & exclusive offers straight to your inbox.</p>
 
-            <!-- Email -->
-            <div class="subscribe-input">
-                <label for="subscribeEmail" class="visually-hidden">Email for subscription</label>
-                <input type="email" id="subscribeEmail" placeholder="Enter your email">
-                <button>➤</button>
-            </div>
+            <form id="subscribeForm" class="subscribe-input">
+                <div>
+                    <label for="subscribeEmail" class="visually-hidden">Email Address</label>
+                    <input type="email" id="subscribeEmail" name="email" placeholder="Email" required>
+                </div>
+                <div>
+                    <label for="subscribePhone" class="subscribe-input">Phone Number</label>
+                    <input type="tel" id="subscribePhone" name="phone" placeholder="Contact" required>
+                </div>
+                <div>
+                    <button type="submit" class="btn-subscribe">➤SUBSCRIBE</button>
+                    <p id="subscribeMessage" class="subscribe-message"></p>
+                </div>
+            </form>
 
-            <!-- Phone -->
-            <div class="subscribe-input">
-                <label for="subscribePhone" class="visually-hidden">Phone number for subscription</label>
-                <input type="tel" id="subscribePhone" placeholder="Enter your phone number">
-            </div>
-
-            <div>
-                <button>SUBSCRIBE</button>
-            </div>
-
-            <!-- SOCIAL ICONS -->
             <div class="social-icons">
-                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://tiktok.com" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
             </div>
         </div>
 
-        <!-- SHOP -->
         <div>
-            <h4>Shop</h4>
-            <a href="shop.html">Makeup</a>
-            <a href="shop.html">Skin Care</a>
-            <a href="shop.html">Hair Care</a>
-            <a href="shop.html">Body Care</a>
+            <h4>PRODUCT NAVIGATOR</h4>
+            <a href="shop.html?category=Cosmetics">Cosmetics</a>
+            <a href="shop.html?category=Skin Care">Skin Care</a>
+            <a href="shop.html?category=Hair Care">Hair Care</a>
+            <a href="shop.html?category=Body Care">Body Care</a>
+            <a href="shop.html?category=Fragrance">Fragrance</a>
+            <a href="shop.html?category=Beauty Tools">Beauty Tools</a>
         </div>
 
-        <!-- ABOUT -->
         <div>
             <h4>ABOUT US</h4>
             <a href="about.html">Our Mission</a>
-            <a href="about.html">Support</a>
+            <a href="service.html">Contact Us</a>
         </div>
 
-        <!-- CUSTOMER SERVICE -->
         <div>
-            <h4>Customer Service</h4>
-            <a href="#">My Account</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Delivery Location</a>
+            <h4>CUSTOMER SERVICE</h4>
+            <a href="#">Visit My Profile</a>
+            <a href="service.html">Support</a>
+            <a href="#">Track My Order</a>
         </div>
     </div>
 
     <div class="footer-bottom">
         <p>© 2026 Vendora | The Online Beauty Store</p>
-        <p>Terms & Conditions | Privacy Policy | Cookie Policy | Do Not Sell My Personal Information | Vendora</p>
-        <p>If you are having problems using this website, please <button>CLICK HERE</button> for assistance.</p>
+        <p><button><a href="terms.html">Terms & Conditions</a></button> | <button><a href="privacy.html">Privacy Policy</a></button> | <button><a href="cookie.html">Cookie Policy</a></button> | Do Not Sell My Personal Information | Vendora</p>
+        <p>If you are having problems using this website, please <button><a href="service.html">CLICK HERE</a></button> for assistance.</p>
     </div>
 </footer>
-
-<script src="../js/feedback.js"></script>
-<script src="../js/form.js"></script>
-<script src="../js/hero.js"></script>
 <script src="../js/main.js"></script>
-<script src="../js/routine.js"></script>
+<script src="../js/feedback.js"></script>
+<script src="../js/shop.js"></script>
 </body>
 </html>

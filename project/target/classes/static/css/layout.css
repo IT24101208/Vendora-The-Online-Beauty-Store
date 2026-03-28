@@ -1,33 +1,14 @@
-/* Container & Grids*/
+/* General page containers, grid system, section alignment, and spacing. */
 
-/* Container */
+/* CONTAINER */
 .container {
     width: 100%;
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-.form-container {
-    background-image: url('../images/b2.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-/* Grid System */
+/* GRID SYSTEM */
 .category-grid,
 .partner-grid,
 .product-grid,
@@ -37,38 +18,33 @@
     gap: 20px;
 }
 
-#feedbackGrid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-/* Section Alignment */
+/* SECTIONS */
 .about-section,
 .beauty-promise-section,
 .mission-section,
 .product-section,
-.why-choose-section {
+.why-choose-section,
+.user-section,
+.service-section {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-
+    align-items: center;
+    justify-content: center;
     text-align: center;
     padding: 40px 20px;
     width: 100%;
-    box-sizing: border-box;
 }
 
-/* Responsive */
+/* Page Header */
+.page-header {
+    text-align: center;
+    margin: 40px 0;
+}
+
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .container {
-        padding: 30px 15px;
-    }
-    .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+        padding: 0 15px;
     }
     .category-grid,
     .partner-grid,
@@ -76,34 +52,15 @@
     .routine-grid {
         grid-template-columns: 1fr;
     }
-
-    .about-section img,
-    .mission-section img,
-    .why-choose-section img,
-    .beauty-promise-section img,
-    .home-bg img,
-    .form-container img {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        object-fit: cover;
-        display: block;
-    }
-
     .form-container {
         padding: 20px;
         background-attachment: scroll;
-        border-radius: 8px;
     }
-
+    .service-section {
+        padding: 20px 15px;
+    }
     body {
         font-size: 14px;
         line-height: 1.5;
-    }
-}
-
-@media (max-width: 900px) {
-    .grid-3 {
-        grid-template-columns: 1fr;
     }
 }

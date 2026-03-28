@@ -1,239 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vendora | The Online Beauty Store</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Online Beauty Store</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/feedback.css">
-    <link rel="stylesheet" href="../css/form.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/layout.css">
+  <style>
+    :root { --primary: #be185d; --bg: #fff5f8; --text: #4a044e; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+    .checkout-container { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
+    .card { background: white; padding: 25px; border-radius: 16px; box-shadow: 0 10px 25px rgba(190, 24, 93, 0.1); margin-bottom: 20px; }
+    h2, h3 { color: var(--primary); margin-top: 0; }
+    .input-group { display: flex; gap: 10px; margin-bottom: 15px; }
+    input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
+    .btn-primary { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+    .btn-primary:hover { background: #9d174d; transform: translateY(-2px); }
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    /* Selection UI for Shipping Methods */
+    .shipping-option { border: 2px solid #eee; padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; cursor: pointer; }
+    .shipping-option.active { border-color: var(--primary); background: #fdf2f8; }
+
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .total-row { display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-top: 2px solid #eee; padding-top: 15px; color: var(--primary); }
+  </style>
 </head>
+<body>
 
-<body class="home-bg">
+<div id="main-content" class="checkout-container">
+  <div class="left-panel">
+    <h2>Checkout</h2>
 
-<header class="header-grid">
-    <div class="logo">
-        <img src="../images/Vendora.png" alt="Vendora Logo">
+    <div id="step-1" class="card">
+      <h3>📍 Shipping Information</h3>
+      <div class="input-group">
+        <input type="text" id="firstName" placeholder="First Name *">
+        <input type="text" id="lastName" placeholder="Last Name *">
+      </div>
+      <input type="email" id="email" placeholder="Email Address *" style="margin-bottom: 15px;">
+      <input type="text" id="phone" placeholder="Phone Number *" style="margin-bottom: 15px;">
+      <input type="text" id="address" placeholder="Street Address *" style="margin-bottom: 15px;">
+      <div class="input-group">
+        <input type="text" id="city" placeholder="City *">
+        <input type="text" id="zipCode" placeholder="ZIP Code *">
+      </div>
+
+      <h3>🚚 Shipping Method</h3>
+      <div class="shipping-option active" onclick="selectShipping(500.00, 'Standard', this)">
+        <span>Standard Shipping</span>
+        <strong>Rs. 500</strong>
+      </div>
+      <div class="shipping-option" onclick="selectShipping(1200.00, 'Express', this)">
+        <span>Express Shipping</span>
+        <strong>Rs. 1200</strong>
+      </div>
+      <button class="btn-primary" onclick="goToStep(2)">Continue to Payment</button>
     </div>
 
-    <nav class="navbar" id="navbarLinks">
-        <!-- Default (Unregistered) -->
-        <a href="index.html">Home</a>
-        <a href="shop.html">Shop</a>
-        <a href="about.html">About</a>
-        <div class="auth-links" id="authLinks">
-            <a href="#">Login</a>
-            <a href="#">Sign Up</a>
-        </div>
-        <!-- Profile -->
-        <div class="profile-menu" id="profileMenu">
+    <div id="step-2" class="card" style="display:none;">
+      <h3>💳 Payment Method</h3>
+      <div style="margin-bottom: 20px;">
+        <label><input type="radio" name="payType" value="Online" checked onchange="togglePayView('Online')"> Online Payment (Card)</label><br><br>
+        <label><input type="radio" name="payType" value="COD" onchange="togglePayView('COD')"> Cash on Delivery (COD)</label>
+      </div>
 
-            <button class="profile-trigger" id="profileTrigger">
-                <img src="https://yourdomain.com/images/user1.jpg" alt="Profile" id="profileImg">
-                <span class="user-name" id="userName"></span>
-            </button>
-            <!-- Dropdown -->
-            <div class="dropdown hidden" id="dropdownMenu">
-                <button id="viewProfileBtn">View Profile</button>
-                <button id="changePasswordBtn">Change Password</button>
-                <button id="logoutBtn">Logout</button>
+      <div id="card-fields">
+        <input type="text" id="cardNum" placeholder="Card Number (16 digits)" maxlength="16" autocomplete="off" style="margin-bottom: 10px;">
+        <div class="input-group">
+          <input type="text" id="expDate" placeholder="MM / YY" maxlength="5" autocomplete="off">
+          <input type="text" id="cvvCode" placeholder="CVV" maxlength="3" autocomplete="off">
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="handlePlaceOrder()">Place Order</button>
+      <button style="background:none; border:none; color:var(--primary); cursor:pointer; width:100%; margin-top:10px;" onclick="goToStep(1)">← Back to Shipping</button>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <button onclick="window.location.href='order_history.html'"
+            style="background: #be185d; color: white; padding: 15px; border: none; border-radius: 12px; width: 100%; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 20px; font-size: 16px; box-shadow: 0 5px 15px rgba(190, 24, 93, 0.2);">
+      🛍️ View My Orders
+    </button>
+
+    <div class="card">
+      <h3>Order Summary</h3>
+      <div class="summary-row"><span>Subtotal</span><span>Rs. 4500.00</span></div>
+      <div class="summary-row"><span>Shipping</span><span id="display-shipping">Rs. 500.00</span></div>
+      <div class="total-row"><span>Total</span><span id="display-total">Rs. 5000.00</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let subtotal = 4500.00;
+  let shippingCost = 500.00;
+  let shippingMethod = "Standard";
+
+  //Updates total price when user picks a different shipping tier
+  function selectShipping(cost, method, el) {
+    shippingCost = cost;
+    shippingMethod = method;
+    document.getElementById('display-shipping').innerText = `Rs. ${cost.toFixed(2)}`;
+    document.getElementById('display-total').innerText = `Rs. ${(subtotal + cost).toFixed(2)}`;
+    document.querySelectorAll('.shipping-option').forEach(opt => opt.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  //Simple SPA-style navigation with basic validation for step 1
+  function goToStep(step) {
+    if (step === 2) {
+      const fName = document.getElementById('firstName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const addr = document.getElementById('address').value.trim();
+
+      if (!fName || !email || !addr) {
+        alert("Please fill in all shipping details.");
+        return;
+      }
+    }
+    document.getElementById('step-1').style.display = step === 1 ? 'block' : 'none';
+    document.getElementById('step-2').style.display = step === 2 ? 'block' : 'none';
+  }
+
+  /** Hides/Shows credit card inputs based on payment type choice */
+  function togglePayView(type) {
+    document.getElementById('card-fields').style.display = type === 'Online' ? 'block' : 'none';
+  }
+
+  /** * Core Logic:
+   * 1. Validates Payment Inputs
+   * 2. Calls /api/orders/add
+   * 3. On success, calls /api/payments/process
+   */
+  async function handlePlaceOrder() {
+    const payType = document.querySelector('input[name="payType"]:checked').value;
+
+    // Front-end security: Basic format checks for card details
+    if (payType === 'Online') {
+      const cardNum = document.getElementById('cardNum').value.trim();
+      const expDate = document.getElementById('expDate').value.trim();
+      const cvv = document.getElementById('cvvCode').value.trim();
+
+      if (cardNum.length !== 16 || isNaN(cardNum)) {
+        alert("Invalid card number. Please enter 16 digits.");
+        return;
+      }
+      if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expDate)) {
+        alert("Invalid expiry date format (MM/YY).");
+        return;
+      }
+      if (cvv.length !== 3 || isNaN(cvv)) {
+        alert("Invalid CVV.");
+        return;
+      }
+    }
+
+    const amountValue = parseFloat(document.getElementById('display-total').innerText.replace('Rs. ', ''));
+
+    const orderData = {
+      firstName: document.getElementById('firstName').value,
+      lastName: document.getElementById('lastName').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      address: document.getElementById('address').value,
+      city: document.getElementById('city').value,
+      zipCode: document.getElementById('zipCode').value,
+      product: "Sunset Eyes Palette", // Hardcoded for this example
+      amount: amountValue,
+      shippingMethod: shippingMethod,
+      paymentMethod: payType
+    };
+
+    try {
+      // STEP A: Save the Order
+      const orderRes = await fetch('http://localhost:8080/api/orders/add', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(orderData)
+      });
+
+      if (orderRes.ok) {
+        const savedOrder = await orderRes.json();
+
+        // STEP B: Log the Payment Transaction using the new Order ID
+        const paymentData = {
+          orderId: savedOrder.id,
+          amount: orderData.amount,
+          paymentMethod: payType,
+          status: (payType === 'Online' ? 'SUCCESS' : 'PENDING')
+        };
+
+        const payRes = await fetch('http://localhost:8080/api/payments/process', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(paymentData)
+        });
+
+        if (payRes.ok) {
+          showSuccessPage(orderData);
+        } else {
+          alert("Order placed, but payment logging failed.");
+        }
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Connection error. Is your Spring Boot backend running on port 8080?");
+    }
+  }
+
+  // Replaces the checkout form with a success message/receipt view
+  function showSuccessPage(data) {
+    document.body.innerHTML = `
+        <div id="invoice" style="max-width: 600px; margin: 50px auto; padding: 30px; background: white; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1); font-family: sans-serif;">
+            <div style="text-align: center; color: #be185d;">
+                <h1>🎉 Order Successful!</h1>
+                <p>Thank you, ${data.firstName}!</p>
+            </div>
+            <hr style="border: 1px solid #eee; margin: 20px 0;">
+            <h3>Order Details:</h3>
+            <p><strong>Product:</strong> ${data.product}</p>
+            <p><strong>Address:</strong> ${data.address}, ${data.city}</p>
+            <p><strong>Payment Mode:</strong> ${data.paymentMethod}</p>
+            <h2 style="color: #be185d;">Total Paid: Rs. ${data.amount.toFixed(2)}</h2>
+            <div id="action-buttons" style="margin-top: 30px; display: flex; gap: 10px;">
+                <button onclick="downloadPDF()" style="background: #be185d; color: white; border: none; padding: 12px; border-radius: 8px; flex: 1; cursor: pointer;">Download Receipt</button>
+                <button onclick="window.location.reload()" style="background: #eee; padding: 12px; border-radius: 8px; flex: 1; cursor: pointer; border:none;">New Order</button>
             </div>
         </div>
-        <div class="user-section hidden" id="userSection">
-            <div class="icon-btn" title="Notifications">🔔</div>
-        </div>
-    </nav>
+    `;
+  }
 
-    <div class="header-search">
-        <label for="searchInput" class="sr-only">Search products</label>
-        <input id="searchInput" type="text" placeholder="Search products..." class="search-input">
-        <div class="icon-btn"><i class="fa-solid fa-cart-shopping"></i></div>
-    </div>
-</header>
-
-<section class="hero">
-    <video id="heroVideo" autoplay muted playsinline>
-        <source src="../images/Banner.mp4" type="video/mp4">
-    </video>
-    <div class="hero-content">
-        <h1>Discover Natural Beauty</h1>
-        <p>Discover clean skincare and cosmetics</p>
-        <a href="shop.html" class="btn-primary"><h2>Shop Now</h2></a>
-    </div>
-</section>
-
-<!-- FEATURED PRODUCTS -->
-<section class="products">
-    <div class="container">
-    <h2>Featured Products</h2>
-    <div class="product-grid">
-        <div class="product-card">
-            <img src="../images/sp1.jpg" alt="Blush">
-            <div class="product-name">PIXI - Blush (19g)</div>
-            <div class="product-price">Rs. 1,600</div>
-            <a href="shop.html" class="btn-primary">Add to Cart</a>
-        </div>
-        <div class="product-card">
-            <img src="../images/sp2.webp" alt="Serum">
-            <div class="product-name">ESPA - Optimal Skin Pro Serum</div>
-            <div class="product-price">Rs. 1,500</div>
-            <a href="#" class="btn-primary">Add to Cart</a>
-        </div>
-        <div class="product-card">
-            <img src="../images/sp3.avif" alt="Men Deserve">
-            <div class="product-name">Men Deserve Beauty Pack</div>
-            <div class="product-price">Rs. 3,850</div>
-            <a href="#" class="btn-primary">Add to Cart</a>
-        </div>
-        <div class="product-card">
-            <img src="../images/sp4.jpg" alt="Serum">
-            <div class="product-name">Beauty of Joeson - Deep Serum</div>
-            <div class="product-price">Rs. 1,750</div>
-            <a href="#" class="btn-primary">Add to Cart</a>
-        </div>
-    </div>
-    </div>
-</section>
-
-<!-- ROUTINE SECTION -->
-<section class="routine-section">
-    <div class="container">
-    <h2>Don't know where to start?</h2>
-    <div class="routine-grid">
-         <div class="routine-card">
-         <img src="../images/skincare.jpg" alt="Skincare">
-              <div class="routine-content">
-              <h3>Find my personal Skincare Routine</h3>
-                  <p>Discover the perfect skincare routine for your skin type.</p>
-                  <a href="routine.html?category=skincare">Get Started</a>
-              </div>
-         </div>
-         <div class="routine-card"><br>
-         <img src="../images/bodycare.jpg" alt="Bodycare">
-              <div class="routine-content">
-              <h3>Find my personal Bodycare</h3>
-                  <p>Discover the perfect bodycare routine for your skin type.</p>
-                  <a href="routine.html?category=bodycare">Get Started</a>
-              </div>
-         </div>
-         <div class="routine-card">
-         <img src="../images/haircare.webp" alt="Haircare">
-              <div class="routine-content">
-              <h3>Find my personal Haircare</h3>
-                   <p>Discover tips and products for healthy, beautiful hair.</p><br>
-                   <a href="routine.html?category=haircare">Get Started</a>
-              </div>
-         </div>
-    </div>
-    </div>
-    </section>
-
-<!-- Supplier & Delivery Network -->
-<section class="partner">
-    <div class="container">
-    <h2>Join Our Supplier & Delivery Network</h2>
-    <div class="partner-grid grid-3">
-        <div class="partner-card">
-            <img src="../images/supplier.jpg" alt="Supplier">
-            <div class="partner-content">
-                <h3>I am a Supplier</h3>
-                <a href="../../templates/customer-management/html/supplier.html">Join Now</a>
-            </div>
-        </div>
-        <div class="partner-card">
-            <img src="../images/delivery.webp" alt="Delivery">
-            <div class="partner-content">
-                <h3>I am a Delivery Person</h3>
-                <a href="../../templates/customer-management/html/delivery.html">Join Now</a>
-            </div>
-        </div>
-    </div>
-    </div>
-</section>
-
-<!-- FEEDBACK / CATEGORY -->
-<section id="feedbackSection">
-    <div class="container">
-        <h2>What People Think About Us</h2>
-        <div class="feedback-grid" id="feedbackGrid">
-            <!-- Feedback cards will be injected here via JS -->
-        </div>
-        <div class="partner-content">
-            <a href="feedback.html">See More</a>
-        </div>
-    </div>
-</section>
-
-<footer class="footer">
-    <div class="footer-grid">
-        <div class="footer-subscribe">
-            <h4>SUBSCRIBE</h4>
-            <p>Get beauty tips, product updates & exclusive offers straight to your inbox.</p>
-
-            <form id="subscribeForm" class="subscribe-input">
-                <div>
-                    <label for="subscribeEmail" class="visually-hidden">Email Address</label>
-                    <input type="email" id="subscribeEmail" name="email" placeholder="Email" required>
-                </div>
-                <div>
-                    <label for="subscribePhone" class="subscribe-input">Phone Number</label>
-                    <input type="tel" id="subscribePhone" name="phone" placeholder="Contact" required>
-                </div>
-                <div>
-                    <button type="submit" class="btn-subscribe">➤SUBSCRIBE</button>
-                    <p id="subscribeMessage" class="subscribe-message"></p>
-                </div>
-            </form>
-
-            <div class="social-icons">
-                <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://tiktok.com" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-            </div>
-        </div>
-
-        <div>
-            <h4>PRODUCT NAVIGATOR</h4>
-            <a href="shop.html?category=Cosmetics">Cosmetics</a>
-            <a href="shop.html?category=Skin Care">Skin Care</a>
-            <a href="shop.html?category=Hair Care">Hair Care</a>
-            <a href="shop.html?category=Body Care">Body Care</a>
-            <a href="shop.html?category=Fragrance">Fragrance</a>
-            <a href="shop.html?category=Beauty Tools">Beauty Tools</a>
-        </div>
-
-        <div>
-            <h4>ABOUT US</h4>
-            <a href="about.html">Our Mission</a>
-            <a href="service.html">Contact Us</a>
-        </div>
-
-        <div>
-            <h4>CUSTOMER SERVICE</h4>
-            <a href="#">Visit My Profile</a>
-            <a href="service.html">Support</a>
-            <a href="#">Track My Order</a>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        <p>© 2026 Vendora | The Online Beauty Store</p>
-        <p><button><a href="terms.html">Terms & Conditions</a></button> | <button><a href="privacy.html">Privacy Policy</a></button> | <button><a href="cookie.html">Cookie Policy</a></button> | Do Not Sell My Personal Information | Vendora</p>
-        <p>If you are having problems using this website, please <button><a href="service.html">CLICK HERE</a></button> for assistance.</p>
-    </div>
-</footer>
-<script src="../js/main.js"></script>
-<script src="../js/feedback.js"></script>
-<script src="../js/shop.js"></script>
+  // Generates a PDF of the 'invoice' div and prompts download
+  function downloadPDF() {
+    const element = document.getElementById('invoice');
+    const buttons = document.getElementById('action-buttons');
+    // Temporarily hide buttons so they don't appear in the PDF
+    buttons.style.display = 'none';
+    html2pdf().from(element).save('Vendora_Receipt.pdf').then(() => {
+      buttons.style.display = 'flex';
+    });
+  }
+</script>
 </body>
 </html>

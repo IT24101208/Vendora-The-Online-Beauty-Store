@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Order History - Online Beauty Store</title>
+    <style>
+        /* Styling for a soft, feminine e-commerce aesthetic */
+        body { font-family: 'Segoe UI', sans-serif; background: #fff5f8; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); }
+        h2 { color: #be185d; border-bottom: 2px solid #fdf2f8; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #be185d; color: white; border-radius: 5px 5px 0 0; }
+
+        /* Pill-style status badges */
+        .status-badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+        .pay-paid { background: #dcfce7; color: #15803d; }
+        .pay-pending { background: #fef9c3; color: #a16207; }
+
+        .cancel-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .cancel-btn:hover { background: #dc2626; }
+        .back-btn { background: #be185d; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 20px; text-decoration: none; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<a href="index.html" class="back-btn">← Back to Shopping</a>
+
+<div class="container">
+    <h2>🛍️ My Order History</h2>
+    <table id="ordersTable">
+        <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Product</th>
+            <th>Amount</th>
+            <th>Order Status</th>
+            <th>Payment Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="orderList">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    /** Auto-load orders when the page opens */
+    document.addEventListener('DOMContentLoaded', fetchOrders);
+
+    /**
+     * Fetches order data from the Spring Boot API.
+     * Maps each order to a table row with conditional logic for the 'Cancel' button.
+     */
+    async function fetchOrders() {
+        try {
+            const res = await fetch('http://localhost:8080/api/orders');
+            if (!res.ok) throw new Error("HTTP error " + res.status);
+
+            const orders = await res.json();
+            const list = document.getElementById('orderList');
+            list.innerHTML = "";
+
+            orders.forEach(order => {
+                const pStatus = order.paymentStatus || 'PENDING';
+                const oStatus = order.status || 'Pending';
+
+                // Template literal for the table row
+                const row = `
+            <tr>
+                <td>#${order.id}</td>
+                <td>${order.product}</td>
+                <td>Rs.${order.amount.toFixed(2)}</td>
+                <td><span class="status-badge" style="${getStatusStyle(oStatus)}">${oStatus}</span></td>
+                <td>
+                    <span class="status-badge ${pStatus === 'PAID' ? 'pay-paid' : 'pay-pending'}">
+                        ${pStatus === 'PAID' ? '✅ Verified' : '⏳ Pending'}
+                    </span>
+                </td>
+                <td>
+                    ${oStatus.toLowerCase() === 'pending' ?
+                    `<button class="cancel-btn" onclick="cancelOrder(${order.id})">Cancel</button>` : '-'}
+                </td>
+            </tr>
+        `;
+                list.innerHTML += row;
+            });
+        } catch (e) {
+            console.error(e);
+            alert("Connectivity Error: Ensure the Spring Boot backend is accessible at http://localhost:8080");
+        }
+    }
+
+    /**
+     * Helper function to return dynamic CSS styles for fulfillment status.
+     * Handles Cancelled, Refunded, Paid, and Pending states.
+     */
+    function getStatusStyle(status) {
+        if (status === 'Cancelled') return 'background: #fee2e2; color: #ef4444;';
+        if (status === 'Refund Requested') return 'background: #ffedd5; color: #9a3412;';
+        if (status === 'PAID' || status === 'Delivered') return 'background: #dcfce7; color: #15803d;';
+        return 'background: #fef9c3; color: #a16207;'; // Default for 'Pending'
+    }
+
+    /**
+     * Triggers the cancellation logic in the backend.
+     * If the order was PAID, the backend automatically changes status to 'Refund Requested'.
+     */
+    async function cancelOrder(id) {
+        if (confirm("Are you sure you want to cancel this order?")) {
+            try {
+                const res = await fetch(`http://localhost:8080/api/orders/${id}/cancel`, {
+                    method: 'PUT'
+                });
+
+                if (res.ok) {
+                    alert("Update Successful!");
+                    fetchOrders(); // Refresh table to show new status
+                } else {
+                    const msg = await res.text();
+                    alert("Cancellation failed: " + msg);
+                }
+            } catch (e) {
+                alert("Server connection error! Check your network or backend console.");
+            }
+        }
+    }
+</script>
+</body>
+</html>

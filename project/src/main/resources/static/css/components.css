@@ -1,6 +1,6 @@
 /* Reusable UI blocks: cards, buttons, feedback cards, about section, dropdowns. */
 
-/* GLOBAL UI= */
+/* GLOBAL UI */
 button {
     cursor: pointer;
     font-family: inherit;
@@ -48,15 +48,6 @@ button {
     margin: 20px auto;
     border-radius: var(--border-radius);
     padding: 32px;
-}
-
-    {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-    transition: transform var(-40%);
-
 }
 
 /* Hover Effect */

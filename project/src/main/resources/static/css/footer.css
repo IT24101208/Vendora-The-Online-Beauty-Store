@@ -3,7 +3,6 @@
     background: #111;
     color: #ccc;
     padding: 25px 20px;
-    /* Reduced padding for compact look */
     width: 100%;
     font-family: 'Roboto Condensed', sans-serif;
     display: flex;
@@ -11,12 +10,21 @@
     justify-content: center;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
 /* GRID LAYOUT */
 .footer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 25px;
-    /* Reduced gap */
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -45,7 +53,6 @@
 .footer-bottom {
     margin-top: 20px;
     padding: 4px 0;
-    /* Compact padding */
     border-top: 1px solid #333;
     text-align: center;
     font-size: 12px;
@@ -164,16 +171,4 @@
     .social-icons {
         justify-content: center;
     }
-}
-
-/* Sticky Footer Implementation */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-main {
-    flex: 1;
-    /* Pushes footer to bottom */
 }

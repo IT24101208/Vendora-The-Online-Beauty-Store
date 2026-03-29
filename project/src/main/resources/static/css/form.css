@@ -111,20 +111,18 @@
 }
 
 /* Primary */
-
 .btn-primary:hover {
     opacity: 0.9;
+}
+
+/* Secondary */
+button.secondary:hover {
+    background: #ddd;
 }
 
 button.secondary {
     background: #eee;
     color: #333;
-}
-
-/* Secondary */
-
-button.secondary:hover {
-    background: #ddd;
 }
 
 .btn-signup {
@@ -165,7 +163,6 @@ button.secondary:hover {
     position: absolute;
     top: 10px;
     right: 15px;
-
     font-size: 20px;
     cursor: pointer;
 }
@@ -199,7 +196,6 @@ button.secondary:hover {
     visibility: visible;
 }
 
-/* Hide completely */
 .modal.hidden {
     display: none;
 }
@@ -215,7 +211,6 @@ button.secondary:hover {
     overflow-y: auto;
     position: relative;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-
     transform: translateY(20px);
     transition: transform 0.3s ease;
 }
@@ -235,15 +230,6 @@ button.secondary:hover {
 .modal-content p {
     margin-bottom: 12px;
     line-height: 1.6;
-}
-
-/* Close button */
-.close {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    font-size: 22px;
-    cursor: pointer;
 }
 
 /* Optional scrollbar styling */

@@ -1,6 +1,4 @@
-/* =========================
-   FEEDBACK PAGE
-========================= */
+/* FEEDBACK PAGE */
 
 /* PAGE WRAPPER */
 .feedback-wrapper {
@@ -15,9 +13,7 @@
     margin-bottom: 20px;
 }
 
-/* =========================
-   FILTER BUTTONS
-========================= */
+/* FILTER BUTTONS */
 .feedback-filters {
     display: flex;
     justify-content: flex-end;
@@ -43,18 +39,14 @@
     color: #fff;
 }
 
-/* =========================
-   GRID
-========================= */
+/* GRID */
 #feedbackGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 18px;
 }
 
-/* =========================
-   FEEDBACK CARD
-========================= */
+/* FEEDBACK CARD */
 .feedback-card {
     background: #fff;
     padding: 16px;
@@ -113,20 +105,15 @@
     color: #9c27b0;
 }
 
-/* =========================
-   SIDE PANEL
-========================= */
+/* SIDE PANEL */
 .feedback-panel {
     position: fixed;
     top: 80px;
     right: -380px;
-    /* hidden */
     width: 340px;
-
     background: #fff;
     padding: 20px;
     border-radius: 10px;
-
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
     transition: right 0.3s ease;
     z-index: 1000;
@@ -136,9 +123,7 @@
     right: 20px;
 }
 
-/* =========================
-   FORM
-========================= */
+/* FORM */
 .form-card {
     display: flex;
     flex-direction: column;
@@ -154,30 +139,23 @@
     color: #777;
 }
 
-/* =========================
-   FLOATING BUTTON
-========================= */
+/* FLOATING BUTTON */
 .floating-btn {
     position: fixed;
     top: 20px;
     right: 20px;
-
     width: 52px;
     height: 52px;
     border-radius: 50%;
-
     background: #000;
     color: #fff;
     font-size: 24px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     cursor: pointer;
     transition: var(--transition);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-
     z-index: 1100;
 }
 
@@ -185,18 +163,14 @@
     transform: scale(1.08);
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/*RESPONSIVE */
 
-/* Tablet */
 @media (max-width: 1000px) {
     #feedbackGrid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* Mobile */
 @media (max-width: 600px) {
     #feedbackGrid {
         grid-template-columns: 1fr;

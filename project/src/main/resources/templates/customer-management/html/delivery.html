@@ -12,146 +12,156 @@
     <link rel="stylesheet" href="../../../static/css/form.css">
     <link rel="stylesheet" href="../../../static/css/layout.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body class="home-bg">
 
-<section class="form-container">
-    <h2 class="section-title">Delivery Partner Registration</h2>
-    <p class="text-normal">Join our delivery network and start delivering products to Vendora customers.</p>
+    <section class="form-container">
+        <h2 class="section-title">Delivery Partner Registration</h2>
+        <p class="text-normal">Join our delivery network and start delivering products to Vendora customers.</p>
 
-    <form class="card" id="deliveryForm" enctype="multipart/form-data">
+        <form class="card" id="deliveryForm" enctype="multipart/form-data">
 
-        <h3>Personal Information</h3>
-        <label for="fullName">Full Name</label>
-        <input id="fullName" type="text" name="fullName" placeholder="Rajapaksha Mudiyanselage Avishka Fernando" required>
+            <h3>Personal Information</h3>
+            <label for="fullName">Full Name</label>
+            <input id="fullName" type="text" name="fullName" placeholder="Rajapaksha Mudiyanselage Avishka Fernando"
+                required>
 
-        <label for="initialName">Name with Initials</label>
-        <input id="initialName" type="text" name="initialName" placeholder="R M A Fernando" required>
+            <label for="initialName">Name with Initials</label>
+            <input id="initialName" type="text" name="initialName" placeholder="R M A Fernando" required>
 
-        <label for="DOB">Date of Birth</label>
-        <input id="DOB" type="date" name="DOB" required>
+            <label for="DOB">Date of Birth</label>
+            <input id="DOB" type="date" name="DOB" required>
 
-        <label for="nic">NIC</label>
-        <input id="nic" type="text" name="nic" pattern="[0-9]{9}[Vv]|[0-9]{12}" placeholder="123456789V" required>
+            <label for="nic">NIC</label>
+            <input id="nic" type="text" name="nic" pattern="[0-9]{9}[Vv]|[0-9]{12}" placeholder="123456789V" required>
 
-        <label for="email">Email Address</label>
-        <input id="email" type="email" name="email" placeholder="example@email.com" required>
+            <label for="email">Email Address</label>
+            <input id="email" type="email" name="email" placeholder="example@email.com" required>
 
-        <label for="phone">Phone Number</label>
-        <input id="phone" type="tel" name="phone" placeholder="0123456789" pattern="0[0-9]{9}" required>
+            <label for="phone">Phone Number</label>
+            <input id="phone" type="tel" name="phone" placeholder="0123456789" pattern="0[0-9]{9}" required>
 
-        <label for="address">Home Address</label>
-        <input id="address" type="text" name="address" placeholder="No 123, Street, City" required>
+            <label for="address">Home Address</label>
+            <input id="address" type="text" name="address" placeholder="No 123, Street, City" required>
 
-        <label for="profilePicture">Profile Picture</label>
-        <input id="profilePicture" type="file" name="profilePicture" accept="image/*" required>
-
-
-        <h3>Emergency Contact</h3>
-        <label for="emergencyName">Contact Name</label>
-        <input id="emergencyName" type="text" name="emergencyName" placeholder="Emergency Name" required>
-
-        <label for="emergencyPhone">Contact Phone</label>
-        <input id="emergencyPhone" type="tel" name="emergencyPhone" placeholder="0123456789" pattern="0[0-9]{9}" required>
+            <label for="profilePicture">Profile Picture</label>
+            <input id="profilePicture" type="file" name="profilePicture" accept="image/*" required>
 
 
-        <h3>Vehicle Information</h3>
-        <label for="vehicleFilter">Select Vehicle</label>
-        <select id="vehicleFilter" name="vehicle" required>
-            <option value="">Select Vehicle</option>
-            <option value="bike">Motor Bike</option>
-            <option value="car">Car</option>
-            <option value="van">Van</option>
-        </select>
+            <h3>Emergency Contact</h3>
+            <label for="emergencyName">Contact Name</label>
+            <input id="emergencyName" type="text" name="emergencyName" placeholder="Emergency Name" required>
 
-        <div class="form-grid">
-            <div class="partner bike" style="display:none;">
-                <label for="bikeModel">Bike Model</label>
-                <input id="bikeModel" type="text" name="bikeModel">
+            <label for="emergencyPhone">Contact Phone</label>
+            <input id="emergencyPhone" type="tel" name="emergencyPhone" placeholder="0123456789" pattern="0[0-9]{9}"
+                required>
 
-                <label for="bikePlate">License Plate</label>
-                <input id="bikePlate" type="text" name="bikePlate">
+
+            <h3>Vehicle Information</h3>
+            <label for="vehicleFilter">Select Vehicle</label>
+            <select id="vehicleFilter" name="vehicle" required>
+                <option value="">Select Vehicle</option>
+                <option value="bike">Motor Bike</option>
+                <option value="car">Car</option>
+                <option value="van">Van</option>
+            </select>
+
+            <div class="form-grid">
+                <div class="partner bike" style="display:none;">
+                    <label for="bikeModel">Bike Model</label>
+                    <input id="bikeModel" type="text" name="bikeModel">
+
+                    <label for="bikePlate">License Plate</label>
+                    <input id="bikePlate" type="text" name="bikePlate">
+                </div>
+
+                <div class="partner car" style="display:none;">
+                    <label for="carModel">Car Model</label>
+                    <input id="carModel" type="text" name="carModel">
+
+                    <label for="carPlate">License Plate</label>
+                    <input id="carPlate" type="text" name="carPlate">
+                </div>
+
+                <div class="partner van" style="display:none;">
+                    <label for="vanModel">Van Model</label>
+                    <input id="vanModel" type="text" name="vanModel">
+
+                    <label for="vanPlate">License Plate</label>
+                    <input id="vanPlate" type="text" name="vanPlate">
+                </div>
             </div>
 
-            <div class="partner car" style="display:none;">
-                <label for="carModel">Car Model</label>
-                <input id="carModel" type="text" name="carModel">
 
-                <label for="carPlate">License Plate</label>
-                <input id="carPlate" type="text" name="carPlate">
+            <h3>Delivery Area</h3>
+            <label for="deliveryProvince">Select Province</label>
+            <select id="deliveryProvince" name="province" required>
+                <option value="">Select Province</option>
+                <option value="central">Central Province</option>
+                <option value="eastern">Eastern Province</option>
+                <option value="northCentral">North Central Province</option>
+                <option value="northern">Northern Province</option>
+                <option value="northWestern">North Western Province</option>
+                <option value="sabaragamuwa">Sabaragamuwa Province</option>
+                <option value="southern">Southern Province</option>
+                <option value="uva">Uva Province</option>
+                <option value="western">Western Province</option>
+            </select>
+
+            <label for="district">Select District</label>
+            <select id="district" name="district" required>
+                <option value="">Select District</option>
+            </select>
+
+
+            <h3>Upload Documents</h3>
+            <label for="license">Driving License</label>
+            <input id="license" type="file" name="license" accept="image/*,application/pdf" required>
+
+            <label for="vehicleReg">Vehicle Registration</label>
+            <input id="vehicleReg" type="file" name="vehicleReg" accept="image/*,application/pdf" required>
+
+
+            <h3>Policies</h3>
+            <p>Please review our policies before submitting your delivery registration.</p>
+            <div class="policy-buttons">
+                <a href="../../../static/html/terms.html" class="btn-secondary" target="_blank">View Terms &
+                    Conditions</a>
+                <a href="../../../static/html/privacy.html" class="btn-secondary" target="_blank">View Privacy
+                    Policies</a>
             </div>
 
-            <div class="partner van" style="display:none;">
-                <label for="vanModel">Van Model</label>
-                <input id="vanModel" type="text" name="vanModel">
+            <h3>Agreement</h3>
+            <label class="checkbox">
+                <input type="checkbox" name="agreement" required>
+                I confirm that I have read and agree to Vendora Terms and Privacy Policy
+            </label>
 
-                <label for="vanPlate">License Plate</label>
-                <input id="vanPlate" type="text" name="vanPlate">
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Submit Registration</button>
+                <button type="button" class="btn-cancel" onclick="cancelForm()">Cancel</button>
             </div>
+        </form>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>© 2026 Vendora | The Online Beauty Store</p>
+            <p><button><a href="../../../static/html/terms.html">Terms & Conditions</a></button> | <button><a
+                        href="../../../static/html/privacy.html">Privacy Policy</a></button> | <button><a
+                        href="../../../static/html/cookie.html">Cookie Policy</a></button> | Do Not Sell My Personal
+                Information | Vendora</p>
+            <p>If you are having problems using this website, please <button><a
+                        href="../../../static/html/service.html">CLICK HERE</a></button> for assistance.</p>
         </div>
-
-
-        <h3>Delivery Area</h3>
-        <label for="deliveryProvince">Select Province</label>
-        <select id="deliveryProvince" name="province" required>
-            <option value="">Select Province</option>
-            <option value="central">Central Province</option>
-            <option value="eastern">Eastern Province</option>
-            <option value="northCentral">North Central Province</option>
-            <option value="northern">Northern Province</option>
-            <option value="northWestern">North Western Province</option>
-            <option value="sabaragamuwa">Sabaragamuwa Province</option>
-            <option value="southern">Southern Province</option>
-            <option value="uva">Uva Province</option>
-            <option value="western">Western Province</option>
-        </select>
-
-        <label for="district">Select District</label>
-        <select id="district" name="district" required>
-            <option value="">Select District</option>
-        </select>
-
-
-        <h3>Upload Documents</h3>
-        <label for="license">Driving License</label>
-        <input id="license" type="file" name="license" accept="image/*,application/pdf" required>
-
-        <label for="vehicleReg">Vehicle Registration</label>
-        <input id="vehicleReg" type="file" name="vehicleReg" accept="image/*,application/pdf" required>
-
-
-        <h3>Policies</h3>
-        <p>Please review our policies before submitting your delivery registration.</p>
-        <div class="policy-buttons">
-            <a href="../../../static/html/terms.html" class="btn-secondary" target="_blank">View Terms & Conditions</a>
-            <a href="../../../static/html/privacy.html" class="btn-secondary" target="_blank">View Privacy Policies</a>
-        </div>
-
-        <h3>Agreement</h3>
-        <label class="checkbox">
-            <input type="checkbox" name="agreement" required>
-            I confirm that I have read and agree to Vendora Terms and Privacy Policy
-        </label>
-
-        <div class="form-actions">
-            <button type="submit" class="btn-primary">Submit Registration</button>
-            <button type="button" class="btn-cancel" onclick="cancelForm()">Cancel</button>
-        </div>
-    </form>
-</section>
-
-<footer class="footer">
-    <div class="footer-bottom">
-        <p>© 2026 Vendora | The Online Beauty Store</p>
-        <p><button><a href="../../../static/html/terms.html">Terms & Conditions</a></button> | <button><a href="../../../static/html/privacy.html">Privacy Policy</a></button> | <button><a href="../../../static/html/cookie.html">Cookie Policy</a></button> | Do Not Sell My Personal Information | Vendora</p>
-        <p>If you are having problems using this website, please <button><a href="../../../static/html/service.html">CLICK HERE</a></button> for assistance.</p>
-    </div>
-</footer>
-<script src="../../../static/js/main.js"></script>
-<script src="../../../static/js/form.js"></script>
-<script src="../../../static/js/feedback.js"></script>
+    </footer>
+    <script src="../../../static/js/main.js"></script>
+    <script src="../../../static/js/form.js"></script>
+    <script src="../../../static/js/feedback.js"></script>
 </body>
+
 </html>

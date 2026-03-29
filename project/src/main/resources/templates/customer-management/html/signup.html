@@ -1,112 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendora | Sign Up</title>
 
-    <link rel="stylesheet" href="../../../static/css/base.css">
-    <link rel="stylesheet" href="../../../static/css/components.css">
-    <link rel="stylesheet" href="../../../static/css/footer.css">
-    <link rel="stylesheet" href="../../../static/css/header.css">
-    <link rel="stylesheet" href="../../../static/css/form.css">
-    <link rel="stylesheet" href="../../../static/css/layout.css">
+    <link rel="stylesheet" href="../../../static/css/base.css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" href="../../../static/css/components.css" th:href="@{/css/components.css}">
+    <link rel="stylesheet" href="../../../static/css/footer.css" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" href="../../../static/css/header.css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="../../../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" href="../../../static/css/layout.css" th:href="@{/css/layout.css}">
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body class="page-bg">
-<div class="page-wrapper">
-    <header class="header-grid">
-        <div class="logo">
-            <img src="../../../static/images/Vendora.png" alt="Vendora Logo">
-        </div>
-        <nav class="navbar">
-            <a href="../../../static/html/index.html">Home</a>
-            <a href="../../../static/html/shop.html">Shop</a>
-            <a href="../../../static/html/about.html">About</a>
-        </nav>
-    </header>
+    <div class="page-wrapper">
+        <header class="header-grid">
+            <div class="logo">
+                <img src="../../../static/images/Vendora.png" th:src="@{/images/Vendora.png}" alt="Vendora Logo"
+                    onerror="this.style.display='none'">
+            </div>
+            <nav class="navbar">
+                <a href="../../../static/html/index.html" th:href="@{/html/index.html}">Home</a>
+                <a href="../../../static/html/shop.html" th:href="@{/html/shop.html}">Shop</a>
+                <a href="../../../static/html/about.html" th:href="@{/html/about.html}">About</a>
+            </nav>
+        </header>
 
-    <main class="container">
-        <h1 class="page-title">Create Account</h1>
+        <main class="container">
+            <h1 class="page-title">Create Account</h1>
 
-        <form id="signupForm" class="form-card" autocomplete="off">
-            <label for="name">Full Name</label>
-            <input id="name" name="name" type="text" required placeholder="Your name">
+            <form id="signupForm" class="form-card" autocomplete="off">
+                <label for="name">Full Name</label>
+                <input id="name" name="name" type="text" required placeholder="Firstname Lastname">
 
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" required placeholder="you@example.com">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required placeholder="you@example.com">
 
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" required placeholder="Your password">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" required minlength="6"
+                    placeholder="At least 6 characters">
 
-            <button type="submit" class="btn-primary">Sign Up</button>
+                <button type="submit" class="btn-primary">Sign Up</button>
 
-            <p class="form-note">
-                Already have an account?
-                <a href="login.html">Log in</a>
-            </p>
+                <p class="form-note">
+                    Already have an account?
+                    <a href="login.html" th:href="@{/customer/login}">Log in</a>
+                </p>
 
-            <p id="signupStatus" class="form-status" aria-live="polite"></p>
-        </form>
-    </main>
+                <p id="signupStatus" class="form-status" aria-live="polite"></p>
+            </form>
+        </main>
 
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
-        </div>
-    </footer>
-</div>
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
+            </div>
+        </footer>
+    </div>
 
-<script src="../../../static/js/main.js"></script>
-<script>
-    const form = document.getElementById("signupForm");
-    const statusEl = document.getElementById("signupStatus");
+    <script src="../../../static/js/main.js" th:src="@{/js/main.js}"></script>
+    <script>
+        const form = document.getElementById("signupForm");
+        const statusEl = document.getElementById("signupStatus");
 
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-
-        if (!name || !email || !password) {
-            statusEl.textContent = "Please fill in all fields.";
-            return;
+        function splitName(full) {
+            const t = full.trim();
+            const i = t.indexOf(" ");
+            if (i === -1) return { firstName: t || "User", lastName: "" };
+            return { firstName: t.substring(0, i).trim(), lastName: t.substring(i + 1).trim() };
         }
 
-        statusEl.textContent = "Creating account...";
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-        try {
-            const res = await fetch("/auth/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, password })
-            });
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
 
-            const json = await res.json().catch(() => ({}));
-
-            if (!res.ok) {
-                statusEl.textContent = json?.message || "Signup failed. Continuing locally...";
-            } else {
-                statusEl.textContent = json?.message || "Account created!";
+            if (!name || !email || !password) {
+                statusEl.textContent = "Please fill in all fields.";
+                return;
             }
 
-            // Regardless of backend availability, set local user for frontend navigation.
-            localStorage.setItem("loggedUser", JSON.stringify({ name: json?.data?.name || name, email }));
-            window.location.href = "index.html";
-        } catch (err) {
-            // If backend/MySQL is not reachable, still allow local navigation.
-            localStorage.setItem("loggedUser", JSON.stringify({ name, email }));
-            statusEl.textContent = "Backend not reachable. Logged in locally for frontend preview.";
-            window.location.href = "index.html";
-        }
-    });
-</script>
+            const { firstName, lastName } = splitName(name);
+
+            statusEl.textContent = "Creating account...";
+
+            try {
+                const res = await fetch("/api/auth/register/customer", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                    body: JSON.stringify({ firstName, lastName, email, password })
+                });
+
+                const raw = await res.text();
+                let data = {};
+                try { data = JSON.parse(raw); } catch (_) { }
+
+                if (!res.ok) {
+                    statusEl.textContent = data.message || raw || "Signup failed.";
+                    return;
+                }
+
+                statusEl.textContent = data.message || "Account created. Check your email to verify.";
+                setTimeout(() => { window.location.href = "/customer/login"; }, 2000);
+            } catch (err) {
+                statusEl.textContent = "Network error. Is the server running?";
+            }
+        });
+    </script>
 </body>
 
 </html>
-

@@ -2,12 +2,19 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* LOGIN STATE (TEMP) */
-    const isLoggedIn = true; // replace with backend later
-    const user = {
-        name: "Venom",
-        profile_image_url: "https://yourdomain.com/images/user1.jpg"
+    /* LOGIN STATE */
+    const isLoggedIn = !!localStorage.getItem("vendoraToken");
+    let user = {
+        name: "User",
+        profile_image_url: "images/default-profile.png"
     };
+    try {
+        const storedUser = localStorage.getItem("vendoraUser");
+        if (storedUser) {
+            const parsed = JSON.parse(storedUser);
+            if (parsed.email) user.name = parsed.email.split('@')[0];
+        }
+    } catch (e) { }
 
     /* ELEMENTS */
     const authLinks = document.getElementById("authLinks");
@@ -48,11 +55,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* LOGOUT */
     logoutBtn?.addEventListener("click", () => {
-        // Replace with backend logout later
-        alert("Logged out");
-
-        authLinks?.classList.remove("hidden");
-        userSection?.classList.add("hidden");
+        localStorage.removeItem("vendoraToken");
+        localStorage.removeItem("vendoraUser");
+        alert("Logged out successfully");
+        window.location.href = "../../../static/html/index.html";
+        setTimeout(() => window.location.href = "/html/index.html", 50); // fallback for Spring server
     });
 
     /* HERO VIDEO LOOP */
@@ -93,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* SUBSCRIBE FORM */
     const subscribeForm = document.getElementById("subscribeForm");
-    subscribeForm?.addEventListener("submit", function(e) {
+    subscribeForm?.addEventListener("submit", function (e) {
         e.preventDefault();
         const email = document.getElementById("subscribeEmail")?.value.trim();
         const message = document.getElementById("subscribeMessage");
@@ -137,8 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-    /* GLOBAL CANCEL FUNCTION */
-    function cancelForm() {
+/* GLOBAL CANCEL FUNCTION */
+function cancelForm() {
     if (confirm("Are you sure you want to cancel?")) {
         window.location.href = "index.html";
     }

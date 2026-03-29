@@ -13,72 +13,77 @@
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/layout.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body class="home-bg">
 
-<section class="form-container">
-    <h2>Find Your Personal Routine</h2>
+    <section class="form-container">
+        <h2>Find Your Personal Routine</h2>
 
-    <form class="card" id="concernForm" style="display:none;">
-        <h3>Personal Information</h3>
+        <form class="card" id="concernForm" style="display:none;">
+            <h3>Personal Information</h3>
 
-        <label for="fullName">Full Name</label>
-        <input id="fullName" name="fullName" required placeholder="Enter your full name">
+            <label for="fullName">Full Name</label>
+            <input id="fullName" name="fullName" required placeholder="Enter your full name">
 
-        <label for="age">Age</label>
-        <input type="number" id="age" name="age" required min="16" max="75" placeholder="Enter age (16-75)">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" required min="16" max="75" placeholder="Enter age (16-75)">
 
-        <label for="photo">Upload Photo</label>
-        <input id="photo" type="file" accept="image/*">
+            <label for="photo">Upload Photo</label>
+            <input id="photo" type="file" accept="image/*">
 
-        <!-- Selected category title -->
-        <h3 id="categoryTitle"></h3>
-        <!-- Concerns checkboxes generated dynamically -->
-        <div id="concernsContainer" class="checkbox-grid"></div>
-        <button type="submit">Get My Routine</button>
-    </form>
+            <!-- Selected category title -->
+            <h3 id="categoryTitle"></h3>
+            <!-- Concerns checkboxes generated dynamically -->
+            <div id="concernsContainer" class="checkbox-grid"></div>
+            <button type="submit">Get My Routine</button>
+        </form>
 
-    <!-- Generated routine output -->
-    <div id="result" class="card"></div>
+        <!-- Generated routine output -->
+        <div id="result" class="card"></div>
 
-    <!-- Feedback section -->
-    <div id="feedbackSection" class="card" style="display:none;">
-        <h3>Feedback</h3>
-        <p>How was your routine?</p>
+        <!-- Feedback section -->
+        <div id="feedbackSection" class="card" style="display:none;">
+            <h3>Feedback</h3>
+            <p>How was your routine?</p>
 
-        <label for="feedbackRating">Rating:</label>
-        <select id="feedbackRating">
-            <option value="">Select rating</option>
-            <option value="5">😊 Very Happy</option>
-            <option value="4">🙂 Happy</option>
-            <option value="3">😐 Neutral</option>
-            <option value="2">🙁 Sad</option>
-            <option value="1">😢 Very Sad</option>
-        </select>
+            <label for="feedbackRating">Rating:</label>
+            <select id="feedbackRating">
+                <option value="">Select rating</option>
+                <option value="5">😊 Very Happy</option>
+                <option value="4">🙂 Happy</option>
+                <option value="3">😐 Neutral</option>
+                <option value="2">🙁 Sad</option>
+                <option value="1">😢 Very Sad</option>
+            </select>
 
-        <label for="feedbackMessage">Your Feedback:</label>
-        <textarea id="feedbackMessage" placeholder="Write your feedback here..." rows="2"></textarea>
+            <label for="feedbackMessage">Your Feedback:</label>
+            <textarea id="feedbackMessage" placeholder="Write your feedback here..." rows="2"></textarea>
 
-        <div class="form-actions">
-            <button type="submit" class="btn-primary">Send Feedback</button>
-            <button type="button" class="btn-cancel" onclick="cancelForm()">Cancel</button>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Send Feedback</button>
+                <button type="button" class="btn-cancel" onclick="cancelForm()">Cancel</button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<footer class="footer">
-    <div class="footer-bottom">
-        <p>© 2026 Vendora | The Online Beauty Store</p>
-        <p><button><a href="terms.html">Terms & Conditions</a></button> | <button><a href="privacy.html">Privacy Policy</a></button> | <button><a href="cookie.html">Cookie Policy</a></button> | Do Not Sell My Personal Information | Vendora</p>
-        <p>If you are having problems using this website, please <button><a href="service.html">CLICK HERE</a></button> for assistance.</p>
-    </div>
-</footer>
-<script src="../js/main.js"></script>
-<script src="../js/form.js"></script>
-<script src="../js/feedback.js"></script>
-<script src="../js/routine.js"></script>
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>© 2026 Vendora | The Online Beauty Store</p>
+            <p><button><a href="terms.html">Terms & Conditions</a></button> | <button><a href="privacy.html">Privacy
+                        Policy</a></button> | <button><a href="cookie.html">Cookie Policy</a></button> | Do Not Sell My
+                Personal Information | Vendora</p>
+            <p>If you are having problems using this website, please <button><a href="service.html">CLICK
+                        HERE</a></button> for assistance.</p>
+        </div>
+    </footer>
+    <script src="../js/main.js"></script>
+    <script src="../js/form.js"></script>
+    <script src="../js/feedback.js"></script>
+    <script src="../js/routine.js"></script>
 </body>
+
 </html>

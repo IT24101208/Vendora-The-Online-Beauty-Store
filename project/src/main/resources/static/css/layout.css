@@ -46,19 +46,23 @@
     .container {
         padding: 0 15px;
     }
+
     .category-grid,
     .partner-grid,
     .product-grid,
     .routine-grid {
         grid-template-columns: 1fr;
     }
+
     .form-container {
         padding: 20px;
         background-attachment: scroll;
     }
+
     .service-section {
         padding: 20px 15px;
     }
+
     body {
         font-size: 14px;
         line-height: 1.5;

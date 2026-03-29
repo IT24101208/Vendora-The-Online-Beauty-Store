@@ -59,7 +59,7 @@
     background: #fff;
     padding: 16px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
     transition: var(--transition);
 }
 
@@ -97,10 +97,21 @@
 }
 
 /* ROLE COLORS */
-.feedback-card[data-role="customer"] .feedback-role { color: #2a7be4; }
-.feedback-card[data-role="supplier"] .feedback-role { color: #28a745; }
-.feedback-card[data-role="delivery"] .feedback-role { color: #ff9800; }
-.feedback-card[data-role="routine"]  .feedback-role { color: #9c27b0; }
+.feedback-card[data-role="customer"] .feedback-role {
+    color: #2a7be4;
+}
+
+.feedback-card[data-role="supplier"] .feedback-role {
+    color: #28a745;
+}
+
+.feedback-card[data-role="delivery"] .feedback-role {
+    color: #ff9800;
+}
+
+.feedback-card[data-role="routine"] .feedback-role {
+    color: #9c27b0;
+}
 
 /* =========================
    SIDE PANEL
@@ -108,14 +119,15 @@
 .feedback-panel {
     position: fixed;
     top: 80px;
-    right: -380px; /* hidden */
+    right: -380px;
+    /* hidden */
     width: 340px;
 
     background: #fff;
     padding: 20px;
     border-radius: 10px;
 
-    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
     transition: right 0.3s ease;
     z-index: 1000;
 }
@@ -164,7 +176,7 @@
 
     cursor: pointer;
     transition: var(--transition);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 
     z-index: 1100;
 }

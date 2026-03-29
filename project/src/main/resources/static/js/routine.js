@@ -98,8 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const selected = Array.from(
             concernsContainer.querySelectorAll("input[type=checkbox]:checked")
         )
-        .filter(cb => cb.id !== "otherCheck")
-        .map(cb => cb.value);
+            .filter(cb => cb.id !== "otherCheck")
+            .map(cb => cb.value);
 
         const otherVal = otherInput.value.trim();
         if (otherCheck.checked && otherVal) selected.push(otherVal);

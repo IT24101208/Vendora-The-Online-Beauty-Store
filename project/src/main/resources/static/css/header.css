@@ -4,8 +4,10 @@
     grid-template-columns: auto 1fr;
     grid-template-rows: auto auto;
     align-items: center;
-    gap: 8px; /* Reduced gap for compact header */
-    padding: 10px 20px; /* Reduced padding */
+    gap: 8px;
+    /* Reduced gap for compact header */
+    padding: 10px 20px;
+    /* Reduced padding */
     background: rgba(255, 201, 238, 0.55);
 }
 
@@ -15,8 +17,10 @@
     width: 120 px;
     grid-row: 1 / span 2;
 }
+
 .header-grid .logo img {
-    height: 110px; /* Reduced from 80px */
+    height: 110px;
+    /* Reduced from 80px */
     width: 110px;
 }
 
@@ -26,7 +30,8 @@
     justify-self: right;
     display: flex;
     align-items: center;
-    gap: 15px; /* Slightly smaller gap */
+    gap: 15px;
+    /* Slightly smaller gap */
 }
 
 .navbar a {
@@ -53,14 +58,18 @@
 
 .header-grid .search-input {
     flex: 1;
-    padding: 8px 12px; /* Reduced padding */
-    border-radius: 16px; /* Slightly smaller radius */
+    padding: 8px 12px;
+    /* Reduced padding */
+    border-radius: 16px;
+    /* Slightly smaller radius */
     border: 1px solid #ddd;
-    font-size: 13px; /* Smaller font for compact look */
+    font-size: 13px;
+    /* Smaller font for compact look */
 }
 
 .header-grid .icon-btn {
-    font-size: 18px; /* Slightly smaller icons */
+    font-size: 18px;
+    /* Slightly smaller icons */
     cursor: pointer;
     color: var(--text-main);
     transition: var(--transition);
@@ -74,7 +83,8 @@
 .hero {
     position: relative;
     width: 100%;
-    min-height: 500px; /* Reduced from 600px */
+    min-height: 500px;
+    /* Reduced from 600px */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -93,20 +103,24 @@
 .hero-content {
     position: relative;
     text-align: center;
-    padding: 20px 25px; /* Reduced padding */
+    padding: 20px 25px;
+    /* Reduced padding */
     max-width: 400px;
-    background: rgba(219,112,147,0.45);
-    border-radius: 10px; /* Slightly smaller radius */
+    background: rgba(219, 112, 147, 0.45);
+    border-radius: 10px;
+    /* Slightly smaller radius */
 }
 
 .hero h1 {
-    font-size: 24px; /* Reduced font size */
+    font-size: 24px;
+    /* Reduced font size */
     color: #fff;
     margin-bottom: 8px;
 }
 
 .hero p {
-    font-size: 14px; /* Reduced font size */
+    font-size: 14px;
+    /* Reduced font size */
     color: #fff;
     margin-bottom: 10px;
 }
@@ -116,18 +130,23 @@
     .header-grid {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto;
-        padding: 10px 15px; /* Reduced for mobile */
+        padding: 10px 15px;
+        /* Reduced for mobile */
     }
+
     .header-grid .logo {
         grid-row: auto;
     }
+
     .header-grid .navbar,
     .header-grid .header-search {
         grid-column: 1;
         justify-self: start;
     }
+
     .header-grid .navbar {
-        margin-bottom: 6px; /* Smaller spacing for mobile */
+        margin-bottom: 6px;
+        /* Smaller spacing for mobile */
         flex-wrap: wrap;
     }
 }

@@ -1,67 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendora | My Profile</title>
 
-    <link rel="stylesheet" href="../../../static/css/base.css">
-    <link rel="stylesheet" href="../../../static/css/components.css">
-    <link rel="stylesheet" href="../../../static/css/footer.css">
-    <link rel="stylesheet" href="../../../static/css/header.css">
-    <link rel="stylesheet" href="../../../static/css/form.css">
-    <link rel="stylesheet" href="../../../static/css/layout.css">
+    <link rel="stylesheet" href="../../../static/css/base.css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" href="../../../static/css/components.css" th:href="@{/css/components.css}">
+    <link rel="stylesheet" href="../../../static/css/footer.css" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" href="../../../static/css/header.css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="../../../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" href="../../../static/css/layout.css" th:href="@{/css/layout.css}">
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body class="page-bg">
-<div class="page-wrapper">
-    <header class="header-grid">
-        <div class="logo">
-            <img src="../../../static/images/Vendora.png" alt="Vendora Logo">
-        </div>
-        <nav class="navbar">
-            <a href="../../../static/html/index.html">Home</a>
-            <a href="../../../static/html/shop.html">Shop</a>
-            <a href="../../../static/html/">Log Out</a>
-        </nav>
-    </header>
-
-    <main class="container">
-        <h1 class="page-title">My Profile</h1>
-
-        <section class="form-card">
-            <p><strong>Name:</strong> <span id="profileName">Guest</span></p>
-            <p><strong>Email:</strong> <span id="profileEmail">-</span></p>
-
-            <div class="form-actions" style="margin-top: 16px;">
-                <button type="button" class="btn-primary" id="logoutBtn">Logout</button>
-                <a class="btn-secondary" href="../../../static/html/index.html" style="text-decoration: none;">Back to Home</a>
+    <div class="page-wrapper">
+        <header class="header-grid">
+            <div class="logo">
+                <img alt="Vendora Logo" src="../../../static/images/Vendora.png" th:src="@{/images/Vendora.png}">
             </div>
-        </section>
-    </main>
+            <nav class="navbar">
+                <a href="../../../static/html/index.html" th:href="@{/html/index.html}">Home</a>
+                <a href="../../../static/html/shop.html" th:href="@{/html/shop.html}">Shop</a>
+                <a href="login.html" th:href="@{/customer/login}">Log Out</a>
+            </nav>
+        </header>
 
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
-        </div>
-    </footer>
-</div>
+        <main class="container">
+            <h1 class="page-title">My Profile</h1>
 
-<script>
-    const user = JSON.parse(localStorage.getItem("loggedUser"));
-    document.getElementById("profileName").textContent = user?.name || "Guest";
-    document.getElementById("profileEmail").textContent = user?.email || "-";
+            <section class="form-card">
+                <p><strong>Name:</strong> <span id="profileName">—</span></p>
+                <p><strong>Email:</strong> <span id="profileEmail">—</span></p>
+                <p><strong>Role:</strong> <span id="profileRole">—</span></p>
+                <p><strong>Status:</strong> <span id="profileStatus">—</span></p>
 
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-        localStorage.removeItem("loggedUser");
-        window.location.href = "login.html";
-    });
-</script>
+                <div class="form-actions" style="margin-top: 16px;">
+                    <button type="button" class="btn-primary" id="logoutBtn">Logout</button>
+                    <a class="btn-secondary" href="../../../static/html/index.html" th:href="@{/html/index.html}"
+                        style="text-decoration: none;">Back to Home</a>
+                </div>
+                <p id="profileError" class="form-status" aria-live="polite"></p>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const token = localStorage.getItem("vendoraToken");
+        const errEl = document.getElementById("profileError");
+
+        async function loadProfile() {
+            if (!token) {
+                errEl.textContent = "Please log in.";
+                return;
+            }
+            try {
+                const res = await fetch("/api/users/me", {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                });
+                const raw = await res.text();
+                let data = {};
+                try { data = JSON.parse(raw); } catch (_) { }
+
+                if (!res.ok) {
+                    errEl.textContent = data.message || raw || "Could not load profile.";
+                    return;
+                }
+
+                document.getElementById("profileName").textContent = data.fullName || "—";
+                document.getElementById("profileEmail").textContent = data.email || "—";
+                document.getElementById("profileRole").textContent = data.role || "—";
+                document.getElementById("profileStatus").textContent = data.status || "—";
+            } catch (e) {
+                errEl.textContent = "Network error.";
+            }
+        }
+
+        loadProfile();
+
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("vendoraToken");
+            localStorage.removeItem("vendoraUser");
+            window.location.href = "/customer/login";
+        });
+    </script>
 </body>
 
 </html>
-

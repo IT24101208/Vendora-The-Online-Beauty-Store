@@ -1,3 +1,5 @@
+// GLOBAL UI STATE
+
 document.addEventListener("DOMContentLoaded", () => {
 
     /* Login State */

@@ -108,6 +108,12 @@ document.addEventListener("DOMContentLoaded", () => {
     otherInput.placeholder = "Enter your concern";
     otherInput.style.display = "none";
     concernsContainer.appendChild(otherInput);
+    const otherInput = document.createElement("input");
+    otherInput.type = "text";
+    otherInput.id = "otherText";
+    otherInput.placeholder = "Enter your concern";
+    otherInput.style.display = "none";
+    concernsContainer.appendChild(otherInput);
 
     const otherCheck = document.getElementById("otherCheck");
     otherCheck?.addEventListener("change", () => {
@@ -153,6 +159,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     causes: "Unknown or multiple factors",
                     routine: "General care: cleanse, moisturize, avoid irritants"
                 };
+
+                output += `🔹 Concern: ${concern}\n   • Symptoms: ${template.symptoms}\n   • Causes: ${template.causes}\n   • Routine:\n       ${template.routine.replace(/\n/g, "\n       ")}\n\n`;
 
                 output += `🔹 Concern: ${concern}\n   • Symptoms: ${template.symptoms}\n   • Causes: ${template.causes}\n   • Routine:\n       ${template.routine.replace(/\n/g, "\n       ")}\n\n`;
             });

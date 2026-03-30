@@ -1,13 +1,17 @@
 /* General page containers, grid system, section alignment, and spacing. */
+/* General page containers, grid system, section alignment, and spacing. */
 
+/* CONTAINER */
 /* CONTAINER */
 .container {
     width: 100%;
+    max-width: 1200px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
+/* GRID SYSTEM */
 /* GRID SYSTEM */
 .category-grid,
 .partner-grid,
@@ -20,6 +24,7 @@
 }
 
 /* SECTIONS */
+/* SECTIONS */
 .about-section,
 .beauty-promise-section,
 .mission-section,
@@ -27,7 +32,11 @@
 .why-choose-section,
 .user-section,
 .service-section {
+.user-section,
+.service-section {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -90,7 +99,6 @@
     .service-section {
         padding: 20px 15px;
     }
-
     body {
         font-size: 14px;
         line-height: 1.5;

@@ -1,6 +1,7 @@
 /* Reusable UI blocks: cards, buttons, feedback cards, about section, dropdowns. */
+/* Reusable UI blocks: cards, buttons, feedback cards, about section, dropdowns. */
 
-/* GLOBAL UI */
+/* GLOBAL UI= */
 button {
     cursor: pointer;
     font-family: inherit;
@@ -24,11 +25,15 @@ button {
 }
 
 /* CARD BASE */
+/* CARD BASE */
 .partner-card,
 .product-card,
 .feedback-card,
 .routine-card {
+.feedback-card,
+.routine-card {
     background: #fff;
+    border-radius: var(--border-radius);
     border-radius: var(--border-radius);
     padding: 20px;
     display: flex;
@@ -62,9 +67,11 @@ button {
 .routine-card img {
     width: 100%;
     border-radius: var(--border-radius);
+    border-radius: var(--border-radius);
 }
 
 .product-card img {
+    height: 200px;
     height: 200px;
     object-fit: cover;
 }
@@ -79,7 +86,9 @@ button {
     background: var(--brand-color);
     color: #fff;
     border-radius: 6px;
+    border-radius: 6px;
     font-size: 14px;
+    transition: var(--transition);
     transition: var(--transition);
 }
 
@@ -92,10 +101,12 @@ button {
 /* PRODUCT TEXT */
 .product-name {
     margin-top: 10px;
+    margin-top: 10px;
     font-size: 15px;
 }
 
 .product-price {
+    margin: 6px 0;
     margin: 6px 0;
     font-size: 15px;
     font-weight: 600;
@@ -122,13 +133,19 @@ button {
 .about-text h2 {
     font-size: 1.8rem;
     margin-bottom: 10px;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
 }
 
 .about-text p,
 .about-text ul {
     font-size: 15px;
+    font-size: 15px;
 }
 
+/* Variants */
+.about-card.right-text .about-text {
+    right: 60px;
 /* Variants */
 .about-card.right-text .about-text {
     right: 60px;
@@ -149,8 +166,17 @@ button {
     width: 1200px;
     transform: translateX(-50%);
     text-align: center;
+.about-card.bottom-text .about-text {
+    top: auto;
+    bottom: 55px;
+    left: 50%;
+    width: 1200px;
+    transform: translateX(-50%);
+    text-align: center;
 }
 
+/* SERVICE CARDS */
+.service-section {
 /* SERVICE CARDS */
 .service-section {
     border-radius: 12px;
@@ -172,9 +198,15 @@ button {
     margin-left: 10px;
     border-radius: 50%;
     object-fit: cover;
+    font-weight: 750;
+    margin-left: 10px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .profile-menu img {
+    width: 38px;
+    height: 38px;
     width: 38px;
     height: 38px;
     border-radius: 50%;
@@ -188,9 +220,15 @@ button {
     font-weight: 500;
 }
 
+.user-name {
+    font-size: 14px;
+    font-weight: 500;
+}
+
 .dropdown {
     position: absolute;
     right: 0;
+    top: 48px;
     top: 48px;
     width: 180px;
     padding: 10px;
@@ -205,10 +243,16 @@ button {
     margin-bottom: 6px;
 }
 
+.dropdown p {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
 .dropdown button {
     width: 100%;
     padding: 8px;
     text-align: left;
+    border-radius: 6px;
     border-radius: 6px;
 }
 
@@ -263,6 +307,9 @@ button {
     }
 
     .about-text p,
+    .about-text ul {
+        font-size: 14px;
+    }
     .about-text ul {
         font-size: 14px;
     }

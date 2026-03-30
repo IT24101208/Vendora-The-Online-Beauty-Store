@@ -1,5 +1,7 @@
 /* Header, navbar, hero section, profile menu, and responsive header styling */
 .header-grid {
+/* Header, navbar, hero section, profile menu, and responsive header styling */
+.header-grid {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: auto auto;
@@ -15,12 +17,15 @@
     width: 120 px;
     grid-row: 1 / span 2;
 }
-
 .header-grid .logo img {
     height: 110px;
     width: 110px;
 }
 
+/* NAVBAR */
+.header-grid .navbar {
+    grid-column: 2;
+    justify-self: right;
 /* NAVBAR */
 .header-grid .navbar {
     grid-column: 2;
@@ -33,10 +38,15 @@
 .navbar a {
     font-size: 14px;
     font-weight: 750;
+.navbar a {
+    font-size: 14px;
+    font-weight: 750;
     color: var(--text-main);
+    transition: var(--transition);
     transition: var(--transition);
 }
 
+.navbar a:hover {
 .navbar a:hover {
     color: var(--brand-color);
 }
@@ -45,10 +55,16 @@
 .header-grid .header-search {
     grid-column: 2;
     justify-self: right;
+/* SEARCH & ICONS */
+.header-grid .header-search {
+    grid-column: 2;
+    justify-self: right;
     display: flex;
     align-items: center;
     gap: 12px;
+    gap: 12px;
     width: 100%;
+    max-width: 750px;
     max-width: 750px;
 }
 
@@ -65,12 +81,16 @@
     cursor: pointer;
     color: var(--text-main);
     transition: var(--transition);
+    transition: var(--transition);
 }
 
+.header-grid .icon-btn:hover {
 .header-grid .icon-btn:hover {
     color: var(--brand-color);
 }
 
+/* HERO SECTION */
+.hero {
 /* HERO SECTION */
 .hero {
     position: relative;
@@ -86,6 +106,8 @@
 /* BACKGROUND VIDEO */
 .hero video {
     position: absolute;
+    inset: 0;
+    width: 100%;
     inset: 0;
     width: 100%;
     height: 100%;
@@ -116,23 +138,22 @@
 }
 
 /* RESPONSIVE */
+/* RESPONSIVE */
 @media (max-width: 1024px) {
     .header-grid {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto;
         padding: 10px 15px;
     }
-
     .header-grid .logo {
         grid-row: auto;
+        grid-row: auto;
     }
-
     .header-grid .navbar,
     .header-grid .header-search {
         grid-column: 1;
         justify-self: start;
     }
-
     .header-grid .navbar {
         margin-bottom: 6px;
         flex-wrap: wrap;

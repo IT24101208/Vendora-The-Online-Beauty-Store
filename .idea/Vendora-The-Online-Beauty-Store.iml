@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+  <component name="NewModuleRootManager">
+    <output url="file://$PROJECT_DIR$/out/production/Vendora-The-Online-Beauty-Store" />
+    <output-test url="file://$PROJECT_DIR$/out/test/Vendora-The-Online-Beauty-Store" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
-    <orderEntry type="inheritedJdk" />
+    <content url="file://$PROJECT_DIR$">
+      <sourceFolder url="file://$PROJECT_DIR$/project/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$PROJECT_DIR$/project/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$PROJECT_DIR$/project/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$PROJECT_DIR$/project/src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$PROJECT_DIR$/project/target" />
+    </content>
+    <orderEntry type="jdk" jdkName="ms-21 (3)" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

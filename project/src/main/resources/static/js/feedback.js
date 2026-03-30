@@ -177,6 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
     filterButtons.forEach(btn => {
         btn.addEventListener("click", () => {
             filterButtons.forEach(b => b.classList.remove("active"));
+            filterButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
             renderFeedback(btn.dataset.filter);
         });
@@ -222,6 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
         feedbacks.push(newFeedback);
         saveFeedbacks();
         feedbackForm.reset();
+
         feedbackPanel?.classList.remove("open");
         alert("Thank you! Your feedback has been submitted successfully.");
         const activeFilter = document.querySelector(".feedback-filters button.active")?.dataset.filter || "all";

@@ -1,30 +1,25 @@
-// Service interactivity data: visible/hidden service sections, FAQ modal state, contact form enabled/disabled.
-
+// Service interactivity data: visible/hidden service sections, contact form enabled/disabled.
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* SECTION TOGGLES */
+    /* Section Toggles */
     const sections = {
         account: document.getElementById("accountServices"),
         customer: document.getElementById("customerServices"),
         supplier: document.getElementById("supplierServices"),
-        delivery: document.getElementById("deliveryServices"),
-        payment: document.getElementById("paymentServices")
+        delivery: document.getElementById("deliveryServices")
     };
 
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
         console.log("Guest user: hiding all role-based sections");
-        Object.values(sections).forEach(sec => sec?.classList.add("hidden"));
+        Object.values(sections).forEach(sec => sec?.classList.add("hidden"));   // Hide all initially
         disableContactForm();
-    } else {
-        // Hide all initially
-        Object.values(sections).forEach(sec => sec?.classList.add("hidden"));
 
-        // Show sections based on role
-        const role = user.role;
+    } else {
+        Object.values(sections).forEach(sec => sec?.classList.add("hidden"));
+        const role = user.role;     // Show sections based on role
         if (role === "CUSTOMER") {
             sections.customer?.classList.remove("hidden");
-            sections.payment?.classList.remove("hidden");
         } else if (role === "SUPPLIER") {
             sections.supplier?.classList.remove("hidden");
         } else if (role === "DELIVERY") {
@@ -35,45 +30,68 @@ document.addEventListener("DOMContentLoaded", () => {
         enableContactForm();
     }
 
-    /* CONTACT FORM UX */
-    const contactForm = document.querySelector(".contact-form form");
-    contactForm?.addEventListener("submit", (e) => {
-        e.preventDefault();
-        document.getElementById("formResponse").innerText = "✅ Message sent successfully!";
+    /* Contact Form UX */
+    const sendMailBtn = document.querySelector(".send-mail-btn");
+    const formResponse = document.getElementById("formResponse");
+    const contactBox = document.querySelector(".contact-form");
+
+    // Show response after clicking SEND NOW
+    sendMailBtn?.addEventListener("click", () => {
+        formResponse.innerHTML = `
+            <div class="mail-success-box">
+                <h4>📩 Message Ready to Send!</h4>
+                <p>
+                    Thank you for reaching out to <strong>Vendora Support</strong>.
+                    Your email app has been opened so you can send your message directly.
+                </p>
+                <p>
+                    Once we receive your email, our support team will carefully review it and get back to you as soon as possible.
+                </p>
+                <p>
+                    ⏳ <strong>Please allow some time for our response</strong>, especially for package, supplier, delivery, or order-related concerns.
+                </p>
+                <p>
+                    💡 Whether you're a <strong>Customer</strong>, <strong>Supplier</strong>, or <strong>Delivery Partner</strong>,
+                    we appreciate your patience and will do our best to assist you quickly.
+                </p>
+                <p>
+                    ❤️ Thank you for contacting us and being part of <strong>Vendora</strong>.
+                </p>
+            </div>
+        `;
     });
 
+    // Disable support access
     function disableContactForm() {
-        const inputs = contactForm?.querySelectorAll("input, textarea, button") || [];
-        inputs.forEach(el => el.disabled = true);
-        contactForm?.insertAdjacentHTML("beforebegin",
-            `<p style="color:red;">Please log in to send a message.</p>`
-        );
-    }
-
-    function enableContactForm() {
-        const inputs = contactForm?.querySelectorAll("input, textarea, button") || [];
-        inputs.forEach(el => el.disabled = false);
-    }
-
-    /* FAQ MODAL */
-    const faqModal = document.getElementById("faqModal");
-    const closeBtn = faqModal?.querySelector(".close");
-    const openFaqBtn = document.getElementById("openFaq");
-
-    openFaqBtn?.addEventListener("click", () => {
-        faqModal.classList.remove("hidden");
-        setTimeout(() => faqModal.classList.add("show"), 10);
-    });
-
-    closeBtn?.addEventListener("click", () => {
-        faqModal.classList.remove("show");
-        setTimeout(() => faqModal.classList.add("hidden"), 300);
-    });
-
-    window.addEventListener("click", (e) => {
-        if (e.target === faqModal) {
-            faqModal.classList.remove("show");
-            setTimeout(() => faqModal.classList.add("hidden"), 300);
+        if (sendMailBtn) {
+            sendMailBtn.classList.add("disabled-mail");
+            sendMailBtn.setAttribute("aria-disabled", "true");
+            sendMailBtn.removeAttribute("href");
         }
-    });
+
+        if (!document.querySelector(".login-warning-msg")) {
+            contactBox?.insertAdjacentHTML(
+                "afterbegin",
+                `
+                <p class="login-warning-msg" style="color:red; margin-top:10px;">
+                    Please log in to send a message.
+                </p>
+                `
+            );
+        }
+    }
+
+    // Enable support access
+    function enableContactForm() {
+        if (sendMailBtn) {
+            sendMailBtn.classList.remove("disabled-mail");
+            sendMailBtn.setAttribute(
+                "href",
+                "mailto:vendorabeautystore@gmail.com?subject=Customer Support Message - Vendora"
+            );
+            sendMailBtn.removeAttribute("aria-disabled");
+        }
+
+        document.querySelector(".login-warning-msg")?.remove();
+    }
 });

@@ -1,19 +1,21 @@
 /* Footer layout, links, subscribe form, social icons, and responsive footer styles */
 .footer {
-    background: #111;
-    color: #ccc;
-    padding: 25px 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    font-family: 'Roboto Condensed', sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    z-index: 1000;
 }
 
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    padding-bottom: 80px;
 }
 
 main {
@@ -49,7 +51,7 @@ main {
     color: var(--brand-color);
 }
 
-/* FOOTER BOTTOM - Sticky */
+/* FOOTER BOTTOM */
 .footer-bottom {
     margin-top: 20px;
     padding: 4px 0;
@@ -85,7 +87,7 @@ main {
     font-size: 12px;
 }
 
-/* Form */
+/* FORM */
 .subscribe-form {
     display: flex;
     flex-direction: column;
@@ -109,7 +111,7 @@ main {
     border-color: var(--brand-color);
 }
 
-/* Button */
+/* BUTTON */
 .btn-subscribe {
     padding: 8px;
     border-radius: 4px;
@@ -124,7 +126,7 @@ main {
     opacity: 0.9;
 }
 
-/* Message */
+/* MESSAGE */
 .subscribe-message {
     font-size: 11px;
     margin-top: 2px;

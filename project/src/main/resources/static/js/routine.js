@@ -1,30 +1,64 @@
 document.addEventListener("DOMContentLoaded", () => {
-
-    // Run only on routine page
     if (!window.location.pathname.includes("routine.html")) return;
 
-    /* ---------------- URL PARAMETER ---------------- */
+    /* URL Parameter */
     const params = new URLSearchParams(window.location.search);
     const category = params.get("category");
 
-    /* ---------------- DOM ELEMENTS ---------------- */
+    /* DOM Elements */
     const concernForm = document.getElementById("concernForm");
     const categoryTitle = document.getElementById("categoryTitle");
     const concernsContainer = document.getElementById("concernsContainer");
     const resultDiv = document.getElementById("result");
     const feedbackSection = document.getElementById("feedbackSection");
+    const feedbackRating = document.getElementById("feedbackRating");
+    const feedbackMessage = document.getElementById("feedbackMessage");
+    const submitFeedbackBtn = document.getElementById("submitFeedback");
 
     if (!category || !concernForm || !categoryTitle || !concernsContainer) return;
 
     concernForm.style.display = "block";
     categoryTitle.textContent = `Selected: ${category.toUpperCase()}`;
 
-    /* ---------------- DATA ---------------- */
+    /* Current User */
+    const currentUser = getCurrentUser();
+
+    function getCurrentUser() {
+        const storedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+        if (storedUser && storedUser.name && storedUser.role) {
+            return {
+                id: storedUser.id || generateUserId(storedUser.name, storedUser.role),
+                name: storedUser.name,
+                role: normalizeRole(storedUser.role)
+            };
+        }
+        return {
+            id: "guest-user",
+            name: "Guest",
+            role: "guest"
+        };
+    }
+
+    function generateUserId(name, role) {
+        return `${role}-${name.toLowerCase().replace(/\s+/g, "-")}`;
+    }
+
+    function normalizeRole(role) {
+        const value = String(role || "").toLowerCase().trim();
+        if (["customer", "supplier", "delivery", "guest", "admin"].includes(value)) {
+            return value;
+        }
+        return "guest";
+    }
+
+    /* Data */
     const concernsData = {
         skincare: ["Oily/combination skin", "Acne & clogged pores", "Hyperpigmentation", "Dehydration", "Fungal infections", "Heat rashes"],
         haircare: ["Hair fall", "Dandruff", "Frizz", "Dry/damaged hair", "Oily scalp", "Split ends"],
         bodycare: ["Body acne", "Fungal infections", "Body odor", "Dark areas", "Dry skin", "Heat rashes"]
-    };
+        };
+
+    }
 
     const routineTemplates = {
         skincare: {
@@ -33,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "Hyperpigmentation": { symptoms: "Dark spots, uneven skin tone.", causes: "Sun exposure, acne scars, hormones.", routine: "Morning: Sunscreen + Vitamin C serum\nNight: Retinol or brightening serum" },
             "Dehydration": { symptoms: "Tight, flaky skin; dull appearance.", causes: "Low water intake, harsh products, environment.", routine: "Morning: Hydrating cleanser + Moisturizer\nNight: Hydrating serum + Moisturizer" },
             "Fungal infections": { symptoms: "Red itchy patches, sometimes scaling.", causes: "Yeast overgrowth due to moisture or heat.", routine: "Keep area dry, antifungal creams, gentle cleanser" },
-            "Heat rashes": { symptoms: "Red bumps, itching, irritation.", causes: "Blocked sweat ducts from heat and sweat.", routine: "Cool compress, breathable clothing, mild cleanser" }
+            "Heat rashes": { symptoms: "Red bumps, itching, irritation." causes: "Blocked sweat ducts from heat and sweat.", routine: "Cool compress, breathable clothing, mild cleanser" }
         },
         haircare: {
             "Hair fall": { symptoms: "Excessive shedding, thinning hair.", causes: "Stress, nutrition, genetics.", routine: "Mild shampoo, protein treatments, balanced diet" },
@@ -53,9 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    /* ---------------- GENERATE CHECKBOXES ---------------- */
+    /* Generate Checkboxes */
     concernsContainer.innerHTML = "";
-
     const categoryConcerns = concernsData[category];
     if (!categoryConcerns) return;
 
@@ -65,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
         concernsContainer.appendChild(label);
     });
 
-    // Other option
     const otherLabel = document.createElement("label");
     otherLabel.innerHTML = `<input type="checkbox" id="otherCheck"> Other (custom)`;
     concernsContainer.appendChild(otherLabel);
@@ -78,23 +110,23 @@ document.addEventListener("DOMContentLoaded", () => {
     concernsContainer.appendChild(otherInput);
 
     const otherCheck = document.getElementById("otherCheck");
-    otherCheck.addEventListener("change", () => {
+    otherCheck?.addEventListener("change", () => {
         otherInput.style.display = otherCheck.checked ? "block" : "none";
     });
 
-    /* ---------------- FORM SUBMIT ---------------- */
+    /* Form Submit */
     concernForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        const name = document.getElementById("fullName").value.trim();
-        const age = parseInt(document.getElementById("age").value.trim(), 10);
+        const enteredName = document.getElementById("fullName")?.value.trim();
+        const age = parseInt(document.getElementById("age")?.value.trim(), 10);
+        const displayName = enteredName || currentUser.name;
 
-        if (!name || isNaN(age) || age < 16 || age > 75) {
+        if (!displayName || isNaN(age) || age < 16 || age > 75) {
             alert("Please enter a valid name and age (16–75).");
             return;
         }
 
-        // Collect concerns
         const selected = Array.from(
             concernsContainer.querySelectorAll("input[type=checkbox]:checked")
         )
@@ -109,13 +141,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Loading UI
         resultDiv.style.display = "block";
         resultDiv.innerHTML = "<div class='loading'>Generating your routine...</div>";
 
         setTimeout(() => {
-
-            let output = `Hello ${name}! Here’s a personalized ${category} routine for age ${age}:\n\n`;
+            let output = `Hello ${displayName}! Here’s a personalized ${category} routine for age ${age}:\n\n`;
 
             selected.forEach(concern => {
                 const template = routineTemplates[category]?.[concern] || {
@@ -128,52 +158,76 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             output += `💡 Tips:
-- Stay hydrated
-- Follow a consistent routine
-- Adjust to your body type
+    - Stay hydrated
+    - Follow a consistent routine
+    - Adjust to your body type
 
 ⚠️ This message was created by AI. Always consult your doctor before using products.`;
 
-            resultDiv.innerHTML = `<pre style="white-space: pre-wrap;">${output}</pre>`;
+            resultDiv.innerHTML = `<pre style="white-space: pre-wrap;">${escapeHTML(output)}</pre>`;
 
-            // Show feedback
-            if (feedbackSection) feedbackSection.style.display = "block";
-
-            const submitFeedbackBtn = document.getElementById("submitFeedback");
-            const exitButton = document.getElementById("exitButton");
-
-            submitFeedbackBtn?.addEventListener("click", () => {
-                const rating = document.getElementById("feedbackRating")?.value;
-                const message = document.getElementById("feedbackMessage")?.value.trim();
-
-                if (!rating) {
-                    alert("Please select a rating.");
-                    return;
-                }
-
-                feedbackSection.innerHTML = `
-                    <p>Thank you for your feedback!</p>
-                    <p>Rating: ${rating}/5</p>
-                    ${message ? `<p>Message: ${message}</p>` : ""}
-                `;
-
-                setTimeout(() => {
-                    window.location.href = "index.html";
-                }, 2000);
-            }, { once: true });
-
-            exitButton?.addEventListener("click", () => {
-                window.location.href = "index.html";
-            }, { once: true });
-
-        }, 800); // slightly smoother UX
+            if (feedbackSection) {
+                feedbackSection.style.display = "block";
+                feedbackSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        }, 800);
     });
 
+    /* Feedback Submit */
+    submitFeedbackBtn?.addEventListener("click", () => {
+        const rating = parseInt(feedbackRating?.value || "0", 10);
+        const message = feedbackMessage?.value.trim() || "Routine feedback submitted.";
+
+        if (!rating || rating < 1 || rating > 5) {
+            alert("Please select a valid rating.");
+            return;
+        }
+
+        const enteredName = document.getElementById("fullName")?.value.trim();
+        const finalName = enteredName || currentUser.name;
+
+        const newFeedback = {
+            id: crypto.randomUUID(),
+            userId: currentUser.id,
+            name: finalName,
+            role: currentUser.role,
+            category: "routine",
+            routineType: category,
+            rating: rating,
+            message: message,
+            createdAt: new Date().toISOString()
+        };
+
+        const existingFeedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
+        existingFeedbacks.push(newFeedback);
+        localStorage.setItem("feedbacks", JSON.stringify(existingFeedbacks));
+
+        feedbackSection.innerHTML = `
+            <div style="text-align:center; padding: 10px 0;">
+                <h3>💜 Thank You for Your Feedback!</h3>
+                <p>Your routine review has been submitted successfully.</p>
+                <p>It will now appear in the <strong>Routine</strong> category on the feedback page.</p>
+            </div>
+        `;
+
+        setTimeout(() => {
+            window.location.href = "feedback.html?filter=routine";
+        }, 1500);
+    });
+
+    function escapeHTML(str) {
+        return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
 });
 
-/* ---------------- GLOBAL CANCEL ---------------- */
+/* GLOBAL CANCEL */
 function cancelForm() {
-    if (confirm("Cancel registration? All entered data will be lost.")) {
+    if (confirm("Are you sure?")) {
         window.location.href = "index.html";
     }
 }

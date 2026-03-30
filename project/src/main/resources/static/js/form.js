@@ -1,89 +1,22 @@
-// Form data: delivery, supplier, and routine form inputs, validations, submissions, dynamic required fields.
-
+// Form data: delivery, supplier, and routine form inputs, validations, submissions
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* CATEGORY TOGGLE (Supplier Products) */
+    /* Category Toggle (Supplier Products) */
     const categoryCheckboxes = document.querySelectorAll('input[name="productCategories[]"]');
     const productSections = document.querySelectorAll('.form-grid .routine');
-
-    if (categoryCheckboxes.length && productSections.length) {
-        categoryCheckboxes.forEach(cb => {
-            cb.addEventListener('change', () => {
-                productSections.forEach(section => {
-                    const category = section.getAttribute('data-category');
-                    const isChecked = document.querySelector(`input[name="productCategories[]"][value="${category}"]`)?.checked;
-                    section.style.display = isChecked ? 'block' : 'none';
-                    section.querySelector('textarea').required = isChecked;
-                });
-            });
+    const updateCategorySections = () => {
+        productSections.forEach(section => {
+            const category = section.dataset.category;
+            const isChecked = document.querySelector(`input[name="productCategories[]"][value="${category}"]`)?.checked;
+            section.style.display = isChecked ? 'block' : 'none';
+            const textarea = section.querySelector('textarea');
+            if (textarea) textarea.required = isChecked;
         });
-    }
+    };
+    categoryCheckboxes.forEach(cb => cb.addEventListener('change', updateCategorySections));
+    updateCategorySections();
 
-    /* FORM SUBMISSION */
-    const formIds = ["deliveryForm", "registrationForm", "supplierForm"];
-
-    formIds.forEach(formId => {
-        const form = document.getElementById(formId);
-        if (!form) return;
-        form.addEventListener("submit", e => {
-            e.preventDefault();
-
-            // PHONE VALIDATION 
-            const phone = form.querySelector("#phone")?.value.trim();
-            const emergencyPhone = form.querySelector("#emergencyPhone")?.value.trim();
-            if (phone && emergencyPhone && phone === emergencyPhone) {
-                alert("Emergency phone number cannot be the same as your phone number.");
-                return;
-            }
-
-            // PROFILE PICTURE SIZE 
-            const profileFile = form.querySelector("#profilePicture")?.files[0];
-            if (profileFile && profileFile.size > 2 * 1024 * 1024) {
-                alert("Profile picture must be less than 2MB");
-                return;
-            }
-
-            // SUPPLIER PRODUCT CATEGORY VALIDATION 
-            const productCategories = form.querySelectorAll('input[name="productCategories[]"]');
-            if (productCategories.length) {
-                const selected = Array.from(productCategories).some(cb => cb.checked);
-                if (!selected) {
-                    alert("Please select at least one product category.");
-                    return;
-                }
-
-                const sections = form.querySelectorAll(".routine");
-                for (let sec of sections) {
-                    const textarea = sec.querySelector("textarea");
-                    if (sec.style.display !== "none" && textarea.value.trim() === "") {
-                        alert(`Please enter product details for ${textarea.id.replace("Products", "")}.`);
-                        return;
-                    }
-                }
-            }
-
-            // VEHICLE INPUTS (Delivery Form) 
-            const visibleVehicle = form.querySelector(".partner[style*='block']");
-            if (visibleVehicle) {
-                const inputs = visibleVehicle.querySelectorAll("input");
-                for (let input of inputs) {
-                    if (input.required && input.value.trim() === "") {
-                        alert(`Please fill ${input.previousElementSibling.textContent}`);
-                        return;
-                    }
-                }
-            }
-
-            // SUCCESS 
-            alert("Registration submitted successfully!");
-            window.location.href = "index.html"; // redirect home
-        });
-    });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    /* ---------------- VEHICLE SELECTION ---------------- */
+    /* Vehicle Selection */
     const vehicleSelect = document.getElementById("vehicleFilter");
     const vehicleSections = {
         bike: document.querySelector(".bike"),
@@ -95,34 +28,27 @@ document.addEventListener("DOMContentLoaded", () => {
         car: ["carModel", "carPlate"],
         van: ["vanModel", "vanPlate"]
     };
-
-    // Hide all vehicle sections initially
-    Object.values(vehicleSections).forEach(sec => sec.style.display = "none");
-
-    // Show selected vehicle section
-    vehicleSelect?.addEventListener("change", () => {
+    const updateVehicleSection = () => {
+        const selected = vehicleSelect?.value;
         Object.keys(vehicleSections).forEach(type => {
             const sec = vehicleSections[type];
-            sec.style.display = "none"; // hide all
+            if (!sec) return;
+            sec.style.display = (type === selected) ? 'block' : 'none';
             vehicleInputs[type].forEach(id => {
                 const input = document.getElementById(id);
-                input.required = false; // remove required
-                input.value = "";       // clear input
+                if (input) {
+                    input.required = (type === selected);
+                    if (type !== selected) input.value = "";
+                }
             });
         });
+    };
+    vehicleSelect?.addEventListener("change", updateVehicleSection);
+    updateVehicleSection(); // initialize
 
-        const selected = vehicleSelect.value;
-        if (vehicleSections[selected]) {
-            const sec = vehicleSections[selected];
-            sec.style.display = "block"; // show selected
-            vehicleInputs[selected].forEach(id => document.getElementById(id).required = true);
-        }
-    });
-
-    /* ---------------- PROVINCE → DISTRICT LOGIC ---------------- */
+    /* Province → District Logic */
     const province = document.getElementById("deliveryProvince");
     const district = document.getElementById("district");
-
     const districts = {
         western: ["Colombo", "Gampaha", "Kalutara"],
         central: ["Kandy", "Matale", "Nuwara Eliya"],
@@ -136,9 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     province?.addEventListener("change", () => {
-        district.innerHTML = '<option value="">Select District</option>'; // reset
-        if (!province.value || !districts[province.value]) return;
-        districts[province.value].forEach(d => {
+        if (!district) return;
+        district.innerHTML = '<option value="">Select District</option>';
+        (districts[province.value] || []).forEach(d => {
             const opt = document.createElement("option");
             opt.value = d;
             opt.textContent = d;
@@ -146,12 +72,60 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    /* ---------------- INITIALIZATION ---------------- */
-    // Optional: pre-select first option or reset fields
-    vehicleSelect?.dispatchEvent(new Event("change"));
+    /* Form Submission & Validations */
+    const formIds = ["deliveryForm", "registrationForm", "supplierForm"];
+    formIds.forEach(formId => {
+        const form = document.getElementById(formId);
+        if (!form) return;
+        form.addEventListener("submit", e => {
+            e.preventDefault();
+            const phone = form.querySelector("#phone")?.value.trim();       // Phone
+            const emergencyPhone = form.querySelector("#emergencyPhone")?.value.trim();
+            if (phone && emergencyPhone && phone === emergencyPhone) {
+                alert("Emergency phone number cannot be the same as your phone number.");
+                return;
+            }
+
+            const profileFile = form.querySelector("#profilePicture")?.files[0];    // Profile Picture
+            if (profileFile && profileFile.size > 2 * 1024 * 1024) {
+                alert("Profile picture must be less than 2MB.");
+                return;
+            }
+
+            if (categoryCheckboxes.length) {        // Supplier Product Category
+                const selected = Array.from(categoryCheckboxes).some(cb => cb.checked);
+                if (!selected) {
+                    alert("Please select at least one product category.");
+                    return;
+                }
+                for (let sec of productSections) {
+                    const textarea = sec.querySelector("textarea");
+                    if (sec.style.display !== "none" && textarea && textarea.value.trim() === "") {
+                        alert(`Please enter product details for ${textarea.id.replace("Products", "")}.`);
+                        return;
+                    }
+                }
+            }
+
+            const visibleVehicle = Object.values(vehicleSections).find(sec => sec?.style.display === "block");  // Vehicle Inputs Validation
+            if (visibleVehicle) {
+                const inputs = visibleVehicle.querySelectorAll("input[required]");
+                for (let input of inputs) {
+                    if (input.value.trim() === "") {
+                        const labelText = input.previousElementSibling?.textContent || input.name;
+                        alert(`Please fill ${labelText}.`);
+                        return;
+                    }
+                }
+            }
+
+            alert("Registration submitted successfully!");      // Success
+            window.location.href = "index.html";
+        });
+    });
 });
 
-/* GLOBAL CANCEL FUNCTION */
+/* Global Cancel Function */
 function cancelForm() {
     if (confirm("Cancel registration? All entered data will be lost.")) {
         window.location.href = "index.html";

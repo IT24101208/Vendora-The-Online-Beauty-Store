@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
 
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/feedback.css">
     <link rel="stylesheet" href="../css/form.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/header.css">
@@ -20,52 +18,44 @@
 </head>
 
 <body class="home-bg">
-
     <header class="header-grid">
-        <div class="logo">
-            <img src="../images/Vendora.png" alt="Vendora Logo">
-        </div>
+    <div class="logo">
+        <img src="../images/Vendora.png" alt="Vendora Logo">
+    </div>
 
-        <nav class="navbar" id="navbarLinks">
-            <!-- Default (Unregistered) -->
+    <nav class="navbar" id="navbarLinks">
+        <div class="auth-links" id="authLinks">
             <a href="index.html">Home</a>
-            <a href="shop.html">Shop</a>
             <a href="about.html">About</a>
-            <div class="auth-links" id="authLinks">
-                <a href="#">Login</a>
-                <a href="#">Sign Up</a>
-            </div>
-            <!-- Profile -->
-            <div class="profile-menu" id="profileMenu">
-
-                <button class="profile-trigger" id="profileTrigger">
-                    <img src="https://yourdomain.com/images/user1.jpg" alt="Profile" id="profileImg">
-                    <span class="user-name" id="userName"></span>
-                </button>
-                <!-- Dropdown -->
-                <div class="dropdown hidden" id="dropdownMenu">
-                    <button id="viewProfileBtn">View Profile</button>
-                    <button id="changePasswordBtn">Change Password</button>
-                    <button id="logoutBtn">Logout</button>
-                </div>
-            </div>
-            <div class="user-section hidden" id="userSection">
-                <div class="icon-btn" title="Notifications">🔔</div>
-            </div>
-        </nav>
-
-        <div class="header-search">
-            <label for="searchInput" class="sr-only">Search products</label>
-            <input id="searchInput" type="text" placeholder="Search products..." class="search-input">
-            <div class="icon-btn"><i class="fa-solid fa-cart-shopping"></i></div>
+            <a href="service.html">Support</a>
+            <a href="../../templates/customer-management/html/login.html">Login</a>
+            <a href="../../templates/customer-management/html/signup.html">Sign Up</a>
         </div>
+
+        <div class="profile-menu" id="profileMenu">
+            <button class="profile-trigger" id="profileTrigger">
+                <img src="https://yourdomain.com/images/user1.jpg" alt="Profile" id="profileImg">
+                <span class="user-name" id="userName"></span>
+            </button>
+
+            <div class="dropdown hidden" id="dropdownMenu">
+                <a href="../../templates/customer-management/html/profile.html">View Profile</a><br>
+                <a href="../../templates/customer-management/html/changePassword.html">Change Password</a><br>
+                <a href="../../templates/customer-management/html/logout.html">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="header-search">
+        <label for="searchInput" class="sr-only">Search products</label>
+        <input id="searchInput" type="text" placeholder="Search products..." class="search-input">
+        <div class="icon-btn"><i class="fa-solid fa-cart-shopping"></i></div>
+        <div class="icon-btn"><i class="fa-solid fa-bell"></i></div>
+    </div>
     </header>
 
-    <!-- SHOP FILTERS -->
     <section class="products">
         <h3 class="section-title">What type of product are you looking for</h3>
-
-        <!-- Filters -->
         <label>Supplier Category</label>
         <div class="category-checkboxes">
             <label><input type="checkbox" value="cosmetics"> Cosmetics</label>
@@ -84,7 +74,7 @@
                 <img src="../images/" alt="Cosmetics">
                 <div class="product-name">___</div>
                 <div class="product-price">Rs. 0</div>
-                <a href="#" class="btn-primary">Add to Cart</a>
+                <a href="#" class="btn-primary">View</a>
             </div>
 
             <!-- Skincare -->
@@ -92,7 +82,7 @@
                 <img src="../images/" alt="Skincare">
                 <div class="product-name">___</div>
                 <div class="product-price">Rs. 0</div>
-                <a href="#" class="btn-primary">Add to Cart</a>
+                <a href="#" class="btn-primary">View</a>
             </div>
 
             <!-- Bodycare -->
@@ -100,7 +90,7 @@
                 <img src="../images/" alt="Bodycare">
                 <div class="product-name">___</div>
                 <div class="product-price">Rs. 0</div>
-                <a href="#" class="btn-primary">Add to Cart</a>
+                <a href="#" class="btn-primary">View</a>
             </div>
 
             <!-- Haircare -->
@@ -108,7 +98,7 @@
                 <img src="../images/" alt="Haircare">
                 <div class="product-name">___</div>
                 <div class="product-price">Rs. 0</div>
-                <a href="#" class="btn-primary">Add to Cart</a>
+                <a href="#" class="btn-primary">View</a>
             </div>
 
             <!-- Fragrance -->
@@ -116,7 +106,7 @@
                 <img src="../images/" alt="Fragrance">
                 <div class="product-name">___</div>
                 <div class="product-price">Rs. 0</div>
-                <a href="#" class="btn-primary">Add to Cart</a>
+                <a href="#" class="btn-primary">View</a>
             </div>
 
             <!-- Beauty Tools -->
@@ -124,7 +114,7 @@
                 <img src="../images/" alt="Beauty Tools">
                 <div class="product-name">___</div>
                 <div class="product-price">Rs. 0</div>
-                <a href="#" class="btn-primary">Add to Cart</a>
+                <a href="#" class="btn-primary">View</a>
             </div>
         </div>
     </section>
@@ -180,7 +170,7 @@
 
             <div>
                 <h4>CUSTOMER SERVICE</h4>
-                <a href="#">Visit My Profile</a>
+                <a href="../../templates/customer-management/html/profile.html">View Profile</a>
                 <a href="service.html">Support</a>
                 <a href="#">Track My Order</a>
             </div>
@@ -189,14 +179,13 @@
         <div class="footer-bottom">
             <p>© 2026 Vendora | The Online Beauty Store</p>
             <p><button><a href="terms.html">Terms & Conditions</a></button> | <button><a href="privacy.html">Privacy
-                        Policy</a></button> | <button><a href="cookie.html">Cookie Policy</a></button> | Do Not Sell My
+                Policy</a></button> | <button><a href="cookie.html">Cookie Policy</a></button> | Do Not Sell My
                 Personal Information | Vendora</p>
             <p>If you are having problems using this website, please <button><a href="service.html">CLICK
-                        HERE</a></button> for assistance.</p>
+                HERE</a></button> for assistance.</p>
         </div>
     </footer>
     <script src="../js/main.js"></script>
     <script src="../js/shop.js"></script>
 </body>
-
 </html>

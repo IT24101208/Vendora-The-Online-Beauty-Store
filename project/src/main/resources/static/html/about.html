@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Vendora | About Us</title>
 
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/feedback.css">
     <link rel="stylesheet" href="../css/form.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/header.css">
@@ -18,40 +16,34 @@
 </head>
 
 <body class="home-bg">
-
     <header class="header-grid">
-        <div class="logo">
-            <img src="../images/Vendora.png" alt="Vendora Logo">
-        </div>
+    <div class="logo">
+        <img src="../images/Vendora.png" alt="Vendora Logo">
+    </div>
 
-        <nav class="navbar" id="navbarLinks">
-            <!-- Default (Unregistered) -->
+    <nav class="navbar" id="navbarLinks">
+        <div class="auth-links" id="authLinks">
             <a href="index.html">Home</a>
             <a href="shop.html">Shop</a>
-            <a href="about.html">About</a>
-            <div class="auth-links" id="authLinks">
-                <a href="#">Login</a>
-                <a href="#">Sign Up</a>
-            </div>
-            <!-- Profile -->
-            <div class="profile-menu" id="profileMenu">
+            <a href="service.html">Support</a>
+            <a href="../../templates/customer-management/html/login.html">Login</a>
+            <a href="../../templates/customer-management/html/signup.html">Sign Up</a>
+        </div>
 
-                <button class="profile-trigger" id="profileTrigger">
-                    <img src="https://yourdomain.com/images/user1.jpg" alt="Profile" id="profileImg">
-                    <span class="user-name" id="userName"></span>
-                </button>
-                <!-- Dropdown -->
-                <div class="dropdown hidden" id="dropdownMenu">
-                    <button id="viewProfileBtn">View Profile</button>
-                    <button id="changePasswordBtn">Change Password</button>
-                    <button id="logoutBtn">Logout</button>
-                </div>
+        <div class="profile-menu" id="profileMenu">
+            <button class="profile-trigger" id="profileTrigger">
+                <img src="https://yourdomain.com/images/user1.jpg" alt="Profile" id="profileImg">
+                <span class="user-name" id="userName"></span>
+            </button>
+
+            <div class="dropdown hidden" id="dropdownMenu">
+                <a href="../../templates/customer-management/html/profile.html">View Profile</a><br>
+                <a href="../../templates/customer-management/html/changePassword.html">Change Password</a><br>
+                <a href="../../templates/customer-management/html/logout.html">Logout</a>
             </div>
-            <div class="user-section hidden" id="userSection">
-                <div class="icon-btn" title="Notifications">🔔</div>
-            </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
 
     <!-- ABOUT SECTION -->
     <section class="about-hero">

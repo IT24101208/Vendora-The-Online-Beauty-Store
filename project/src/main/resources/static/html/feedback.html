@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,22 +13,15 @@
     <link rel="stylesheet" href="../css/layout.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap"
-        rel="stylesheet">
+          rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body class="home-bg">
-
-    <div class="page-wrapper">
-
-        <section class="feedback-wrapper">
-
-            <!-- HEADER -->
-            <header class="feedback-header">
-                <h2>Customer Feedback</h2>
-            </header>
-
-            <!-- FILTERS -->
+<div class="page-wrapper">
+    <section class="feedback-wrapper">
+        <header class="feedback-header">
+            <h2>Feedback Collection</h2>
             <div class="feedback-filters">
                 <button data-filter="all" class="active">All</button>
                 <button data-filter="customer">Customer</button>
@@ -37,63 +29,51 @@
                 <button data-filter="delivery">Delivery</button>
                 <button data-filter="routine">Routine</button>
             </div>
+        </header>
 
-            <!-- FEEDBACK GRID -->
-            <div id="feedbackGrid">
-                <!-- Injected by JS -->
-            </div>
+        <div id="feedbackGrid"></div>
+    </section>
+</div>
 
-        </section>
+<button id="openPanelBtn" class="floating-btn" title="Share Feedback">+</button>
 
-    </div>
+<div id="feedbackPanel" class="feedback-panel">
+    <form id="feedbackForm" class="form-card">
+        <h3>Share Your Feedback</h3>
+        <p id="loggedUser">User: Guest</p>
 
-    <!-- FLOAT BUTTON -->
-    <button id="openPanelBtn" class="floating-btn">+</button>
+        <label for="rating">Rating</label>
+        <select id="rating" required>
+            <option value="">Select</option>
+            <option value="5">★★★★★ - Excellent</option>
+            <option value="4">★★★★☆ - Good</option>
+            <option value="3">★★★☆☆ - Neutral</option>
+            <option value="2">★★☆☆☆ - Poor</option>
+            <option value="1">★☆☆☆☆ - Very Bad</option>
+        </select>
 
-    <!-- SLIDE PANEL -->
-    <div id="feedbackPanel" class="feedback-panel">
-        <form id="feedbackForm" class="form-card">
+        <label for="message">Message</label>
+        <textarea id="message" rows="5" placeholder="Write your feedback..." required></textarea>
 
-            <h3>Share Your Feedback</h3>
-            <p id="loggedUser">User: Guest</p>
-
-            <!-- Rating -->
-            <label for="rating">Rating</label>
-            <select id="rating" required>
-                <option value="">Select</option>
-                <option value="5">★★★★★</option>
-                <option value="4">★★★★☆</option>
-                <option value="3">★★★☆☆</option>
-                <option value="2">★★☆☆☆</option>
-                <option value="1">★☆☆☆☆</option>
-            </select>
-
-            <!-- Message -->
-            <label for="message">Message</label>
-            <textarea id="message" rows="4" placeholder="Write your feedback..." required></textarea>
-
-            <!-- Actions -->
-            <div class="form-actions">
-                <button type="submit" class="btn-primary">Submit</button>
-                <button type="button" id="cancelBtn" class="btn-cancel">Cancel</button>
-            </div>
-
-        </form>
-    </div>
-
-    <footer class="footer">
-        <div class="footer-bottom">
-            <p>© 2026 Vendora | The Online Beauty Store</p>
-            <p><button><a href="terms.html">Terms & Conditions</a></button> | <button><a href="privacy.html">Privacy
-                        Policy</a></button> | <button><a href="cookie.html">Cookie Policy</a></button> | Do Not Sell My
-                Personal Information | Vendora</p>
-            <p>If you are having problems using this website, please <button><a href="service.html">CLICK
-                        HERE</a></button> for assistance.</p>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary"><i class="fas fa-paper-plane"></i> Send</button>
+            <button type="button" id="cancelBtn" class="btn-cancel">Cancel</button>
         </div>
-    </footer>
-    <script src="../js/main.js"></script>
-    <script src="../js/form.js"></script>
-    <script src="../js/feedback.js"></script>
-</body>
+    </form>
+</div>
 
+<footer class="footer">
+    <div class="footer-bottom">
+        <p>© 2026 Vendora | The Online Beauty Store</p>
+        <p><button><a href="terms.html">Terms & Conditions</a></button> | <button><a href="privacy.html">Privacy
+            Policy</a></button> | <button><a href="cookie.html">Cookie Policy</a></button> | Do Not Sell My
+            Personal Information | Vendora</p>
+        <p>If you are having problems using this website, please <button><a href="service.html">CLICK
+            HERE</a></button> for assistance.</p>
+    </div>
+</footer>
+<script src="../js/main.js"></script>
+<script src="../js/form.js"></script>
+<script src="../js/feedback.js"></script>
+</body>
 </html>

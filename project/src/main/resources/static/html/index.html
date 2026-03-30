@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,37 +18,31 @@
 </head>
 
 <body class="home-bg">
-
     <header class="header-grid">
         <div class="logo">
             <img src="../images/Vendora.png" alt="Vendora Logo">
         </div>
 
         <nav class="navbar" id="navbarLinks">
-            <!-- Default (Unregistered) -->
-            <a href="index.html">Home</a>
-            <a href="shop.html">Shop</a>
-            <a href="about.html">About</a>
             <div class="auth-links" id="authLinks">
-                <a href="#">Login</a>
-                <a href="#">Sign Up</a>
+                <a href="shop.html">Shop</a>
+                <a href="about.html">About</a>
+                <a href="service.html">Support</a>
+                <a href="../../templates/customer-management/html/login.html">Login</a>
+                <a href="../../templates/customer-management/html/signup.html">Sign Up</a>
             </div>
-            <!-- Profile -->
-            <div class="profile-menu" id="profileMenu">
 
+            <div class="profile-menu" id="profileMenu">
                 <button class="profile-trigger" id="profileTrigger">
                     <img src="https://yourdomain.com/images/user1.jpg" alt="Profile" id="profileImg">
                     <span class="user-name" id="userName"></span>
                 </button>
-                <!-- Dropdown -->
+
                 <div class="dropdown hidden" id="dropdownMenu">
-                    <button id="viewProfileBtn">View Profile</button>
-                    <button id="changePasswordBtn">Change Password</button>
-                    <button id="logoutBtn">Logout</button>
+                    <a href="../../templates/customer-management/html/profile.html">View Profile</a><br>
+                    <a href="../../templates/customer-management/html/changePassword.html">Change Password</a><br>
+                    <a href="../../templates/customer-management/html/logout.html">Logout</a>
                 </div>
-            </div>
-            <div class="user-section hidden" id="userSection">
-                <div class="icon-btn" title="Notifications">🔔</div>
             </div>
         </nav>
 
@@ -57,6 +50,7 @@
             <label for="searchInput" class="sr-only">Search products</label>
             <input id="searchInput" type="text" placeholder="Search products..." class="search-input">
             <div class="icon-btn"><i class="fa-solid fa-cart-shopping"></i></div>
+            <div class="icon-btn"><i class="fa-solid fa-bell"></i></div>
         </div>
     </header>
 
@@ -82,25 +76,25 @@
                     <img src="../images/sp1.jpg" alt="Blush">
                     <div class="product-name">PIXI - Blush (19g)</div>
                     <div class="product-price">Rs. 1,600</div>
-                    <a href="shop.html" class="btn-primary">Add to Cart</a>
+                    <a href="shop.html" class="btn-primary">View</a>
                 </div>
                 <div class="product-card">
                     <img src="../images/sp2.webp" alt="Serum">
                     <div class="product-name">ESPA - Optimal Skin Pro Serum</div>
                     <div class="product-price">Rs. 1,500</div>
-                    <a href="#" class="btn-primary">Add to Cart</a>
+                    <a href="#" class="btn-primary">View</a>
                 </div>
                 <div class="product-card">
                     <img src="../images/sp3.avif" alt="Men Deserve">
                     <div class="product-name">Men Deserve Beauty Pack</div>
                     <div class="product-price">Rs. 3,850</div>
-                    <a href="#" class="btn-primary">Add to Cart</a>
+                    <a href="#" class="btn-primary">View</a>
                 </div>
                 <div class="product-card">
                     <img src="../images/sp4.jpg" alt="Serum">
                     <div class="product-name">Beauty of Joeson - Deep Serum</div>
                     <div class="product-price">Rs. 1,750</div>
-                    <a href="#" class="btn-primary">Add to Cart</a>
+                    <a href="#" class="btn-primary">View</a>
                 </div>
             </div>
         </div>
@@ -131,7 +125,7 @@
                     <img src="../images/haircare.webp" alt="Haircare">
                     <div class="routine-content">
                         <h3>Find my personal Haircare</h3>
-                        <p>Discover tips and products for healthy, beautiful hair.</p><br>
+                        <p>Discover tips and products for healthy, beautiful hair.</p>
                         <a href="routine.html?category=haircare">Get Started</a>
                     </div>
                 </div>
@@ -154,7 +148,7 @@
                 <div class="partner-card">
                     <img src="../images/delivery.webp" alt="Delivery">
                     <div class="partner-content">
-                        <h3>I am a Delivery Person</h3>
+                        <h3>I am a Delivery Personnel</h3>
                         <a href="../../templates/customer-management/html/delivery.html">Join Now</a>
                     </div>
                 </div>
@@ -173,7 +167,7 @@
                 <a href="feedback.html">See More</a>
             </div>
         </div>
-    </section>
+    </section><br>
 
     <footer class="footer">
         <div class="footer-grid">
@@ -226,7 +220,7 @@
 
             <div>
                 <h4>CUSTOMER SERVICE</h4>
-                <a href="#">Visit My Profile</a>
+                <a href="../../templates/customer-management/html/profile.html">View Profile</a>
                 <a href="service.html">Support</a>
                 <a href="#">Track My Order</a>
             </div>
@@ -245,5 +239,4 @@
     <script src="../js/feedback.js"></script>
     <script src="../js/shop.js"></script>
 </body>
-
 </html>

@@ -1,0 +1,58 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_30_03_2026_12_25_[Changes]" date="1774853721244" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_30_03_2026_12_25_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 30/03/2026 12:25 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/config/CorsConfig.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/controller/AuthController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/DatabaseConfig.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/common/ApiResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/repository/UserRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/service/UserService.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/service/impl/UserServiceImpl.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/repository/RoleRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/controller/PageController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/dto/RegisterRequest.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/VendoraApplication.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/config/CorsConfig$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/common/UserRole.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/exception/GlobalExceptionHandler.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/config/SecurityConfig.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/dto/LoginRequest.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/model/User.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/model/Role.class" />
+  </binary>
+</changelist>

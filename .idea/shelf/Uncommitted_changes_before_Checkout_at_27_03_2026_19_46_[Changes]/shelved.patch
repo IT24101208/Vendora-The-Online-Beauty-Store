@@ -1,0 +1,1736 @@
+Index: project/target/classes/templates/IT24101208/HTML/Login.html
+===================================================================
+diff --git a/project/target/classes/templates/IT24101208/HTML/Login.html b/project/target/classes/templates/IT24101208/HTML/Login.html
+deleted file mode 100644
+--- a/project/target/classes/templates/IT24101208/HTML/Login.html	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ /dev/null	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
+@@ -1,65 +0,0 @@
+-<!DOCTYPE html>
+-<html lang="en">
+-
+-<head>
+-    <meta charset="UTF-8">
+-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>Vendora | Login</title>
+-
+-    <link rel="stylesheet" href="../css/base.css">
+-    <link rel="stylesheet" href="../css/form.css">
+-</head>
+-
+-<body>
+-
+-<section class="form-container">
+-    <h2>Customer Login</h2>
+-
+-    <form id="loginForm" class="card">
+-        <label>Email</label>
+-        <input type="email" id="loginEmail" required>
+-
+-        <label>Password</label>
+-        <input type="password" id="loginPassword" required>
+-
+-        <button type="submit">Login</button>
+-
+-        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+-    </form>
+-</section>
+-
+-<script>
+-    document.addEventListener("DOMContentLoaded", () => {
+-
+-        const form = document.getElementById("loginForm");
+-
+-        form.addEventListener("submit", function(e) {
+-            e.preventDefault();
+-
+-            const email = document.getElementById("loginEmail").value.trim();
+-            const password = document.getElementById("loginPassword").value.trim();
+-
+-            const users = JSON.parse(localStorage.getItem("users")) || [];
+-
+-            const user = users.find(u =>
+-                u.email === email &&
+-                u.password === password &&
+-                u.role === "customer"
+-            );
+-
+-            if (!user) {
+-                alert("Invalid credentials or not a customer account.");
+-                return;
+-            }
+-
+-            localStorage.setItem("loggedUser", JSON.stringify(user));
+-
+-            alert("Login successful!");
+-            window.location.href = "index.html";
+-        });
+-
+-    });
+-</script>
+-
+-</body>
+-</html>
+\ No newline at end of file
+Index: project/target/classes/templates/IT24101208/HTML/Profile.html
+===================================================================
+diff --git a/project/target/classes/templates/IT24101208/HTML/Profile.html b/project/target/classes/templates/IT24101208/HTML/Profile.html
+deleted file mode 100644
+--- a/project/target/classes/templates/IT24101208/HTML/Profile.html	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ /dev/null	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
+@@ -1,144 +0,0 @@
+-<!DOCTYPE html>
+-<html lang="en">
+-
+-<head>
+-    <meta charset="UTF-8">
+-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>Vendora | My Profile</title>
+-
+-    <link rel="stylesheet" href="../../../static/css/base.css">
+-    <link rel="stylesheet" href="../../../static/css/components.css">
+-    <link rel="stylesheet" href="../../../static/css/footer.css">
+-    <link rel="stylesheet" href="../../../static/css/form.css">
+-    <link rel="stylesheet" href="../../../static/css/header.css">
+-    <link rel="stylesheet" href="../../../static/css/layout.css">
+-
+-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
+-</head>
+-
+-<body>
+-
+-<!-- HEADER (optional include if you have one) -->
+-<header class="header">
+-    <h1>Vendora</h1>
+-    <nav>
+-        <span id="navUserName"></span>
+-        <button id="logoutBtn">Logout</button>
+-    </nav>
+-</header>
+-
+-<!-- PROFILE SECTION -->
+-<section class="form-container">
+-    <h2>My Profile</h2>
+-
+-    <form id="profileForm" class="card">
+-
+-        <!-- PROFILE IMAGE -->
+-        <div style="text-align:center; margin-bottom:20px;">
+-            <img id="profilePreview" src="../images/user.png" alt="Profile Image"
+-                 style="width:120px; height:120px; border-radius:50%; object-fit:cover;">
+-            <br><br>
+-            <input type="file" id="profileImage" accept="image/*">
+-        </div>
+-
+-        <!-- USER DETAILS -->
+-        <label for="profileName">Full Name</label>
+-        <input type="text" id="profileName" required>
+-
+-        <label for="profileEmail">Email</label>
+-        <input type="email" id="profileEmail" required>
+-
+-        <label for="profileRole">Role</label>
+-        <input type="text" id="profileRole" disabled>
+-
+-        <button type="submit">Update Profile</button>
+-    </form>
+-
+-    <!-- SUCCESS MESSAGE -->
+-    <div id="successMessage" class="card" style="display:none; text-align:center;"></div>
+-</section>
+-
+-<script>
+-    document.addEventListener("DOMContentLoaded", () => {
+-
+-        const user = JSON.parse(localStorage.getItem("loggedUser"));
+-
+-        // Redirect if not logged in
+-        if (!user) {
+-            window.location.href = "login.html";
+-            return;
+-        }
+-
+-        /* ===== NAVBAR NAME ===== */
+-        const navUserName = document.getElementById("navUserName");
+-        if (navUserName) {
+-            navUserName.textContent = `Hi, ${user.name}`;
+-        }
+-
+-        /* ===== LOAD PROFILE DATA ===== */
+-        document.getElementById("profileName").value = user.name || "";
+-        document.getElementById("profileEmail").value = user.email || "";
+-        document.getElementById("profileRole").value = user.role || "";
+-
+-        const preview = document.getElementById("profilePreview");
+-
+-        if (user.image) {
+-            preview.src = user.image;
+-        }
+-
+-        /* ===== IMAGE PREVIEW ===== */
+-        document.getElementById("profileImage").addEventListener("change", function () {
+-            const file = this.files[0];
+-            if (!file) return;
+-
+-            const reader = new FileReader();
+-            reader.onload = function (e) {
+-                preview.src = e.target.result;
+-            };
+-            reader.readAsDataURL(file);
+-        });
+-
+-        /* ===== UPDATE PROFILE ===== */
+-        document.getElementById("profileForm").addEventListener("submit", function (e) {
+-            e.preventDefault();
+-
+-            user.name = document.getElementById("profileName").value.trim();
+-            user.email = document.getElementById("profileEmail").value.trim();
+-
+-            // Save image if updated
+-            const fileInput = document.getElementById("profileImage");
+-            if (fileInput.files[0]) {
+-                const reader = new FileReader();
+-                reader.onload = function (e) {
+-                    user.image = e.target.result;
+-                    saveUser();
+-                };
+-                reader.readAsDataURL(fileInput.files[0]);
+-            } else {
+-                saveUser();
+-            }
+-
+-            function saveUser() {
+-                localStorage.setItem("loggedUser", JSON.stringify(user));
+-
+-                const msg = document.getElementById("successMessage");
+-                msg.style.display = "block";
+-                msg.innerHTML = "<p>✅ Profile updated successfully!</p>";
+-
+-                setTimeout(() => {
+-                    window.location.href = "index.html";
+-                }, 1500);
+-            }
+-        });
+-
+-        /* ===== LOGOUT ===== */
+-        document.getElementById("logoutBtn").addEventListener("click", () => {
+-            localStorage.removeItem("loggedUser");
+-            window.location.href = "login.html";
+-        });
+-
+-    });
+-</script>
+-
+-</body>
+-</html>
+\ No newline at end of file
+Index: project/target/maven-archiver/pom.properties
+===================================================================
+diff --git a/project/target/maven-archiver/pom.properties b/project/target/maven-archiver/pom.properties
+deleted file mode 100644
+--- a/project/target/maven-archiver/pom.properties	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ /dev/null	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
+@@ -1,3 +0,0 @@
+-artifactId=vendora
+-groupId=com.vendora
+-version=0.0.1-SNAPSHOT
+Index: project/target/classes/templates/IT24101208/HTML/signup.html
+===================================================================
+diff --git a/project/target/classes/templates/IT24101208/HTML/signup.html b/project/target/classes/templates/IT24101208/HTML/signup.html
+deleted file mode 100644
+--- a/project/target/classes/templates/IT24101208/HTML/signup.html	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ /dev/null	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
+@@ -1,97 +0,0 @@
+-<!DOCTYPE html>
+-<html lang="en">
+-<head>
+-    <meta charset="UTF-8">
+-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>Vendora | Sign Up</title>
+-
+-    <link rel="stylesheet" href="../css/base.css">
+-    <link rel="stylesheet" href="../css/form.css">
+-</head>
+-
+-<body>
+-
+-<section class="form-container">
+-    <h2>Create Account</h2>
+-
+-    <form id="signupForm" class="card">
+-
+-        <label>Full Name</label>
+-        <input type="text" id="name" required>
+-
+-        <label>Email</label>
+-        <input type="email" id="email" required>
+-
+-        <label>Password</label>
+-        <input type="password" id="password" required minlength="6">
+-
+-        <label>Confirm Password</label>
+-        <input type="password" id="confirmPassword" required>
+-
+-        <label>Role</label>
+-        <select id="role" required>
+-            <option value="">Select Role</option>
+-            <option value="customer">Customer</option>
+-            <option value="supplier">Supplier</option>
+-            <option value="delivery">Delivery</option>
+-            <option value="admin">Admin</option>
+-        </select>
+-
+-        <button type="submit">Sign Up</button>
+-
+-        <p>Already have an account? <a href="login.html">Login</a></p>
+-
+-    </form>
+-</section>
+-
+-<script>
+-    document.addEventListener("DOMContentLoaded", () => {
+-
+-        const form = document.getElementById("signupForm");
+-
+-        form.addEventListener("submit", function(e) {
+-            e.preventDefault();
+-
+-            const name = document.getElementById("name").value.trim();
+-            const email = document.getElementById("email").value.trim();
+-            const password = document.getElementById("password").value;
+-            const confirmPassword = document.getElementById("confirmPassword").value;
+-            const role = document.getElementById("role").value;
+-
+-            if (password !== confirmPassword) {
+-                alert("Passwords do not match.");
+-                return;
+-            }
+-
+-            let users = JSON.parse(localStorage.getItem("users")) || [];
+-
+-            const exists = users.find(u => u.email === email);
+-            if (exists) {
+-                alert("Email already registered.");
+-                return;
+-            }
+-
+-            const newUser = {
+-                name,
+-                email,
+-                password,
+-                role,
+-                image: "" // for profile later
+-            };
+-
+-            users.push(newUser);
+-            localStorage.setItem("users", JSON.stringify(users));
+-
+-            alert("Account created successfully!");
+-
+-            // Auto login
+-            localStorage.setItem("loggedUser", JSON.stringify(newUser));
+-
+-            window.location.href = "index.html";
+-        });
+-
+-    });
+-</script>
+-
+-</body>
+-</html>
+\ No newline at end of file
+Index: project/target/classes/static/html/service.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n\r\n<html lang=\"en\">\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Vendora | Customer Service</title>\r\n\r\n    <link rel=\"stylesheet\" href=\"../css/base.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/components.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/footer.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/header.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/layout.css\">\r\n\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap\" rel=\"stylesheet\">\r\n\r\n</head>\r\n\r\n<body class=\"home-bg\">\r\n\r\n<!-- HEADER -->\r\n\r\n<header class=\"header\">\r\n\r\n    <div class=\"logo\">\r\n        <img src=\"../images/vendora-Logo.png\" alt=\"Vendora Logo\">\r\n    </div>\r\n\r\n    <nav class=\"navbar\">\r\n        <a href=\"index.html\">Home</a>\r\n        <a href=\"shop.html\">Shop</a>\r\n        <a href=\"routine.html\">Learn</a>\r\n        <a href=\"about.html\">About</a>\r\n        <a href=\"service.html\">Service</a>\r\n    </nav>\r\n\r\n    <div class=\"header-search\">\r\n        <label for=\"searchInput\" class=\"sr-only\">Search products</label>\r\n        <input id=\"searchInput\" type=\"text\" placeholder=\"Search products...\" class=\"search-input\">\r\n        <div class=\"icon-btn\"><i class=\"fa-solid fa-cart-shopping\"></i></div>\r\n    </div>\r\n\r\n</header>\r\n\r\n<!-- MY ACCOUNT -->\r\n\r\n<section class=\"container\">\r\n\r\n    <h2 class=\"section-title\">My Account</h2>\r\n\r\n    <div class=\"card\">\r\n\r\n        <label>Username</label> <input type=\"text\">\r\n\r\n        <label>Email</label> <input type=\"email\">\r\n\r\n        <label>Password</label> <input type=\"password\">\r\n\r\n        <br><br>\r\n\r\n        <button class=\"btn-primary\">Update Account</button>\r\n\r\n    </div>\r\n\r\n</section>\r\n\r\n<!-- CONTACT US -->\r\n\r\n<section class=\"container\">\r\n\r\n    <h2 class=\"section-title\">Contact Us</h2>\r\n\r\n    <div class=\"card\">\r\n\r\n        <label>Full Name</label> <input type=\"text\">\r\n\r\n        <label>Email</label> <input type=\"email\">\r\n\r\n        <label>Message</label>\r\n\r\n        <textarea rows=\"5\"></textarea>\r\n\r\n        <br><br>\r\n\r\n        <button class=\"btn-primary\">Send Message</button>\r\n\r\n    </div>\r\n\r\n</section>\r\n\r\n<!-- TRACK DELIVERY -->\r\n\r\n<section class=\"container\">\r\n\r\n    <h2 class=\"section-title\">Track Delivery</h2>\r\n\r\n    <div class=\"card\">\r\n\r\n        <label>Order Number</label> <input type=\"text\" placeholder=\"Enter your order ID\">\r\n\r\n        <br><br>\r\n\r\n        <button class=\"btn-primary\">Track Order</button>\r\n\r\n        <p class=\"text-small\">\r\n            Delivery updates will appear here once the tracking number is submitted.\r\n        </p>\r\n\r\n    </div>\r\n\r\n</section>\r\n\r\n<!-- FOOTER -->\r\n\r\n<footer class=\"footer\">\r\n\r\n    <div class=\"footer-grid\">\r\n\r\n        <div>\r\n            <h4>Shop</h4>\r\n            <a href=\"shop.html\">Skincare</a>\r\n            <a href=\"shop.html\">Haircare</a>\r\n            <a href=\"shop.html\">Foundation</a>\r\n            <a href=\"shop.html\">Bodycare</a>\r\n        </div>\r\n\r\n        <div>\r\n            <h4>Company</h4>\r\n            <a href=\"about.html\">About Us</a>\r\n            <a href=\"routine.html\">Beauty Learning</a>\r\n        </div>\r\n\r\n        <div>\r\n            <h4>Customer</h4>\r\n            <a href=\"service.html\">My Account</a>\r\n            <a href=\"service.html\">Contact</a>\r\n        </div>\r\n\r\n        <div>\r\n            <h4>Support</h4>\r\n            <p>Need help? Our team is here for you.</p>\r\n        </div>\r\n\r\n    </div>\r\n\r\n    <div class=\"footer-bottom\">\r\n        © 2026 Vendora | The Online Beauty Store\r\n    </div>\r\n\r\n</footer>\r\n\r\n<script src=\"../js/form.js\"></script>\r\n<script src=\"../js/main.js\"></script>\r\n</body>\r\n</html>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/classes/static/html/service.html b/project/target/classes/static/html/service.html
+--- a/project/target/classes/static/html/service.html	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/static/html/service.html	(date 1774602155795)
+@@ -1,156 +1,117 @@
+ <!DOCTYPE html>
+-
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>Vendora | Customer Service</title>
++    <title>Vendora Services</title>
+ 
+     <link rel="stylesheet" href="../css/base.css">
+     <link rel="stylesheet" href="../css/components.css">
+-    <link rel="stylesheet" href="../css/footer.css">
+     <link rel="stylesheet" href="../css/header.css">
++    <link rel="stylesheet" href="../css/footer.css">
++    <link rel="stylesheet" href="../css/form.css">
+     <link rel="stylesheet" href="../css/layout.css">
+ 
+     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
+-
++    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+ </head>
+ 
+-<body class="home-bg">
++<body>
+ 
+-<!-- HEADER -->
++<!-- PAGE HEADER -->
++<section class="page-header">
++    <h1>Our Services</h1>
++    <p>Explore the services available on Vendora</p>
++</section>
+ 
+-<header class="header">
++<!-- GENERAL SERVICES -->
++<section class="service-section" id="generalServices">
++    <h2>🌍 General Services</h2>
++    <ul>
++        <li>Browse beauty and cosmetic products</li>
++        <li>View product categories</li>
++        <li>Read FAQs</li>
++        <li>Learn about Vendora</li>
++    </ul>
++</section>
+ 
+-    <div class="logo">
+-        <img src="../images/vendora-Logo.png" alt="Vendora Logo">
++<!-- CONTACT & SUPPORT -->
++<section class="service-section" id="supportServices">
++    <h2>📧 Contact & Support</h2>
++    <ul>
++        <li>Contact Vendora support team</li>
++        <li>Send messages to Admin (Login required)</li>
++        <li>Report issues or complaints</li>
++    </ul>
++
++    <!-- CONTACT FORM -->
++    <div class="contact-form">
++        <h3>Send a Message</h3>
++        <form>
++            <input type="text" placeholder="Your Name" required>
++            <input type="email" placeholder="Your Email" required>
++            <textarea placeholder="Write your message..." required></textarea>
++            <button type="submit">Send Message</button>
++        </form>
+     </div>
+-
+-    <nav class="navbar">
+-        <a href="index.html">Home</a>
+-        <a href="shop.html">Shop</a>
+-        <a href="routine.html">Learn</a>
+-        <a href="about.html">About</a>
+-        <a href="service.html">Service</a>
+-    </nav>
+-
+-    <div class="header-search">
+-        <label for="searchInput" class="sr-only">Search products</label>
+-        <input id="searchInput" type="text" placeholder="Search products..." class="search-input">
+-        <div class="icon-btn"><i class="fa-solid fa-cart-shopping"></i></div>
+-    </div>
+-
+-</header>
+-
+-<!-- MY ACCOUNT -->
+-
+-<section class="container">
+-
+-    <h2 class="section-title">My Account</h2>
+-
+-    <div class="card">
+-
+-        <label>Username</label> <input type="text">
+-
+-        <label>Email</label> <input type="email">
+-
+-        <label>Password</label> <input type="password">
++</section>
+ 
+-        <br><br>
++<!-- ACCOUNT SERVICES -->
++<section class="service-section hidden" id="accountServices">
++    <h2>🔐 Account & Profile Services</h2>
++    <ul>
++        <li>View profile details</li>
++        <li>Edit profile information</li>
++        <li>Change password</li>
++    </ul>
++</section>
+ 
+-        <button class="btn-primary">Update Account</button>
+-
+-    </div>
+-
++<!-- CUSTOMER SERVICES -->
++<section class="service-section hidden role-section" id="customerServices">
++    <h2>🛍️ Customer Services</h2>
++    <ul>
++        <li>View order history</li>
++        <li>Track delivery status</li>
++        <li>Cancel orders (before shipping)</li>
++        <li>Add products to cart</li>
++    </ul>
+ </section>
+ 
+-<!-- CONTACT US -->
+-
+-<section class="container">
+-
+-    <h2 class="section-title">Contact Us</h2>
+-
+-    <div class="card">
+-
+-        <label>Full Name</label> <input type="text">
+-
+-        <label>Email</label> <input type="email">
+-
+-        <label>Message</label>
++<!-- PAYMENT SERVICES -->
++<section class="service-section hidden role-section" id="paymentServices">
++    <h2>💳 Payment Services</h2>
++    <ul>
++        <li>Pay using Credit/Debit Card</li>
++        <li>Cash on Delivery (COD)</li>
++        <li>View payment status</li>
++    </ul>
++</section>
+ 
+-        <textarea rows="5"></textarea>
+-
+-        <br><br>
+-
+-        <button class="btn-primary">Send Message</button>
+-
+-    </div>
+-
++<!-- SUPPLIER SERVICES -->
++<section class="service-section hidden role-section" id="supplierServices">
++    <h2>🏭 Supplier Services</h2>
++    <ul>
++        <li>Add new products</li>
++        <li>Update product details</li>
++        <li>Manage stock levels</li>
++    </ul>
+ </section>
+ 
+-<!-- TRACK DELIVERY -->
+-
+-<section class="container">
+-
+-    <h2 class="section-title">Track Delivery</h2>
+-
+-    <div class="card">
+-
+-        <label>Order Number</label> <input type="text" placeholder="Enter your order ID">
+-
+-        <br><br>
+-
+-        <button class="btn-primary">Track Order</button>
+-
+-        <p class="text-small">
+-            Delivery updates will appear here once the tracking number is submitted.
+-        </p>
+-
+-    </div>
+-
++<!-- DELIVERY SERVICES -->
++<section class="service-section hidden role-section" id="deliveryServices">
++    <h2>🚚 Delivery Services</h2>
++    <ul>
++        <li>View assigned deliveries</li>
++        <li>Update delivery status</li>
++        <li>Manage delivery tasks</li>
++    </ul>
+ </section>
+ 
+-<!-- FOOTER -->
+ 
+ <footer class="footer">
+-
+-    <div class="footer-grid">
+-
+-        <div>
+-            <h4>Shop</h4>
+-            <a href="shop.html">Skincare</a>
+-            <a href="shop.html">Haircare</a>
+-            <a href="shop.html">Foundation</a>
+-            <a href="shop.html">Bodycare</a>
+-        </div>
+-
+-        <div>
+-            <h4>Company</h4>
+-            <a href="about.html">About Us</a>
+-            <a href="routine.html">Beauty Learning</a>
+-        </div>
+-
+-        <div>
+-            <h4>Customer</h4>
+-            <a href="service.html">My Account</a>
+-            <a href="service.html">Contact</a>
+-        </div>
+-
+-        <div>
+-            <h4>Support</h4>
+-            <p>Need help? Our team is here for you.</p>
+-        </div>
+-
+-    </div>
+-
+-    <div class="footer-bottom">
+-        © 2026 Vendora | The Online Beauty Store
+-    </div>
+-
++    <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
+ </footer>
+-
+-<script src="../js/form.js"></script>
+-<script src="../js/main.js"></script>
++<script src="../js/service.js"></script>
+ </body>
+-</html>
++</html>
+\ No newline at end of file
+Index: project/target/classes/static/html/routine.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Vendora | Personal Beauty Routine</title>\r\n\r\n    <link rel=\"stylesheet\" href=\"../css/base.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/components.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/footer.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/form.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/layout.css\">\r\n\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap\" rel=\"stylesheet\">\r\n</head>\r\n\r\n<body>\r\n\r\n<section class=\"form-container\">\r\n    <h2>Find Your Personal Routine</h2>\r\n\r\n    <form class=\"card\" id=\"concernForm\" style=\"display:none;\">\r\n        <h3>Personal Information</h3>\r\n\r\n        <label for=\"fullName\">Full Name</label>\r\n        <input id=\"fullName\" name=\"fullName\" required placeholder=\"Enter your full name\">\r\n\r\n        <label for=\"age\">Age</label>\r\n        <input type=\"number\" id=\"age\" name=\"age\" required min=\"16\" max=\"75\" placeholder=\"Enter age (16-75)\">\r\n\r\n        <label for=\"photo\">Upload Photo</label>\r\n        <input id=\"photo\" type=\"file\" accept=\"image/*\">\r\n\r\n        <!-- Selected category title -->\r\n        <h3 id=\"categoryTitle\"></h3>\r\n\r\n        <!-- Concerns checkboxes generated dynamically -->\r\n        <div id=\"concernsContainer\" class=\"checkbox-grid\"></div>\r\n\r\n        <button type=\"submit\">Get My Routine</button>\r\n    </form>\r\n\r\n    <!-- Generated routine output -->\r\n    <div id=\"result\" class=\"card\"></div>\r\n\r\n    <!-- Feedback section -->\r\n    <div id=\"feedbackSection\" class=\"card\" style=\"display:none;\">\r\n        <h3>Feedback</h3>\r\n        <p>How was your routine?</p>\r\n        <select id=\"feedbackRating\">\r\n            <option value=\"\">Select rating</option>\r\n            <option value=\"5\">\uD83D\uDE0A Very Happy</option>\r\n            <option value=\"4\">\uD83D\uDE42 Happy</option>\r\n            <option value=\"3\">\uD83D\uDE10 Neutral</option>\r\n            <option value=\"2\">\uD83D\uDE41 Sad</option>\r\n            <option value=\"1\">\uD83D\uDE22 Very Sad</option>\r\n        </select>\r\n        <textarea id=\"feedbackMessage\" placeholder=\"Write your feedback here...\" rows=\"2\"></textarea>\r\n        <div class=\"form-actions\">\r\n            <button id=\"submitFeedback\" type=\"button\">Submit Feedback</button>\r\n            <button id=\"exitButton\" type=\"button\">Exit</button>\r\n        </div>\r\n    </div>\r\n</section>\r\n\r\n<script src=\"../js/delivery.js\"></script>\r\n<script src=\"../js/form.js\"></script>\r\n<script src=\"../js/main.js\"></script>\r\n<script src=\"../js/routine.js\"></script>\r\n<script src=\"../js/feedback.js\"></script>\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/classes/static/html/routine.html b/project/target/classes/static/html/routine.html
+--- a/project/target/classes/static/html/routine.html	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/static/html/routine.html	(date 1774602155795)
+@@ -13,9 +13,10 @@
+     <link rel="stylesheet" href="../css/layout.css">
+ 
+     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
++    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+ </head>
+ 
+-<body>
++<body class="home-bg">
+ 
+ <section class="form-container">
+     <h2>Find Your Personal Routine</h2>
+@@ -34,10 +35,8 @@
+ 
+         <!-- Selected category title -->
+         <h3 id="categoryTitle"></h3>
+-
+         <!-- Concerns checkboxes generated dynamically -->
+         <div id="concernsContainer" class="checkbox-grid"></div>
+-
+         <button type="submit">Get My Routine</button>
+     </form>
+ 
+@@ -48,6 +47,8 @@
+     <div id="feedbackSection" class="card" style="display:none;">
+         <h3>Feedback</h3>
+         <p>How was your routine?</p>
++
++        <label for="feedbackRating">Rating:</label>
+         <select id="feedbackRating">
+             <option value="">Select rating</option>
+             <option value="5">😊 Very Happy</option>
+@@ -56,7 +57,10 @@
+             <option value="2">🙁 Sad</option>
+             <option value="1">😢 Very Sad</option>
+         </select>
++
++        <label for="feedbackMessage">Your Feedback:</label>
+         <textarea id="feedbackMessage" placeholder="Write your feedback here..." rows="2"></textarea>
++
+         <div class="form-actions">
+             <button id="submitFeedback" type="button">Submit Feedback</button>
+             <button id="exitButton" type="button">Exit</button>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"aabc6dc0-a376-43de-8bb4-d56aa51e60f5\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/html/privacy.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/html/terms.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/js/service.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/project/src/main/resources/static/css/base.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/css/base.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/project/src/main/resources/static/css/components.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/css/components.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/project/src/main/resources/static/css/footer.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/css/footer.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/project/src/main/resources/static/css/form.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/css/form.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/project/src/main/resources/static/css/layout.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/css/layout.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/project/src/main/resources/static/html/about.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/html/about.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/project/src/main/resources/static/html/delivery.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/html/delivery.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/project/src/main/resources/static/html/feedback.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/html/feedback.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/project/src/main/resources/static/html/index.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/html/index.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/project/src/main/resources/static/html/routine.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/html/routine.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/project/src/main/resources/static/html/service.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/html/service.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/project/src/main/resources/static/html/supplier.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/project/src/main/resources/static/html/supplier.html\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"HTML File\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PREVIOUS_COMMIT_AUTHORS\">\r\n      <list>\r\n        <option value=\"IT24101208 &lt;it24101208@my.sliit.lk&gt;\" />\r\n      </list>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;IT24101208&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/IT24101208/Vendora-The-Online-Beauty-Store.git&quot;,\r\n    &quot;accountId&quot;: &quot;c8b7bc0b-2b19-4736-afbe-2bc02e4750f8&quot;\r\n  }\r\n}</component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"file://$PROJECT_DIR$/project/src/main/resources/static/html/supplier.html\" root0=\"FORCE_HIGHLIGHTING\" />\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 6\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"3AOMYxsjqgcNxjVjDI8Xs69kwNI\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"autoscrollFromSource\" value=\"true\" />\r\n    <option name=\"autoscrollToSource\" value=\"true\" />\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"openDirectoriesWithSingleClick\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n    <option name=\"showMembers\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Application.VendoraApplication.executor&quot;: &quot;Run&quot;,\r\n    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,\r\n    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;D:/SLIIT University/Year 2 - Semester 2/IE2091 - IS Project/Assignment/Vendora-The-Online-Beauty-Store&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.externalResources&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\resources\\static\" />\r\n      <recent name=\"D:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\resources\\static\\Structure\" />\r\n      <recent name=\"D:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\resources\\static\\html\" />\r\n      <recent name=\"D:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\resources\\templates\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\resources\\templates\\IT24101208\\images\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"VendoraApplication\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.vendora.VendoraApplication\" />\r\n      <module name=\"Vendora-The-Online-Beauty-Store\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.vendora.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.VendoraApplication\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"aabc6dc0-a376-43de-8bb4-d56aa51e60f5\" name=\"Changes\" comment=\"\" />\r\n      <created>1772013291786</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1772013291786</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Initial Project Push\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1772459376175</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1772459376175</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Frontend - Epic 01\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1772485065691</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1772485065691</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Frontend - Epic 01 - II\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1772496136264</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1772496136264</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Frontend - Epic 01 - III\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1772640632915</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1772640632915</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Frontend - Epic 01 - IV\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1772814522544</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1772814522544</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Frontend - Epic 01 - IV\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1773160360843</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1773160360843</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Frontend - Epic 01 - V\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1773160387954</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1773160387954</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Frontend Finalised - I\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774081276171</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774081276171</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"Frontend Finalised - II\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774086898084</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774086898084</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Frontend Finalised - III\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774105891904</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774105891904</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"Frontend Finalised - III\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1774138765962</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1774138765962</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"12\" />\r\n    <servers>\r\n      <JIRA url=\"https://vendora2026ise.atlassian.net\">\r\n        <option name=\"jiraVersion\" value=\"1001.0.0-SNAPSHOT\" />\r\n        <username>it24101208@my.sllit.lk</username>\r\n      </JIRA>\r\n    </servers>\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Initial commit\" />\r\n    <MESSAGE value=\"Initial Project Push\" />\r\n    <MESSAGE value=\"Frontend - Epic 01\" />\r\n    <MESSAGE value=\"Frontend - Epic 01 - II\" />\r\n    <MESSAGE value=\"Frontend - Epic 01 - III\" />\r\n    <MESSAGE value=\"Frontend - Epic 01 - IV\" />\r\n    <MESSAGE value=\"Frontend - Epic 01 - V\" />\r\n    <MESSAGE value=\"Frontend Finalised - I\" />\r\n    <MESSAGE value=\"Frontend Finalised - II\" />\r\n    <MESSAGE value=\"Frontend Finalised - III\" />\r\n    <MESSAGE value=\"Updated Database\" />\r\n    <MESSAGE value=\"Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/.idea/workspace.xml	(date 1774620975510)
+@@ -5,22 +5,52 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/privacy.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/terms.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/js/service.js" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/css/base.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/components.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/css/components.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/footer.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/css/footer.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/form.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/css/form.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/css/layout.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/about.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/delivery.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/delivery.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/feedback.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/project/pom.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/PageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/PageController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/security/SecurityConfig.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/application.properties" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/index.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/routine.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/routine.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/service.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/service.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/supplier.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/supplier.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/application.properties" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/VendoraApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/VendoraApplication.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/config/SecurityConfig.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/controller/PageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/controller/PageController.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/css/base.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/static/css/components.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/css/components.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/static/css/footer.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/css/footer.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/static/css/form.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/css/form.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/static/css/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/css/layout.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/html/about.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/delivery.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/html/delivery.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/html/feedback.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/html/index.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/routine.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/html/routine.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/service.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/html/service.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/supplier.html" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/static/html/supplier.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/HTML/Login.html" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/HTML/Profile.html" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/HTML/signup.html" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/background 2.jpg" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/cart-logo.webp" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/login-background.webp" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/p10.webp" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/p6.jpeg" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/p7.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/p8.webp" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/p9.webp" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/product1.webp" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/product2.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/product3.webp" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/product4.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/product5.jpg" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/classes/templates/IT24101208/images/vendora-Logo.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/maven-archiver/pom.properties" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/vendora-0.0.1-SNAPSHOT.jar" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/project/target/vendora-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -40,6 +70,11 @@
+         <option value="IT24101208 &lt;it24101208@my.sliit.lk&gt;" />
+       </list>
+     </option>
++    <option name="RECENT_BRANCH_BY_REPOSITORY">
++      <map>
++        <entry key="$PROJECT_DIR$" value="develop" />
++      </map>
++    </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+   <component name="GitHubPullRequestSearchHistory">{
+@@ -84,7 +119,7 @@
+     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;customer-management&quot;,
+     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+     &quot;last_opened_file_path&quot;: &quot;D:/SLIIT University/Year 2 - Semester 2/IE2091 - IS Project/Assignment/Vendora-The-Online-Beauty-Store&quot;,
+Index: project/target/classes/static/html/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Vendora | The Online Beauty Store</title>\r\n\r\n    <link rel=\"stylesheet\" href=\"../css/base.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/components.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/footer.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/header.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/layout.css\">\r\n\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css\">\r\n</head>\r\n\r\n<body class=\"home-bg\">\r\n\r\n<header class=\"header-grid\">\r\n    <div class=\"logo\">\r\n        <img src=\"../images/Vendora.png\" alt=\"Vendora Logo\">\r\n    </div>\r\n\r\n    <nav class=\"navbar\">\r\n        <a href=\"shop.html\">Shop</a>\r\n        <a href=\"about.html\">About</a>\r\n        <a href=\"../../templates/IT24101208/html/login.html\">Login</a>\r\n        <a href=\"../../templates/IT24101208/html/signup.html\">Sign Up</a>\r\n        <img id=\"navProfileImg\" src=\"../../../resources/Profile_Pictures/PP1.jpg \" alt=\"Profile\">\r\n        <a href=\"../../templates/IT24101208/html/profile.html\"> \uD83D\uDC64 </a>\r\n\r\n        <div class=\"profile-menu\">\r\n            <div id=\"profileDropdown\" class=\"dropdown hidden\">\r\n                <p id=\"navUserName\"></p>\r\n                <button id=\"goProfile\">My Profile</button>\r\n                <button id=\"logoutBtn\">Logout</button>\r\n            </div>\r\n        </div>\r\n    </nav>\r\n\r\n    <div class=\"header-search\">\r\n        <label for=\"searchInput\" class=\"sr-only\">Search products</label>\r\n        <input id=\"searchInput\" type=\"text\" placeholder=\"Search products...\" class=\"search-input\">\r\n        <div class=\"icon-btn\"><i class=\"fa-solid fa-cart-shopping\"></i></div>\r\n    </div>\r\n</header>\r\n\r\n<section class=\"hero\">\r\n    <video id=\"heroVideo\" autoplay muted playsinline>\r\n        <source src=\"../images/Banner.mp4\" type=\"video/mp4\">\r\n    </video>\r\n    <div class=\"hero-content\">\r\n        <h1>Discover Natural Beauty</h1>\r\n        <p>Discover clean skincare and cosmetics</p>\r\n        <a href=\"shop.html\" class=\"btn-primary\">Shop Now</a>\r\n    </div>\r\n</section>\r\n<script src=\"../js/hero.js\"></script>\r\n\r\n<!-- FEATURED PRODUCTS -->\r\n<section class=\"products\">\r\n    <div class=\"container\">\r\n    <h2>Featured Products</h2>\r\n    <div class=\"product-grid\">\r\n        <div class=\"product-card\">\r\n            <img src=\"../images/sp1.jpg\" alt=\"Blush\">\r\n            <div class=\"product-name\">PIXI - Blush (19g)</div>\r\n            <div class=\"product-price\">Rs. 1,600</div>\r\n            <a href=\"shop.html\" class=\"btn-primary\">Add to Cart</a>\r\n        </div>\r\n        <div class=\"product-card\">\r\n            <img src=\"../images/sp2.webp\" alt=\"Serum\">\r\n            <div class=\"product-name\">ESPA - Optimal Skin Pro Serum</div>\r\n            <div class=\"product-price\">Rs. 1,500</div>\r\n            <a href=\"shop.html\" class=\"btn-primary\">Add to Cart</a>\r\n        </div>\r\n        <div class=\"product-card\">\r\n            <img src=\"../images/sp3.avif\" alt=\"Men Deserve\">\r\n            <div class=\"product-name\">Men Deserve Beauty Pack</div>\r\n            <div class=\"product-price\">Rs. 3,850</div>\r\n            <a href=\"shop.html\" class=\"btn-primary\">Add to Cart</a>\r\n        </div>\r\n        <div class=\"product-card\">\r\n            <img src=\"../images/sp4.jpg\" alt=\"Serum\">\r\n            <div class=\"product-name\">Beauty of Joeson - Deep Serum</div>\r\n            <div class=\"product-price\">Rs. 1,750</div>\r\n            <a href=\"shop.html\" class=\"btn-primary\">Add to Cart</a>\r\n        </div>\r\n    </div>\r\n    </div>\r\n</section>\r\n\r\n<!-- ROUTINE SECTION -->\r\n    <section class=\"routine-section\">\r\n        <div class=\"container\">\r\n            <h2>Don't know where to start?</h2>\r\n            <div class=\"routine-grid\">\r\n                <div class=\"routine-card\">\r\n                    <img src=\"../images/skincare.jpg\" alt=\"Skincare\">\r\n                    <div class=\"routine-content\">\r\n                        <h3>Find my personal Skincare Routine</h3>\r\n                        <p>Discover the perfect skincare routine for your skin type.</p>\r\n                        <a href=\"routine.html?category=skincare\">Get Started</a>\r\n                    </div>\r\n                </div>\r\n                <div class=\"routine-card\">\r\n                    <br>\r\n                    <img src=\"../images/bodycare.jpg\" alt=\"Bodycare\">\r\n                    <div class=\"routine-content\">\r\n                        <h3>Find my personal Bodycare</h3>\r\n                        <p>Discover the perfect bodycare routine for your skin type.</p>\r\n                        <a href=\"routine.html?category=bodycare\">Get Started</a>\r\n                    </div>\r\n                </div>\r\n                <div class=\"routine-card\">\r\n                    <img src=\"../images/haircare.webp\" alt=\"Haircare\">\r\n                    <div class=\"routine-content\">\r\n                        <h3>Find my personal Haircare</h3>\r\n                        <p>Discover tips and products for healthy, beautiful hair.</p><br>\r\n                        <a href=\"routine.html?category=haircare\">Get Started</a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </section>\r\n\r\n<!-- Supplier & Delivery Network -->\r\n<section class=\"partner\">\r\n    <div class=\"container\">\r\n    <h2>Join Our Supplier & Delivery Network</h2>\r\n    <div class=\"partner-grid grid-3\">\r\n        <div class=\"partner-card\">\r\n            <img src=\"../images/supplier.jpg\" alt=\"Supplier\">\r\n            <div class=\"partner-content\">\r\n                <h3>I am a Supplier</h3>\r\n                <a href=\"supplier.html\">Join Now</a>\r\n            </div>\r\n        </div>\r\n        <div class=\"partner-card\">\r\n            <img src=\"../images/delivery.webp\" alt=\"Delivery\">\r\n            <div class=\"partner-content\">\r\n                <h3>I am a Delivery Person</h3>\r\n                <a href=\"delivery.html\">Join Now</a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    </div>\r\n</section>\r\n\r\n<!-- FEEDBACK / CATEGORY -->\r\n<section id=\"feedbackSection\">\r\n    <div class=\"container\">\r\n        <h2>What People Think About Us</h2>\r\n        <div class=\"feedback-grid\" id=\"feedbackGrid\">\r\n            <!-- Feedback cards will be injected here via JS -->\r\n        </div>\r\n        <div class=\"partner-content\"><br>\r\n            <a href=\"feedback.html\">See More &gt;</a>\r\n        </div>\r\n    </div>\r\n</section>\r\n\r\n<!-- FOOTER -->\r\n<footer class=\"footer\">\r\n    <div class=\"footer-grid\">\r\n\r\n        <!-- SUBSCRIBE -->\r\n        <div class=\"footer-subscribe\">\r\n            <h4>SUBSCRIBE</h4>\r\n            <p>Get blog updates and exclusive discounts.</p>\r\n\r\n            <!-- Email -->\r\n            <div class=\"subscribe-input\">\r\n                <label for=\"subscribeEmail\" class=\"visually-hidden\">Email for subscription</label>\r\n                <input type=\"email\" id=\"subscribeEmail\" placeholder=\"Enter your email\">\r\n                <button>➤</button>\r\n            </div>\r\n\r\n            <!-- Phone -->\r\n            <div class=\"subscribe-input\">\r\n                <label for=\"subscribePhone\" class=\"visually-hidden\">Phone number for subscription</label>\r\n                <input type=\"tel\" id=\"subscribePhone\" placeholder=\"Enter your phone number\">\r\n            </div>\r\n\r\n            <div>\r\n                <button>SUBSCRIBE</button>\r\n            </div>\r\n\r\n            <!-- SOCIAL ICONS -->\r\n            <div class=\"social-icons\">\r\n                <a href=\"https://facebook.com\" target=\"_blank\"><i class=\"fa-brands fa-facebook-f\"></i></a>\r\n                <a href=\"https://youtube.com\" target=\"_blank\"><i class=\"fa-brands fa-youtube\"></i></a>\r\n                <a href=\"https://instagram.com\" target=\"_blank\"><i class=\"fa-brands fa-instagram\"></i></a>\r\n                <a href=\"https://tiktok.com\" target=\"_blank\"><i class=\"fa-brands fa-tiktok\"></i></a>\r\n            </div>\r\n        </div>\r\n\r\n        <!-- SHOP -->\r\n        <div>\r\n            <h4>Shop</h4>\r\n            <a href=\"shop.html\">Makeup</a>\r\n            <a href=\"shop.html\">Skin Care</a>\r\n            <a href=\"shop.html\">Hair Care</a>\r\n            <a href=\"shop.html\">Body Care</a>\r\n        </div>\r\n\r\n        <!-- ABOUT -->\r\n        <div>\r\n            <h4>ABOUT US</h4>\r\n            <a href=\"about.html\">Our Mission</a>\r\n            <a href=\"about.html\">Support</a>\r\n        </div>\r\n\r\n        <!-- CUSTOMER SERVICE -->\r\n        <div>\r\n            <h4>Customer Service</h4>\r\n            <a href=\"#\">My Account</a>\r\n            <a href=\"#\">Contact Us</a>\r\n            <a href=\"#\">Delivery Location</a>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"footer-bottom\">\r\n        <p>© 2026 Vendora | The Online Beauty Store</p>\r\n        <p>Terms & Conditions | Privacy Policy | Cookie Policy | Do Not Sell My Personal Information | Vendora</p>\r\n        <p>If you are having problems using this website, please <button>CLICK HERE</button> for assistance.</p>\r\n    </div>\r\n</footer>\r\n\r\n<script src=\"../js/feedback.js\"></script>\r\n<script src=\"../js/form.js\"></script>\r\n<script src=\"../js/hero.js\"></script>\r\n<script src=\"../js/main.js\"></script>\r\n<script src=\"../js/routine.js\"></script>\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/classes/static/html/index.html b/project/target/classes/static/html/index.html
+--- a/project/target/classes/static/html/index.html	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/static/html/index.html	(date 1774602293404)
+@@ -24,12 +24,11 @@
+     </div>
+ 
+     <nav class="navbar">
+-        <a href="shop.html">Shop</a>
++        <a href="#">Shop</a>
+         <a href="about.html">About</a>
+-        <a href="../../templates/IT24101208/html/login.html">Login</a>
+-        <a href="../../templates/IT24101208/html/signup.html">Sign Up</a>
+-        <img id="navProfileImg" src="../../../resources/Profile_Pictures/PP1.jpg " alt="Profile">
+-        <a href="../../templates/IT24101208/html/profile.html"> 👤 </a>
++        <a href="#">Login</a>
++        <a href="#">Sign Up</a>
++        <a href="#"> 👤 </a>
+ 
+         <div class="profile-menu">
+             <div id="profileDropdown" class="dropdown hidden">
+@@ -74,56 +73,55 @@
+             <img src="../images/sp2.webp" alt="Serum">
+             <div class="product-name">ESPA - Optimal Skin Pro Serum</div>
+             <div class="product-price">Rs. 1,500</div>
+-            <a href="shop.html" class="btn-primary">Add to Cart</a>
++            <a href="#" class="btn-primary">Add to Cart</a>
+         </div>
+         <div class="product-card">
+             <img src="../images/sp3.avif" alt="Men Deserve">
+             <div class="product-name">Men Deserve Beauty Pack</div>
+             <div class="product-price">Rs. 3,850</div>
+-            <a href="shop.html" class="btn-primary">Add to Cart</a>
++            <a href="#" class="btn-primary">Add to Cart</a>
+         </div>
+         <div class="product-card">
+             <img src="../images/sp4.jpg" alt="Serum">
+             <div class="product-name">Beauty of Joeson - Deep Serum</div>
+             <div class="product-price">Rs. 1,750</div>
+-            <a href="shop.html" class="btn-primary">Add to Cart</a>
++            <a href="#" class="btn-primary">Add to Cart</a>
+         </div>
+     </div>
+     </div>
+ </section>
+ 
+ <!-- ROUTINE SECTION -->
+-    <section class="routine-section">
+-        <div class="container">
+-            <h2>Don't know where to start?</h2>
+-            <div class="routine-grid">
+-                <div class="routine-card">
+-                    <img src="../images/skincare.jpg" alt="Skincare">
+-                    <div class="routine-content">
+-                        <h3>Find my personal Skincare Routine</h3>
+-                        <p>Discover the perfect skincare routine for your skin type.</p>
+-                        <a href="routine.html?category=skincare">Get Started</a>
+-                    </div>
+-                </div>
+-                <div class="routine-card">
+-                    <br>
+-                    <img src="../images/bodycare.jpg" alt="Bodycare">
+-                    <div class="routine-content">
+-                        <h3>Find my personal Bodycare</h3>
+-                        <p>Discover the perfect bodycare routine for your skin type.</p>
+-                        <a href="routine.html?category=bodycare">Get Started</a>
+-                    </div>
+-                </div>
+-                <div class="routine-card">
+-                    <img src="../images/haircare.webp" alt="Haircare">
+-                    <div class="routine-content">
+-                        <h3>Find my personal Haircare</h3>
+-                        <p>Discover tips and products for healthy, beautiful hair.</p><br>
+-                        <a href="routine.html?category=haircare">Get Started</a>
+-                    </div>
+-                </div>
+-            </div>
+-        </div>
++<section class="routine-section">
++    <div class="container">
++    <h2>Don't know where to start?</h2>
++    <div class="routine-grid">
++         <div class="routine-card">
++         <img src="../images/skincare.jpg" alt="Skincare">
++              <div class="routine-content">
++              <h3>Find my personal Skincare Routine</h3>
++                  <p>Discover the perfect skincare routine for your skin type.</p>
++                  <a href="routine.html?category=skincare">Get Started</a>
++              </div>
++         </div>
++         <div class="routine-card"><br>
++         <img src="../images/bodycare.jpg" alt="Bodycare">
++              <div class="routine-content">
++              <h3>Find my personal Bodycare</h3>
++                  <p>Discover the perfect bodycare routine for your skin type.</p>
++                  <a href="routine.html?category=bodycare">Get Started</a>
++              </div>
++         </div>
++         <div class="routine-card">
++         <img src="../images/haircare.webp" alt="Haircare">
++              <div class="routine-content">
++              <h3>Find my personal Haircare</h3>
++                   <p>Discover tips and products for healthy, beautiful hair.</p><br>
++                   <a href="routine.html?category=haircare">Get Started</a>
++              </div>
++         </div>
++    </div>
++    </div>
+     </section>
+ 
+ <!-- Supplier & Delivery Network -->
+@@ -165,30 +163,22 @@
+ <!-- FOOTER -->
+ <footer class="footer">
+     <div class="footer-grid">
+-
+-        <!-- SUBSCRIBE -->
+         <div class="footer-subscribe">
+             <h4>SUBSCRIBE</h4>
+             <p>Get blog updates and exclusive discounts.</p>
+ 
+-            <!-- Email -->
+             <div class="subscribe-input">
+-                <label for="subscribeEmail" class="visually-hidden">Email for subscription</label>
++                <label for="subscribeEmail" class="visually-hidden">Email</label>
+                 <input type="email" id="subscribeEmail" placeholder="Enter your email">
+                 <button>➤</button>
+             </div>
+-
+-            <!-- Phone -->
+             <div class="subscribe-input">
+-                <label for="subscribePhone" class="visually-hidden">Phone number for subscription</label>
++                <label for="subscribePhone" class="visually-hidden">Phone</label>
+                 <input type="tel" id="subscribePhone" placeholder="Enter your phone number">
+             </div>
+-
+             <div>
+                 <button>SUBSCRIBE</button>
+             </div>
+-
+-            <!-- SOCIAL ICONS -->
+             <div class="social-icons">
+                 <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                 <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+@@ -197,27 +187,26 @@
+             </div>
+         </div>
+ 
+-        <!-- SHOP -->
+         <div>
+-            <h4>Shop</h4>
+-            <a href="shop.html">Makeup</a>
+-            <a href="shop.html">Skin Care</a>
+-            <a href="shop.html">Hair Care</a>
+-            <a href="shop.html">Body Care</a>
++            <h4>PRODUCT NAVIGATOR</h4>
++            <a href="shop.html?category=Cosmetics">Cosmetics</a>
++            <a href="shop.html?category=Skin Care">Skin Care</a>
++            <a href="shop.html?category=Hair Care">Hair Care</a>
++            <a href="shop.html?category=Body Care">Body Care</a>
++            <a href="shop.html?category=Fragrance">Fragrance</a>
++            <a href="shop.html?category=Beauty Tools">Beauty Tools</a>
+         </div>
+ 
+-        <!-- ABOUT -->
+         <div>
+             <h4>ABOUT US</h4>
+             <a href="about.html">Our Mission</a>
+-            <a href="about.html">Support</a>
++            <a href="#">Contact Us</a>
+         </div>
+ 
+-        <!-- CUSTOMER SERVICE -->
+         <div>
+-            <h4>Customer Service</h4>
+-            <a href="#">My Account</a>
+-            <a href="#">Contact Us</a>
++            <h4>CUSTOMER SERVICE</h4>
++            <a href="#">Visit My Account</a>
++            <a href="#">Support</a>
+             <a href="#">Delivery Location</a>
+         </div>
+     </div>
+@@ -231,7 +220,6 @@
+ 
+ <script src="../js/feedback.js"></script>
+ <script src="../js/form.js"></script>
+-<script src="../js/hero.js"></script>
+ <script src="../js/main.js"></script>
+ <script src="../js/routine.js"></script>
+ </body>
+Index: project/target/classes/static/html/feedback.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Vendora | Feedback</title>\r\n\r\n    <link rel=\"stylesheet\" href=\"../css/base.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/components.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/feedback.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/footer.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/form.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/layout.css\">\r\n\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css\">\r\n</head>\r\n\r\n<body>\r\n<div class=\"page-wrapper\">\r\n    <header class=\"feedback-header\"><br>\r\n        <h2>What People Think About Us</h2>\r\n    </header>\r\n\r\n    <!-- FILTER BUTTONS -->\r\n    <section class=\"container\">\r\n        <div class=\"feedback-filters\">\r\n            <button data-filter=\"all\" class=\"active\">All</button>\r\n            <button data-filter=\"customer\">Customer</button>\r\n            <button data-filter=\"supplier\">Supplier</button>\r\n            <button data-filter=\"delivery\">Delivery</button>\r\n        </div>\r\n    </section>\r\n\r\n    <section class=\"container feedback-layout\">\r\n        <div class=\"feedback-display\">\r\n            <div id=\"feedbackGrid\" class=\"grid-3\">\r\n                <!-- JS will inject cards here -->\r\n            </div>\r\n        </div>\r\n\r\n        <!-- RIGHT SIDE (Slide Form Panel) -->\r\n        <div id=\"feedbackPanel\" class=\"feedback-panel\">\r\n            <form id=\"feedbackForm\" class=\"form-card\">\r\n                <h3>We Value Your Feedback ♥</h3>\r\n                <p id=\"loggedUser\">Current User: Guest</p>\r\n\r\n                <!-- Rating -->\r\n                <label for=\"rating\">Rating</label>\r\n                <select id=\"rating\" required>\r\n                    <option value=\"\">Select Rating</option>\r\n                    <option value=\"5\">★★★★★</option>\r\n                    <option value=\"4\">★★★★☆</option>\r\n                    <option value=\"3\">★★★☆☆</option>\r\n                    <option value=\"2\">★★☆☆☆</option>\r\n                    <option value=\"1\">★☆☆☆☆</option>\r\n                </select>\r\n\r\n                <!-- Message -->\r\n                <label for=\"message\">Message</label>\r\n                <textarea id=\"message\" rows=\"4\" placeholder=\"What you think about us?\" required></textarea>\r\n\r\n                <!-- Buttons -->\r\n                <div class=\"form-actions\">\r\n                    <button type=\"submit\" class=\"btn-primary\">Submit</button>\r\n                    <button type=\"button\" id=\"cancelBtn\" class=\"btn-cancel\">Cancel</button>\r\n                </div>\r\n            </form>\r\n        </div>\r\n    </section>\r\n\r\n    <!-- FLOAT BUTTON (Open Form) -->\r\n    <button id=\"openPanelBtn\" class=\"floating-btn\">+</button>\r\n\r\n</div>\r\n\r\n<!-- FOOTER -->\r\n<footer class=\"footer\">\r\n    <div class=\"footer-grid\">\r\n        <div class=\"footer-bottom\">© 2026 Vendora | The Online Beauty Store</div>\r\n    </div>\r\n</footer>\r\n\r\n<script src=\"../js/delivery.js\"></script>\r\n<script src=\"../js/form.js\"></script>\r\n<script src=\"../js/main.js\"></script>\r\n<script src=\"../js/routine.js\"></script>\r\n<script src=\"../js/feedback.js\"></script>\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/classes/static/html/feedback.html b/project/target/classes/static/html/feedback.html
+--- a/project/target/classes/static/html/feedback.html	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/static/html/feedback.html	(date 1774602155789)
+@@ -23,13 +23,14 @@
+         <h2>What People Think About Us</h2>
+     </header>
+ 
+-    <!-- FILTER BUTTONS -->
++    <!-- Filter Buttons-->
+     <section class="container">
+         <div class="feedback-filters">
+             <button data-filter="all" class="active">All</button>
+             <button data-filter="customer">Customer</button>
+             <button data-filter="supplier">Supplier</button>
+             <button data-filter="delivery">Delivery</button>
++            <button data-filter="routine">Routine</button>
+         </div>
+     </section>
+ 
+@@ -72,10 +73,8 @@
+ 
+     <!-- FLOAT BUTTON (Open Form) -->
+     <button id="openPanelBtn" class="floating-btn">+</button>
+-
+ </div>
+ 
+-<!-- FOOTER -->
+ <footer class="footer">
+     <div class="footer-grid">
+         <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
+Index: project/target/classes/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># DATABASE CONFIGURATION\r\nspring.datasource.url=jdbc:mysql://localhost:3306/vendora?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8\r\nspring.datasource.username=root\r\nspring.datasource.password=Sharki@123\r\nspring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver\r\n\r\n# CONNECTION POOL (HikariCP - Default)\r\nspring.datasource.hikari.minimum-idle=5\r\nspring.datasource.hikari.maximum-pool-size=20\r\nspring.datasource.hikari.idle-timeout=30000\r\nspring.datasource.hikari.max-lifetime=1800000\r\nspring.datasource.hikari.connection-timeout=20000\r\n\r\n# JPA / HIBERNATE CONFIGURATION\r\nspring.jpa.hibernate.ddl-auto=update\r\nspring.jpa.show-sql=true\r\nspring.jpa.properties.hibernate.format_sql=true\r\nspring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect\r\n\r\n# SERVER CONFIGURATION\r\nserver.port=8080\r\n\r\n# LOGGING\r\nlogging.level.org.hibernate.SQL=DEBUG\r\nlogging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/project/target/classes/application.properties b/project/target/classes/application.properties
+--- a/project/target/classes/application.properties	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/application.properties	(date 1774620892877)
+@@ -22,4 +22,8 @@
+ 
+ # LOGGING
+ logging.level.org.hibernate.SQL=DEBUG
+-logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+\ No newline at end of file
++logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
++
++# TEMP LOGIN FOR TESTING
++spring.security.user.name=admin
++spring.security.user.password=12345
+\ No newline at end of file
+Index: project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst b/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+--- a/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst	(date 1774620896458)
+@@ -1,0 +1,1 @@
++com\vendora\VendoraApplicationTests.class
+Index: project/target/classes/static/css/form.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/* Application Styles, Buttons, Forms, Icons, Inputs, Modals */\r\n\r\n/* Cancel Button */\r\n.btn-cancel {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    background: #ccc;\r\n    border: none;\r\n    border-radius: 6px;\r\n    text-decoration: none;\r\n    color: #000;\r\n}\r\n\r\n.btn-cancel:hover {\r\n    background: #aaa;\r\n}\r\n\r\n/* Card Style for Forms */\r\n.card {\r\n    background: #ffffff;\r\n    padding: 40px;\r\n    border-radius: 10px;\r\n    box-shadow: 0 4px 12px rgba(0,0,0,0.08);\r\n    margin-top: 30px;\r\n}\r\n\r\n/* Checkbox Override */\r\n.card input[type=\"checkbox\"] {\r\n    width: auto;\r\n    margin-right: 8px;\r\n}\r\n\r\n/* Form Action Buttons */\r\nbutton.secondary {  /* Secondary Button (Skip/Exit) */\r\n    background: #eee;\r\n    color: #333;\r\n}\r\n\r\nbutton.secondary:hover {\r\n    background: #ddd;\r\n}\r\n\r\n.form-actions {\r\n    margin-top: 25px;\r\n    display: flex;\r\n    gap: 10px;\r\n}\r\n\r\n.form-actions button {\r\n    flex: 1;\r\n    padding: 12px 0;\r\n    border-radius: 6px;\r\n    font-size: 14px;\r\n    cursor: pointer;\r\n}\r\n\r\n/* Form Container */\r\n.form-container {\r\n    max-width: 800px;\r\n    margin: auto;\r\n    padding: 60px 20px;\r\n}\r\n\r\n/* Form Grid Layout */\r\n.form-grid {\r\n    display: grid;\r\n    grid-template-columns: 1fr 1fr;\r\n    gap: 20px;\r\n    margin-top: 20px;\r\n}\r\n\r\n/* Form Titles */\r\n.card h3 {\r\n    margin-top: 25px;\r\n    margin-bottom: 10px;\r\n    font-size: 20px;\r\n}\r\n\r\n/* Input, Select, Textarea */\r\n.card input,\r\n.card select,\r\n.card textarea {\r\n    width: 100%;\r\n    padding: 10px;\r\n    margin-top: 5px;\r\n    border: 1px solid #ccc;\r\n    border-radius: 6px;\r\n    font-size: 14px;\r\n}\r\n\r\n.card textarea {\r\n    resize: vertical;\r\n    min-height: 100px;\r\n}\r\n\r\n#feedbackMessage,\r\ntextarea {\r\n    resize: none;\r\n}\r\n\r\n/* Labels */\r\n.card label {\r\n    display: block;\r\n    margin-top: 15px;\r\n    font-weight: 500;\r\n}\r\n\r\n.category-checkboxes label {\r\n    display: inline-block;\r\n    margin-right: 15px;\r\n    font-weight: 500;\r\n}\r\n\r\n/* Policy Buttons */\r\n.policy-buttons {\r\n    margin-top: 10px;\r\n    margin-bottom: 20px;\r\n}\r\n\r\n.policy-buttons a {\r\n    display: inline-block;\r\n    margin-right: 10px;\r\n    padding: 8px 16px;\r\n    border: 1px solid #000;\r\n    border-radius: 6px;\r\n    text-decoration: none;\r\n    font-size: 14px;\r\n}\r\n\r\n/* Primary Submit Button */\r\n.btn-primary {\r\n    background: var(--brand-color);\r\n    color: black;\r\n    padding: 8px 16px;\r\n    border-radius: 5px;\r\n    transition: 0.5s;\r\n    font-weight: 900;\r\n}\r\n\r\n.btn-primary:hover {\r\n    background: #333;\r\n}\r\n\r\n/* Responsive form */\r\n@media (max-width: 768px) {\r\n    .form-grid {\r\n        grid-template-columns: 1fr;\r\n    }\r\n\r\n    .card {\r\n        padding: 25px;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/classes/static/css/form.css b/project/target/classes/static/css/form.css
+--- a/project/target/classes/static/css/form.css	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/static/css/form.css	(date 1774602155770)
+@@ -62,6 +62,13 @@
+     padding: 60px 20px;
+ }
+ 
++/* SERVICE CONTACT FORM */
++.contact-form form {
++    display: flex;
++    flex-direction: column;
++    gap: 10px;
++}
++
+ /* Form Grid Layout */
+ .form-grid {
+     display: grid;
+@@ -99,6 +106,13 @@
+     resize: none;
+ }
+ 
++.contact-form input,
++.contact-form textarea {
++    padding: 10px;
++    border-radius: 8px;
++    border: 1px solid #ccc;
++}
++
+ /* Labels */
+ .card label {
+     display: block;
+@@ -142,6 +156,15 @@
+     background: #333;
+ }
+ 
++.contact-form button {
++    padding: 10px;
++    border: none;
++    background: var(--brand-color);
++    color: #fff;
++    border-radius: 8px;
++    cursor: pointer;
++}
++
+ /* Responsive form */
+ @media (max-width: 768px) {
+     .form-grid {
+Index: project/src/main/resources/static/html/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Vendora | The Online Beauty Store</title>\r\n\r\n    <link rel=\"stylesheet\" href=\"../css/base.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/components.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/footer.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/header.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/layout.css\">\r\n\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css\">\r\n</head>\r\n\r\n<body class=\"home-bg\">\r\n\r\n<header class=\"header-grid\">\r\n    <div class=\"logo\">\r\n        <img src=\"../images/Vendora.png\" alt=\"Vendora Logo\">\r\n    </div>\r\n\r\n    <nav class=\"navbar\">\r\n        <a href=\"#\">Shop</a>\r\n        <a href=\"about.html\">About</a>\r\n        <a href=\"#\">Login</a>\r\n        <a href=\"#\">Sign Up</a>\r\n        <a href=\"#\"> \uD83D\uDC64 </a>\r\n\r\n        <div class=\"profile-menu\">\r\n            <div id=\"profileDropdown\" class=\"dropdown hidden\">\r\n                <p id=\"navUserName\"></p>\r\n                <button id=\"goProfile\">My Profile</button>\r\n                <button id=\"logoutBtn\">Logout</button>\r\n            </div>\r\n        </div>\r\n    </nav>\r\n\r\n    <div class=\"header-search\">\r\n        <label for=\"searchInput\" class=\"sr-only\">Search products</label>\r\n        <input id=\"searchInput\" type=\"text\" placeholder=\"Search products...\" class=\"search-input\">\r\n        <div class=\"icon-btn\"><i class=\"fa-solid fa-cart-shopping\"></i></div>\r\n    </div>\r\n</header>\r\n\r\n<section class=\"hero\">\r\n    <video id=\"heroVideo\" autoplay muted playsinline>\r\n        <source src=\"../images/Banner.mp4\" type=\"video/mp4\">\r\n    </video>\r\n    <div class=\"hero-content\">\r\n        <h1>Discover Natural Beauty</h1>\r\n        <p>Discover clean skincare and cosmetics</p>\r\n        <a href=\"shop.html\" class=\"btn-primary\">Shop Now</a>\r\n    </div>\r\n</section>\r\n<script src=\"../js/hero.js\"></script>\r\n\r\n<!-- FEATURED PRODUCTS -->\r\n<section class=\"products\">\r\n    <div class=\"container\">\r\n    <h2>Featured Products</h2>\r\n    <div class=\"product-grid\">\r\n        <div class=\"product-card\">\r\n            <img src=\"../images/sp1.jpg\" alt=\"Blush\">\r\n            <div class=\"product-name\">PIXI - Blush (19g)</div>\r\n            <div class=\"product-price\">Rs. 1,600</div>\r\n            <a href=\"#\" class=\"btn-primary\">Add to Cart</a>\r\n        </div>\r\n        <div class=\"product-card\">\r\n            <img src=\"../images/sp2.webp\" alt=\"Serum\">\r\n            <div class=\"product-name\">ESPA - Optimal Skin Pro Serum</div>\r\n            <div class=\"product-price\">Rs. 1,500</div>\r\n            <a href=\"#\" class=\"btn-primary\">Add to Cart</a>\r\n        </div>\r\n        <div class=\"product-card\">\r\n            <img src=\"../images/sp3.avif\" alt=\"Men Deserve\">\r\n            <div class=\"product-name\">Men Deserve Beauty Pack</div>\r\n            <div class=\"product-price\">Rs. 3,850</div>\r\n            <a href=\"#\" class=\"btn-primary\">Add to Cart</a>\r\n        </div>\r\n        <div class=\"product-card\">\r\n            <img src=\"../images/sp4.jpg\" alt=\"Serum\">\r\n            <div class=\"product-name\">Beauty of Joeson - Deep Serum</div>\r\n            <div class=\"product-price\">Rs. 1,750</div>\r\n            <a href=\"#\" class=\"btn-primary\">Add to Cart</a>\r\n        </div>\r\n    </div>\r\n    </div>\r\n</section>\r\n\r\n<!-- ROUTINE SECTION -->\r\n<section class=\"routine-section\">\r\n    <div class=\"container\">\r\n    <h2>Don't know where to start?</h2>\r\n    <div class=\"routine-grid\">\r\n         <div class=\"routine-card\">\r\n         <img src=\"../images/skincare.jpg\" alt=\"Skincare\">\r\n              <div class=\"routine-content\">\r\n              <h3>Find my personal Skincare Routine</h3>\r\n                  <p>Discover the perfect skincare routine for your skin type.</p>\r\n                  <a href=\"routine.html?category=skincare\">Get Started</a>\r\n              </div>\r\n         </div>\r\n         <div class=\"routine-card\"><br>\r\n         <img src=\"../images/bodycare.jpg\" alt=\"Bodycare\">\r\n              <div class=\"routine-content\">\r\n              <h3>Find my personal Bodycare</h3>\r\n                  <p>Discover the perfect bodycare routine for your skin type.</p>\r\n                  <a href=\"routine.html?category=bodycare\">Get Started</a>\r\n              </div>\r\n         </div>\r\n         <div class=\"routine-card\">\r\n         <img src=\"../images/haircare.webp\" alt=\"Haircare\">\r\n              <div class=\"routine-content\">\r\n              <h3>Find my personal Haircare</h3>\r\n                   <p>Discover tips and products for healthy, beautiful hair.</p><br>\r\n                   <a href=\"routine.html?category=haircare\">Get Started</a>\r\n              </div>\r\n         </div>\r\n    </div>\r\n    </div>\r\n    </section>\r\n\r\n<!-- Supplier & Delivery Network -->\r\n<section class=\"partner\">\r\n    <div class=\"container\">\r\n    <h2>Join Our Supplier & Delivery Network</h2>\r\n    <div class=\"partner-grid grid-3\">\r\n        <div class=\"partner-card\">\r\n            <img src=\"../images/supplier.jpg\" alt=\"Supplier\">\r\n            <div class=\"partner-content\">\r\n                <h3>I am a Supplier</h3>\r\n                <a href=\"supplier.html\">Join Now</a>\r\n            </div>\r\n        </div>\r\n        <div class=\"partner-card\">\r\n            <img src=\"../images/delivery.webp\" alt=\"Delivery\">\r\n            <div class=\"partner-content\">\r\n                <h3>I am a Delivery Person</h3>\r\n                <a href=\"delivery.html\">Join Now</a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    </div>\r\n</section>\r\n\r\n<!-- FEEDBACK / CATEGORY -->\r\n<section id=\"feedbackSection\">\r\n    <div class=\"container\">\r\n        <h2>What People Think About Us</h2>\r\n        <div class=\"feedback-grid\" id=\"feedbackGrid\">\r\n            <!-- Feedback cards will be injected here via JS -->\r\n        </div>\r\n        <div class=\"partner-content\"><br>\r\n            <a href=\"feedback.html\">See More &gt;</a>\r\n        </div>\r\n    </div>\r\n</section>\r\n\r\n<!-- FOOTER -->\r\n<footer class=\"footer\">\r\n    <div class=\"footer-grid\">\r\n        <div class=\"footer-subscribe\">\r\n            <h4>SUBSCRIBE</h4>\r\n            <p>Get blog updates and exclusive discounts.</p>\r\n\r\n            <div class=\"subscribe-input\">\r\n                <label for=\"subscribeEmail\" class=\"visually-hidden\">Email</label>\r\n                <input type=\"email\" id=\"subscribeEmail\" placeholder=\"Enter your email\">\r\n                <button>➤</button>\r\n            </div>\r\n            <div class=\"subscribe-input\">\r\n                <label for=\"subscribePhone\" class=\"visually-hidden\">Phone</label>\r\n                <input type=\"tel\" id=\"subscribePhone\" placeholder=\"Enter your phone number\">\r\n            </div>\r\n            <div>\r\n                <button>SUBSCRIBE</button>\r\n            </div>\r\n            <div class=\"social-icons\">\r\n                <a href=\"https://facebook.com\" target=\"_blank\"><i class=\"fa-brands fa-facebook-f\"></i></a>\r\n                <a href=\"https://youtube.com\" target=\"_blank\"><i class=\"fa-brands fa-youtube\"></i></a>\r\n                <a href=\"https://instagram.com\" target=\"_blank\"><i class=\"fa-brands fa-instagram\"></i></a>\r\n                <a href=\"https://tiktok.com\" target=\"_blank\"><i class=\"fa-brands fa-tiktok\"></i></a>\r\n            </div>\r\n        </div>\r\n\r\n        <div>\r\n            <h4>PRODUCT NAVIGATOR</h4>\r\n            <a href=\"shop.html?category=Cosmetics\">Cosmetics</a>\r\n            <a href=\"shop.html?category=Skin Care\">Skin Care</a>\r\n            <a href=\"shop.html?category=Hair Care\">Hair Care</a>\r\n            <a href=\"shop.html?category=Body Care\">Body Care</a>\r\n            <a href=\"shop.html?category=Fragrance\">Fragrance</a>\r\n            <a href=\"shop.html?category=Beauty Tools\">Beauty Tools</a>\r\n        </div>\r\n\r\n        <div>\r\n            <h4>ABOUT US</h4>\r\n            <a href=\"about.html\">Our Mission</a>\r\n            <a href=\"#\">Contact Us</a>\r\n        </div>\r\n\r\n        <div>\r\n            <h4>CUSTOMER SERVICE</h4>\r\n            <a href=\"#\">Visit My Account</a>\r\n            <a href=\"#\">Support</a>\r\n            <a href=\"#\">Delivery Location</a>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"footer-bottom\">\r\n        <p>© 2026 Vendora | The Online Beauty Store</p>\r\n        <p>Terms & Conditions | Privacy Policy | Cookie Policy | Do Not Sell My Personal Information | Vendora</p>\r\n        <p>If you are having problems using this website, please <button>CLICK HERE</button> for assistance.</p>\r\n    </div>\r\n</footer>\r\n\r\n<script src=\"../js/feedback.js\"></script>\r\n<script src=\"../js/form.js\"></script>\r\n<script src=\"../js/main.js\"></script>\r\n<script src=\"../js/routine.js\"></script>\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/src/main/resources/static/html/index.html b/project/src/main/resources/static/html/index.html
+--- a/project/src/main/resources/static/html/index.html	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/src/main/resources/static/html/index.html	(date 1774602293404)
+@@ -67,7 +67,7 @@
+             <img src="../images/sp1.jpg" alt="Blush">
+             <div class="product-name">PIXI - Blush (19g)</div>
+             <div class="product-price">Rs. 1,600</div>
+-            <a href="#" class="btn-primary">Add to Cart</a>
++            <a href="shop.html" class="btn-primary">Add to Cart</a>
+         </div>
+         <div class="product-card">
+             <img src="../images/sp2.webp" alt="Serum">
+Index: project/target/classes/static/html/supplier.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Vendora | Supplier Registration</title>\r\n\r\n    <link rel=\"stylesheet\" href=\"../css/base.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/components.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/footer.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/form.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/layout.css\">\r\n\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css\">\r\n</head>\r\n\r\n<body class=\"home-bg\">\r\n\r\n<section class=\"form-container\">\r\n    <h2 class=\"section-title\">Supplier Registration</h2>\r\n    <p class=\"text-normal\">Join our supplier network and provide quality beauty products to Vendora customers.</p>\r\n\r\n    <form class=\"card\" id=\"registrationForm\" enctype=\"multipart/form-data\">\r\n\r\n        <!-- Personal Information -->\r\n        <h3>Personal Information</h3>\r\n        <label for=\"fullName\">Full Name</label>\r\n        <input id=\"fullName\" type=\"text\" name=\"fullName\" placeholder=\"Rajapaksha Mudiyanselage Avishka Fernando\" required>\r\n\r\n        <label for=\"initialName\">Name with Initials</label>\r\n        <input id=\"initialName\" type=\"text\" name=\"initialName\" placeholder=\"R M A Fernando\" required>\r\n\r\n        <label for=\"nic\">NIC</label>\r\n        <input id=\"nic\" type=\"text\" name=\"nic\" pattern=\"[0-9]{9}[Vv]|[0-9]{12}\" placeholder=\"123456789V\" required>\r\n\r\n        <label for=\"email\">Email Address</label>\r\n        <input id=\"email\" type=\"email\" name=\"email\" placeholder=\"example@email.com\" required>\r\n\r\n        <label for=\"phone\">Phone Number</label>\r\n        <input id=\"phone\" type=\"tel\" name=\"phone\" placeholder=\"0123456789\" pattern=\"0[0-9]{9}\" required>\r\n\r\n        <label for=\"address\">Home / Business Address</label>\r\n        <input id=\"address\" type=\"text\" name=\"address\" placeholder=\"No 123, Street, City\" required>\r\n\r\n        <label for=\"profilePicture\">Profile Picture</label>\r\n        <input id=\"profilePicture\" type=\"file\" name=\"profilePicture\" accept=\"image/*\" required>\r\n\r\n        <!-- Business Information -->\r\n        <h3>Business Information</h3>\r\n        <label for=\"businessName\">Business Name</label>\r\n        <input id=\"businessName\" type=\"text\" name=\"businessName\" placeholder=\"BeautyCo Pvt Ltd\" required>\r\n\r\n        <label for=\"businessRegNumber\">Business Registration Number</label>\r\n        <input id=\"businessRegNumber\" type=\"text\" name=\"businessRegNumber\" placeholder=\"BRN123456\" required>\r\n\r\n        <label for=\"taxNumber\">Tax Identification Number (TIN)</label>\r\n        <input id=\"taxNumber\" type=\"text\" name=\"taxNumber\" placeholder=\"1234567890\" required>\r\n\r\n        <!-- Product Category -->\r\n        <h3>Product Categories</h3>\r\n        <p>Select the product types you want to supply:</p>\r\n        <div class=\"category-checkboxes\">\r\n            <label><input type=\"checkbox\" name=\"productCategories[]\" value=\"cosmetics\"> Cosmetics</label>\r\n            <label><input type=\"checkbox\" name=\"productCategories[]\" value=\"skincare\"> Skincare</label>\r\n            <label><input type=\"checkbox\" name=\"productCategories[]\" value=\"haircare\"> Haircare</label>\r\n            <label><input type=\"checkbox\" name=\"productCategories[]\" value=\"bodycare\"> Bodycare</label>\r\n            <label><input type=\"checkbox\" name=\"productCategories[]\" value=\"fragrance\"> Fragrance</label>\r\n            <label><input type=\"checkbox\" name=\"productCategories[]\" value=\"beautyTools\"> Beauty Tools</label>\r\n        </div>\r\n\r\n        <!-- Product Details -->\r\n        <h3>Product Details</h3>\r\n        <div class=\"form-grid\">\r\n            <div class=\"routine cosmetics\" data-category=\"cosmetics\" style=\"display:none;\">\r\n                <label for=\"cosmeticsProducts\">Cosmetics Product List</label>\r\n                <textarea id=\"cosmeticsProducts\" name=\"cosmeticsProducts\" placeholder=\"List your cosmetics products\"></textarea>\r\n            </div>\r\n            <div class=\"routine skincare\" data-category=\"skincare\" style=\"display:none;\">\r\n                <label for=\"skincareProducts\">Skincare Product List</label>\r\n                <textarea id=\"skincareProducts\" name=\"skincareProducts\" placeholder=\"List your skincare products\"></textarea>\r\n            </div>\r\n            <div class=\"routine haircare\" data-category=\"haircare\" style=\"display:none;\">\r\n                <label for=\"haircareProducts\">Haircare Product List</label>\r\n                <textarea id=\"haircareProducts\" name=\"haircareProducts\" placeholder=\"List your haircare products\"></textarea>\r\n            </div>\r\n            <div class=\"routine bodycare\" data-category=\"bodycare\" style=\"display:none;\">\r\n                <label for=\"bodycareProducts\">Bodycare Product List</label>\r\n                <textarea id=\"bodycareProducts\" name=\"bodycareProducts\" placeholder=\"List your bodycare products\"></textarea>\r\n            </div>\r\n            <div class=\"routine fragrance\" data-category=\"fragrance\" style=\"display:none;\">\r\n                <label for=\"fragranceProducts\">Fragrance Product List</label>\r\n                <textarea id=\"fragranceProducts\" name=\"fragranceProducts\" placeholder=\"List your fragrance products\"></textarea>\r\n            </div>\r\n            <div class=\"routine beautyTools\" data-category=\"beautyTools\" style=\"display:none;\">\r\n                <label for=\"beautyTools\">Beauty Tools Product List</label>\r\n                <textarea id=\"beautyTools\" name=\"beautyTools\" placeholder=\"List your beauty tools products\"></textarea>\r\n            </div>\r\n        </div>\r\n\r\n        <!-- Upload Documents -->\r\n        <h3>Upload Documents</h3>\r\n        <label for=\"businessCert\">Business Registration Certificate</label>\r\n        <input id=\"businessCert\" type=\"file\" name=\"businessCert\" accept=\".pdf,.jpg,.png\" required>\r\n\r\n        <label for=\"productPdf\">Product Catalog / Images (PDF)</label>\r\n        <input id=\"productPdf\" type=\"file\" name=\"productPdf\" accept=\".pdf\" required>\r\n\r\n        <label for=\"certifications\">Regulatory / Compliance Certificates (Optional)</label>\r\n        <input id=\"certifications\" type=\"file\" name=\"certifications\" accept=\".pdf,.jpg,.png\">\r\n\r\n        <!-- Policies -->\r\n        <h3>Policies</h3>\r\n        <p>Please review our policies before submitting your supplier registration.</p>\r\n        <div class=\"policy-buttons\">\r\n            <a href=\"Terms.html\" class=\"btn-secondary\" target=\"_blank\">View Terms & Conditions</a>\r\n            <a href=\"Privacy.html\" class=\"btn-secondary\" target=\"_blank\">View Privacy Policy</a>\r\n        </div>\r\n\r\n        <!-- Agreement -->\r\n        <h3>Agreement</h3>\r\n        <label class=\"checkbox\">\r\n            <input type=\"checkbox\" name=\"agreement\" required>\r\n            I confirm that all information provided is accurate, and I agree to Vendora Terms and Privacy Policy.\r\n        </label>\r\n\r\n        <!-- Form Buttons -->\r\n        <div class=\"form-actions\">\r\n            <button type=\"submit\" class=\"btn-primary\">Submit Registration</button>\r\n            <button type=\"button\" class=\"btn-cancel\" onclick=\"cancelForm()\">Cancel</button>\r\n        </div>\r\n    </form>\r\n</section>\r\n\r\n<footer class=\"footer\">\r\n    <div class=\"footer-bottom\">© 2026 Vendora | The Online Beauty Store</div>\r\n</footer>\r\n\r\n<script src=\"../js/form.js\"></script>\r\n<script src=\"../js/main.js\"></script>\r\n<script src=\"../js/delivery.js\"></script>\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/classes/static/html/supplier.html b/project/target/classes/static/html/supplier.html
+--- a/project/target/classes/static/html/supplier.html	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/static/html/supplier.html	(date 1774602155795)
+@@ -24,7 +24,6 @@
+ 
+     <form class="card" id="registrationForm" enctype="multipart/form-data">
+ 
+-        <!-- Personal Information -->
+         <h3>Personal Information</h3>
+         <label for="fullName">Full Name</label>
+         <input id="fullName" type="text" name="fullName" placeholder="Rajapaksha Mudiyanselage Avishka Fernando" required>
+@@ -47,7 +46,7 @@
+         <label for="profilePicture">Profile Picture</label>
+         <input id="profilePicture" type="file" name="profilePicture" accept="image/*" required>
+ 
+-        <!-- Business Information -->
++
+         <h3>Business Information</h3>
+         <label for="businessName">Business Name</label>
+         <input id="businessName" type="text" name="businessName" placeholder="BeautyCo Pvt Ltd" required>
+@@ -58,7 +57,7 @@
+         <label for="taxNumber">Tax Identification Number (TIN)</label>
+         <input id="taxNumber" type="text" name="taxNumber" placeholder="1234567890" required>
+ 
+-        <!-- Product Category -->
++
+         <h3>Product Categories</h3>
+         <p>Select the product types you want to supply:</p>
+         <div class="category-checkboxes">
+@@ -70,7 +69,6 @@
+             <label><input type="checkbox" name="productCategories[]" value="beautyTools"> Beauty Tools</label>
+         </div>
+ 
+-        <!-- Product Details -->
+         <h3>Product Details</h3>
+         <div class="form-grid">
+             <div class="routine cosmetics" data-category="cosmetics" style="display:none;">
+@@ -99,7 +97,6 @@
+             </div>
+         </div>
+ 
+-        <!-- Upload Documents -->
+         <h3>Upload Documents</h3>
+         <label for="businessCert">Business Registration Certificate</label>
+         <input id="businessCert" type="file" name="businessCert" accept=".pdf,.jpg,.png" required>
+@@ -110,22 +107,20 @@
+         <label for="certifications">Regulatory / Compliance Certificates (Optional)</label>
+         <input id="certifications" type="file" name="certifications" accept=".pdf,.jpg,.png">
+ 
+-        <!-- Policies -->
++
+         <h3>Policies</h3>
+         <p>Please review our policies before submitting your supplier registration.</p>
+         <div class="policy-buttons">
+-            <a href="Terms.html" class="btn-secondary" target="_blank">View Terms & Conditions</a>
+-            <a href="Privacy.html" class="btn-secondary" target="_blank">View Privacy Policy</a>
++            <a href="terms.html" class="btn-secondary" target="_blank">View Terms & Conditions</a>
++            <a href="privacy.html" class="btn-secondary" target="_blank">View Privacy Policy</a>
+         </div>
+ 
+-        <!-- Agreement -->
+         <h3>Agreement</h3>
+         <label class="checkbox">
+             <input type="checkbox" name="agreement" required>
+             I confirm that all information provided is accurate, and I agree to Vendora Terms and Privacy Policy.
+         </label>
+ 
+-        <!-- Form Buttons -->
+         <div class="form-actions">
+             <button type="submit" class="btn-primary">Submit Registration</button>
+             <button type="button" class="btn-cancel" onclick="cancelForm()">Cancel</button>
+@@ -137,8 +132,8 @@
+     <div class="footer-bottom">© 2026 Vendora | The Online Beauty Store</div>
+ </footer>
+ 
++<script src="../js/delivery.js"></script>
+ <script src="../js/form.js"></script>
+ <script src="../js/main.js"></script>
+-<script src="../js/delivery.js"></script>
+ </body>
+ </html>
+\ No newline at end of file
+Index: project/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># DATABASE CONFIGURATION\r\nspring.datasource.url=jdbc:mysql://localhost:3306/vendora?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8\r\nspring.datasource.username=root\r\nspring.datasource.password=Sharki@123\r\nspring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver\r\n\r\n# CONNECTION POOL (HikariCP - Default)\r\nspring.datasource.hikari.minimum-idle=5\r\nspring.datasource.hikari.maximum-pool-size=20\r\nspring.datasource.hikari.idle-timeout=30000\r\nspring.datasource.hikari.max-lifetime=1800000\r\nspring.datasource.hikari.connection-timeout=20000\r\n\r\n# JPA / HIBERNATE CONFIGURATION\r\nspring.jpa.hibernate.ddl-auto=update\r\nspring.jpa.show-sql=true\r\nspring.jpa.properties.hibernate.format_sql=true\r\nspring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect\r\n\r\n# SERVER CONFIGURATION\r\nserver.port=8080\r\n\r\n# LOGGING\r\nlogging.level.org.hibernate.SQL=DEBUG\r\nlogging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/project/src/main/resources/application.properties b/project/src/main/resources/application.properties
+--- a/project/src/main/resources/application.properties	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/src/main/resources/application.properties	(date 1774613664552)
+@@ -22,4 +22,8 @@
+ 
+ # LOGGING
+ logging.level.org.hibernate.SQL=DEBUG
+-logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+\ No newline at end of file
++logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
++
++# TEMP LOGIN FOR TESTING
++spring.security.user.name=admin
++spring.security.user.password=12345
+\ No newline at end of file
+Index: project/target/classes/static/css/footer.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/* Footer Styles */\r\n\r\n.footer-bottom {        /* Bottom Section */\r\n    border-top: 1px solid #333;\r\n    padding-top: 20px;\r\n    margin-top: 40px;\r\n    text-align: center;\r\n    font-size: 14px;\r\n    line-height: 1.6;\r\n    color: #cccccc;\r\n}\r\n\r\n.footer-bottom button {\r\n    background: none;\r\n    border: none;\r\n    color: var(--brand-color);\r\n    font-weight: 600;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    margin-left: 5px;\r\n}\r\n\r\n.footer-bottom button:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.footer-grid {      /* Grid Layout */\r\n    display: grid;\r\n    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));\r\n    gap: 40px;\r\n    max-width: 1200px;\r\n    margin: auto;\r\n}\r\n\r\n.footer a {     /* Links */\r\n    color: #cccccc;\r\n    display: block;\r\n    margin-bottom: 8px;\r\n    text-decoration: none;\r\n    font-size: 17px;\r\n    transition: color 0.2s ease;\r\n}\r\n\r\n.footer a:hover {\r\n    color: #ffffff;\r\n}\r\n\r\n.footer {       /* Main Container */\r\n    background: #1A1A1A;\r\n    color: #ffffff;\r\n    padding: 50px 60px;\r\n    width: 100%;\r\n    font-family: 'Roboto Condensed', sans-serif;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.footer h4 {    /* Section Titles */\r\n    margin-bottom: 15px;\r\n    color: #FFF36E;\r\n    font-size: 16px;\r\n    letter-spacing: 0.5px;\r\n}\r\n\r\n.social-icons {     /* Social Icons */\r\n    display: flex;\r\n    gap: 12px;\r\n    margin-top: 15px;\r\n}\r\n\r\n.social-icons a {\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    width: 32px;\r\n    height: 32px;\r\n    border-radius: 50%;\r\n    background: #333333;\r\n    color: #ffffff;\r\n    font-size: 16px;\r\n    transition: background 0.2s, transform 0.2s;\r\n}\r\n\r\n.social-icons a:hover {\r\n    background: var(--brand-color);\r\n    transform: scale(1.1);\r\n}\r\n\r\n.footer-subscribe {     /* Subscribe Section */\r\n    display: flex;\r\n    flex-direction: column;\r\n    gap: 10px;\r\n}\r\n\r\n.subscribe-input {\r\n    display: flex;\r\n    gap: 10px;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.subscribe-input input {\r\n    flex: 1;\r\n    padding: 10px 12px;\r\n    border: none;\r\n    outline: none;\r\n    background: #dddddd;\r\n    border-radius: 5px;\r\n    font-size: 14px;\r\n}\r\n\r\n.subscribe-input button {\r\n    background: var(--brand-color);\r\n    color: #fff;\r\n    border: none;\r\n    padding: 10px 16px;\r\n    border-radius: 5px;\r\n    cursor: pointer;\r\n    transition: opacity 0.2s ease;\r\n}\r\n\r\n.subscribe-input button:hover {\r\n    opacity: 0.9;\r\n}\r\n\r\n.footer-subscribe p {\r\n    font-size: 14px;\r\n    color: #cccccc;\r\n}\r\n\r\n/* Responsive Footer */\r\n@media (max-width: 768px) {\r\n    .footer {\r\n        padding: 40px 25px;\r\n    }\r\n\r\n    .footer-bottom {\r\n        font-size: 13px;\r\n        line-height: 1.5;\r\n    }\r\n\r\n    .footer-grid {\r\n        grid-template-columns: 1fr;\r\n        gap: 30px;\r\n        text-align: center;\r\n    }\r\n\r\n    .social-icons {\r\n        justify-content: center;\r\n    }\r\n\r\n    .subscribe-input {\r\n        flex-direction: column;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/classes/static/css/footer.css b/project/target/classes/static/css/footer.css
+--- a/project/target/classes/static/css/footer.css	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/static/css/footer.css	(date 1774602155763)
+@@ -28,8 +28,9 @@
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+     gap: 40px;
+-    max-width: 1200px;
++    max-width: 1600px;
+     margin: auto;
++    text-align: center;
+ }
+ 
+ .footer a {     /* Links */
+@@ -37,6 +38,7 @@
+     display: block;
+     margin-bottom: 8px;
+     text-decoration: none;
++    text-align: center;
+     font-size: 17px;
+     transition: color 0.2s ease;
+ }
+Index: project/target/classes/static/css/layout.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/* Container & Grids*/\r\n\r\n/* Container */\r\n.container {\r\n    width: 100%;\r\n    max-width: 1300px;\r\n    margin: 0 auto;\r\n    padding: 0 20px;\r\n}\r\n\r\n*, *::before, *::after {\r\n    box-sizing: border-box;\r\n}\r\n\r\n.form-container {\r\n    background-image: url('../images/b2.png');\r\n    background-repeat: no-repeat;\r\n    background-position: center;\r\n    background-size: cover;\r\n    background-attachment: fixed;\r\n    padding: 40px;\r\n    border-radius: 10px;\r\n    box-shadow: 0 4px 15px rgba(0,0,0,0.2);\r\n    box-sizing: border-box;\r\n    width: 100%;\r\n    max-width: 800px;\r\n    margin: 0 auto;\r\n}\r\n\r\n/* Grid System */\r\n.category-grid,\r\n.partner-grid,\r\n.product-grid,\r\n.routine-grid {\r\n    display: grid;\r\n    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\r\n    gap: 20px;\r\n}\r\n\r\n#feedbackGrid {\r\n    display: grid;\r\n    grid-template-columns: repeat(4, 1fr);\r\n    gap: 20px;\r\n}\r\n\r\n/* Section Alignment */\r\n.about-section,\r\n.beauty-promise-section,\r\n.mission-section,\r\n.product-section,\r\n.why-choose-section {\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    flex-direction: column;\r\n\r\n    text-align: center;\r\n    padding: 40px 20px;\r\n    width: 100%;\r\n    box-sizing: border-box;\r\n}\r\n\r\n/* Responsive */\r\n@media (max-width: 768px) {\r\n    .container {\r\n        padding: 30px 15px;\r\n    }\r\n    .grid-3 {\r\n        display: grid;\r\n        grid-template-columns: repeat(3, 1fr);\r\n        gap: 20px;\r\n    }\r\n    .category-grid,\r\n    .partner-grid,\r\n    .product-grid,\r\n    .routine-grid {\r\n        grid-template-columns: 1fr;\r\n    }\r\n\r\n    .about-section img,\r\n    .mission-section img,\r\n    .why-choose-section img,\r\n    .beauty-promise-section img,\r\n    .home-bg img,\r\n    .form-container img {\r\n        width: 100%;\r\n        max-width: 100%;\r\n        height: auto;\r\n        object-fit: cover;\r\n        display: block;\r\n    }\r\n\r\n    .form-container {\r\n        padding: 20px;\r\n        background-attachment: scroll;\r\n        border-radius: 8px;\r\n    }\r\n\r\n    body {\r\n        font-size: 14px;\r\n        line-height: 1.5;\r\n    }\r\n}\r\n\r\n@media (max-width: 900px) {\r\n    .grid-3 {\r\n        grid-template-columns: 1fr;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/classes/static/css/layout.css b/project/target/classes/static/css/layout.css
+--- a/project/target/classes/static/css/layout.css	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/static/css/layout.css	(date 1774602155782)
+@@ -48,7 +48,8 @@
+ .beauty-promise-section,
+ .mission-section,
+ .product-section,
+-.why-choose-section {
++.why-choose-section,
++.service-section    {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+@@ -60,6 +61,11 @@
+     box-sizing: border-box;
+ }
+ 
++.page-header {
++    text-align: center;
++    margin: 40px 0;
++}
++
+ /* Responsive */
+ @media (max-width: 768px) {
+     .container {
+@@ -90,6 +96,10 @@
+         display: block;
+     }
+ 
++    .service-section {
++        padding: 15px;
++    }
++
+     .form-container {
+         padding: 20px;
+         background-attachment: scroll;
+Index: project/target/classes/static/css/base.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/*  Fonts, Global Styles, Reset, and Variables */\r\n\r\n/* CSS Reset & Box Sizing */\r\n* {\r\n    margin: 0;\r\n    padding: 0;\r\n    box-sizing: border-box;\r\n}\r\n\r\nhtml, body {\r\n    width: 100%;\r\n    height: 100%;\r\n    margin: 0;\r\n    font-family: 'Roboto Condensed', sans-serif;\r\n    color: Black;\r\n    line-height: 1.6;\r\n    overflow-x: hidden;\r\n}\r\n\r\nbody {      /* Flex container for sticky footer */\r\n    display: flex;\r\n    flex-direction: column;\r\n    min-height: 100vh;\r\n    background: url('../images/b1.jpg') no-repeat center center fixed;\r\n    background-size: cover;\r\n    background-position: center;\r\n    background-color: #f7f7f7;\r\n}\r\n\r\n.page-wrapper {     /* Page wrapper to push footer down */\r\n    flex: 1;\r\n}\r\n\r\n:root {     /* CSS Variables */\r\n    --brand-color: #DB7093;    /* Primary Brand Color */\r\n    --text-main: #333333;      /* Main Text Color */\r\n    --heading-color: #222222;  /* Headings Color */\r\n    --bg-light: #f7f7f7;       /* Light Background */\r\n    --bg-dark: #1A1A1A;        /* Dark Background */\r\n}\r\n\r\n/* Global Image Control */\r\n.about-section img,\r\n.beauty-promise-section img,\r\n.mission-section img,\r\n.why-choose-section img {\r\n    width: 100%;\r\n    max-width: 500px;\r\n    height: auto;\r\n    display: block;\r\n}\r\n\r\nh1, h2, h3, h4, h5, h6 {        /* Headings Font */\r\n    font-family: 'Playfair Display', serif;\r\n    color: var(--heading-color);\r\n    line-height: 1.3;\r\n    margin-bottom: 15px; /* space below all headings */\r\n}\r\n\r\nh2 {\r\n    margin-top: 40px; /* extra gap for section titles */\r\n}\r\n\r\n.section-title {\r\n    margin: 20px 0 20px; /* fixed invalid -10 value */\r\n}\r\n\r\nimg {       /* Images */\r\n    max-width: 100%;\r\n    height: auto;\r\n    object-fit: cover;\r\n    display: block;\r\n}\r\n\r\na {     /* Links */\r\n    text-decoration: none;\r\n    color: inherit;\r\n}\r\n\r\nul, ol {        /* Lists */\r\n    list-style: none;\r\n    padding-left: 0;\r\n}\r\n\r\n.hidden {       /* Utility Classes */\r\n    display: none !important;\r\n}\r\n\r\np {     /* Typography Helpers */\r\n    margin-bottom: 1rem;\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/classes/static/css/base.css b/project/target/classes/static/css/base.css
+--- a/project/target/classes/static/css/base.css	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/static/css/base.css	(date 1774602155695)
+@@ -88,4 +88,15 @@
+ 
+ p {     /* Typography Helpers */
+     margin-bottom: 1rem;
++}
++
++/* SERVICE PAGE TEXT */
++.service-section h2 {
++    margin-bottom: 15px;
++    font-size: 1.6rem;
++}
++
++.service-section ul li {
++    margin: 8px 0;
++    line-height: 1.6;
+ }
+\ No newline at end of file
+Index: project/src/main/java/com/vendora/controller/PageController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.vendora.controller;\r\n\r\nimport org.springframework.stereotype.Controller;\r\nimport org.springframework.web.bind.annotation.GetMapping;\r\n\r\n@Controller\r\npublic class PageController {\r\n\r\n    @GetMapping(\"/\")\r\n    public String home(){\r\n        return \"index\";\r\n    }\r\n\r\n    @GetMapping(\"/shop\")\r\n    public String shop(){\r\n        return \"shop\";\r\n    }\r\n\r\n    @GetMapping(\"/about\")\r\n    public String about(){\r\n        return \"about\";\r\n    }\r\n\r\n    @GetMapping(\"/learn\")\r\n    public String learn(){\r\n        return \"learn\";\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/src/main/java/com/vendora/controller/PageController.java b/project/src/main/java/com/vendora/controller/PageController.java
+--- a/project/src/main/java/com/vendora/controller/PageController.java	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/src/main/java/com/vendora/controller/PageController.java	(date 1774616098747)
+@@ -8,22 +8,22 @@
+ 
+     @GetMapping("/")
+     public String home(){
+-        return "index";
++        return "forward:/html/index.html";
+     }
+ 
+     @GetMapping("/shop")
+     public String shop(){
+-        return "shop";
++        return "forward:/html/shop.html";
+     }
+ 
+     @GetMapping("/about")
+     public String about(){
+-        return "about";
++        return "forward:/html/about.html";
+     }
+ 
+     @GetMapping("/learn")
+     public String learn(){
+-        return "learn";
++        return "forward:/html/service.html";
+     }
+ 
+ }
+\ No newline at end of file
+Index: project/target/classes/static/css/components.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/* Cards & UI Blocks */\r\n\r\n/* GLOBAL UI */\r\nbutton {\r\n    cursor: pointer;\r\n    font-family: inherit;\r\n}\r\n\r\n/* CARD BASE (ALL CARDS) */\r\n.partner-card,\r\n.product-card,\r\n.routine-card,\r\n.feedback-card {\r\n    background: #fff;\r\n    border-radius: 10px;\r\n    padding: 20px;\r\n\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    text-align: center;\r\n\r\n    box-shadow: 0 6px 18px rgba(0,0,0,0.08);\r\n    overflow: hidden;\r\n    transition: transform 0.2s ease;\r\n}\r\n\r\n.partner-card:hover,\r\n.product-card:hover,\r\n.routine-card:hover {\r\n    transform: translateY(-4px);\r\n}\r\n\r\n/* CARD IMAGES */\r\n.partner-card img,\r\n.product-card img,\r\n.routine-card img {\r\n    width: 100%;\r\n    border-radius: 10px;\r\n}\r\n\r\n.product-card img {\r\n    height: 220px;\r\n    object-fit: cover;\r\n}\r\n\r\n/* CARD BUTTONS */\r\n.partner-card a,\r\n.product-card a,\r\n.routine-card a {\r\n    display: inline-block;\r\n    margin-top: 10px;\r\n    padding: 8px 16px;\r\n    background: var(--brand-color);\r\n    color: #fff;\r\n    border-radius: 8px;\r\n    text-decoration: none;\r\n    font-size: 14px;\r\n}\r\n\r\n.partner-card a:hover,\r\n.product-card a:hover,\r\n.routine-card a:hover {\r\n    opacity: 0.9;\r\n}\r\n\r\n/* PRODUCT TEXT */\r\n.product-name {\r\n    margin-top: 12px;\r\n    font-size: 15px;\r\n}\r\n\r\n.product-price {\r\n    margin: 6px 0 10px;\r\n    font-size: 15px;\r\n    font-weight: 600;\r\n    color: var(--brand-color);\r\n}\r\n\r\n/* FEEDBACK SECTION */\r\n#feedbackSection {\r\n    padding: 10px 20px;\r\n    margin-bottom: 30px; /* Gap before footer */\r\n}\r\n\r\n/* Feedback Grid */\r\n.feedback-grid {\r\n    display: grid;\r\n    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\r\n    gap: 20px;\r\n}\r\n\r\n/* Feedback Card */\r\n.feedback-card {\r\n    background: #fff;\r\n    padding: 20px;\r\n    border-radius: 10px;\r\n    box-shadow: 0 4px 8px rgba(0,0,0,0.1);\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: flex-start;\r\n    overflow: visible; /* show full content */\r\n}\r\n\r\n.feedback-card h4 {\r\n    font-size: 1.1rem;\r\n    font-weight: 600;\r\n    color: #222;\r\n    margin-bottom: 6px;\r\n}\r\n\r\n.feedback-role {\r\n    font-size: 0.85rem;\r\n    color: #777;\r\n    text-transform: capitalize;\r\n    margin-bottom: 8px;\r\n}\r\n\r\n.feedback-role::before {\r\n    content: \"● \";\r\n    font-size: 0.7rem;\r\n}\r\n\r\n.feedback-card[data-role=\"customer\"] .feedback-role {   color: #2a7be4; }\r\n.feedback-card[data-role=\"supplier\"] .feedback-role {   color: #28a745; }\r\n.feedback-card[data-role=\"delivery\"] .feedback-role {   color: #ff9800; }\r\n\r\n.feedback-rating {\r\n    font-size: 1rem;\r\n    color: #f5a623;\r\n    letter-spacing: 2px;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.feedback-message {\r\n    font-size: 0.95rem;\r\n    color: #444;\r\n    line-height: 1.5;\r\n    word-wrap: break-word;\r\n    display: block !important;\r\n    overflow: visible !important;\r\n}\r\n\r\n/* Style See More button */\r\n#feedbackSection .see-more {\r\n    margin-top: 20px;\r\n    text-align: right;\r\n}\r\n\r\n#feedbackSection .see-more a {\r\n    display: inline-block;\r\n    padding: 8px 16px;\r\n    background-color: var(--brand-color);\r\n    color: #fff;\r\n    border-radius: 8px;\r\n    font-weight: 800;\r\n    text-decoration: none;\r\n    transition: 0.4s;\r\n}\r\n\r\n#feedbackSection .see-more a:hover {\r\n    background-color: #c95c85;\r\n}\r\n\r\n/* Role Colors */\r\n.feedback-card[data-role=\"customer\"] .feedback-role { color: #2a7be4; }\r\n.feedback-card[data-role=\"supplier\"] .feedback-role { color: #28a745; }\r\n.feedback-card[data-role=\"delivery\"] .feedback-role { color: #ff9800; }\r\n\r\n/* ABOUT SECTION */\r\n.about-bg {\r\n    width: 100%;\r\n    object-fit: cover;\r\n}\r\n\r\n.about-card {\r\n    position: relative;\r\n    max-width: 1000px;\r\n    margin: 20px auto;\r\n    border-radius: 10px;\r\n    overflow: hidden;\r\n    padding: 20px;\r\n}\r\n\r\n.about-text,       /* About Text */\r\n.text-box {\r\n    background: rgba(255,255,255,0.9);\r\n    border-radius: 10px;\r\n}\r\n\r\n.about-text {\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 40px;\r\n    transform: translateY(-50%);\r\n    max-width: 500px;\r\n    padding: 25px 30px;\r\n}\r\n\r\n.about-text h2 {\r\n    font-size: 2rem;\r\n    font-weight: 700;\r\n    color: var(--heading-color);\r\n    margin-bottom: 15px;\r\n}\r\n\r\n.about-text p,\r\n.about-text ul {\r\n    font-size: 16px;\r\n    line-height: 1.6;\r\n}\r\n\r\n.about-card.right-text .about-text {    /* Variants */\r\n    right: 40px;\r\n    left: auto;\r\n}\r\n\r\n.about-card.bottom-text .about-text {\r\n    top: auto;\r\n    bottom: 20px;\r\n    left: 50%;\r\n    transform: translateX(-50%);\r\n    text-align: center;\r\n    max-width: 90%;\r\n}\r\n\r\n.about-card.center-text .about-text {\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n    text-align: center;\r\n    max-width: 90%;\r\n}\r\n\r\n.text-box {         /* UI BLOCK */\r\n    padding: 20px;\r\n    max-width: 500px;\r\n    width: 100%;\r\n    box-shadow: 0 5px 15px rgba(0,0,0,0.1);\r\n    margin: 20px 0;\r\n}\r\n\r\n/* PROFILE DROPDOWN */\r\n.profile-menu {\r\n    position: relative;\r\n    display: inline-block;\r\n}\r\n\r\n.profile-menu img {\r\n    width: 40px;\r\n    height: 40px;\r\n    border-radius: 50%;\r\n    object-fit: cover;\r\n    cursor: pointer;\r\n    border: 2px solid #ddd;\r\n}\r\n\r\n.dropdown {\r\n    position: absolute;\r\n    right: 0;\r\n    top: 50px;\r\n    background: #fff;\r\n    border: 1px solid #ddd;\r\n    border-radius: 10px;\r\n    width: 180px;\r\n    padding: 10px;\r\n    box-shadow: 0 4px 12px rgba(0,0,0,0.1);\r\n    z-index: 100;\r\n}\r\n\r\n.dropdown button {\r\n    width: 100%;\r\n    padding: 8px;\r\n    border: none;\r\n    background: none;\r\n    text-align: left;\r\n}\r\n\r\n.dropdown button:hover {\r\n    background: #f5f5f5;\r\n}\r\n\r\n/* RESPONSIVE */\r\n@media (max-width: 768px) {\r\n    .about-text {\r\n        position: static;\r\n        transform: none;\r\n        max-width: 100%;\r\n        margin-top: 15px;\r\n    }\r\n\r\n    .about-text h2 { font-size: 1.5rem; }\r\n    .about-text p,\r\n    .about-text ul { font-size: 14px; }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/classes/static/css/components.css b/project/target/classes/static/css/components.css
+--- a/project/target/classes/static/css/components.css	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/static/css/components.css	(date 1774602155732)
+@@ -26,6 +26,18 @@
+     transition: transform 0.2s ease;
+ }
+ 
++/* SERVICE CARDS */
++.service-section {
++    border-radius: 16px;
++    box-shadow: 0 4px 12px rgba(0,0,0,0.28);
++    transition: 0.3s ease;
++    width: 80px;
++}
++
++.service-section:hover {
++    transform: translateY(-5px);
++}
++
+ .partner-card:hover,
+ .product-card:hover,
+ .routine-card:hover {
+@@ -241,6 +253,14 @@
+     margin: 20px 0;
+ }
+ 
++/* CONTACT FORM BOX */
++.contact-form {
++    margin-top: 20px;
++    padding: 20px;
++    background: #f9f9f9;
++    border-radius: 12px;
++}
++
+ /* PROFILE DROPDOWN */
+ .profile-menu {
+     position: relative;
+Index: project/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0\r\n https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n\r\n    <modelVersion>4.0.0</modelVersion>\r\n\r\n    <parent>\r\n        <groupId>org.springframework.boot</groupId>\r\n        <artifactId>spring-boot-starter-parent</artifactId>\r\n        <version>3.3.5</version>\r\n    </parent>\r\n\r\n    <groupId>com.vendora</groupId>\r\n    <artifactId>vendora</artifactId>\r\n    <version>0.0.1-SNAPSHOT</version>\r\n\r\n    <name>Vendora - Online Beauty Store</name>\r\n    <description>Year 2 Semester 2 Group Project</description>\r\n\r\n    <properties>\r\n        <java.version>21</java.version>\r\n        <jjwt.version>0.11.5</jjwt.version>\r\n    </properties>\r\n\r\n    <!-- ================= DEPENDENCIES ================= -->\r\n\r\n    <dependencies>\r\n\r\n        <!-- WEB -->\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-web</artifactId>\r\n        </dependency>\r\n\r\n        <!-- JPA -->\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-data-jpa</artifactId>\r\n        </dependency>\r\n\r\n        <!-- SECURITY -->\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-security</artifactId>\r\n        </dependency>\r\n\r\n        <!-- THYMELEAF -->\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-thymeleaf</artifactId>\r\n        </dependency>\r\n\r\n        <!-- EMAIL -->\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-mail</artifactId>\r\n        </dependency>\r\n\r\n        <!-- MYSQL -->\r\n        <dependency>\r\n            <groupId>com.mysql</groupId>\r\n            <artifactId>mysql-connector-j</artifactId>\r\n            <scope>runtime</scope>\r\n        </dependency>\r\n\r\n        <!-- JWT -->\r\n        <dependency>\r\n            <groupId>io.jsonwebtoken</groupId>\r\n            <artifactId>jjwt-api</artifactId>\r\n            <version>${jjwt.version}</version>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>io.jsonwebtoken</groupId>\r\n            <artifactId>jjwt-impl</artifactId>\r\n            <version>${jjwt.version}</version>\r\n            <scope>runtime</scope>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>io.jsonwebtoken</groupId>\r\n            <artifactId>jjwt-jackson</artifactId>\r\n            <version>${jjwt.version}</version>\r\n            <scope>runtime</scope>\r\n        </dependency>\r\n\r\n        <!-- VALIDATION -->\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-validation</artifactId>\r\n        </dependency>\r\n\r\n        <!-- PDF -->\r\n        <dependency>\r\n            <groupId>com.itextpdf</groupId>\r\n            <artifactId>kernel</artifactId>\r\n            <version>7.2.5</version>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>com.itextpdf</groupId>\r\n            <artifactId>layout</artifactId>\r\n            <version>7.2.5</version>\r\n        </dependency>\r\n\r\n        <!-- TEST -->\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-test</artifactId>\r\n            <scope>test</scope>\r\n        </dependency>\r\n\r\n    </dependencies>\r\n\r\n    <!-- ================= BUILD ================= -->\r\n\r\n    <build>\r\n        <plugins>\r\n\r\n            <plugin>\r\n                <groupId>org.springframework.boot</groupId>\r\n                <artifactId>spring-boot-maven-plugin</artifactId>\r\n            </plugin>\r\n\r\n        </plugins>\r\n    </build>\r\n\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/pom.xml b/project/pom.xml
+--- a/project/pom.xml	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/pom.xml	(date 1774620760039)
+@@ -2,7 +2,7 @@
+ <project xmlns="http://maven.apache.org/POM/4.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+- https://maven.apache.org/xsd/maven-4.0.0.xsd">
++         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+ 
+     <modelVersion>4.0.0</modelVersion>
+ 
+@@ -10,6 +10,7 @@
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-parent</artifactId>
+         <version>3.3.5</version>
++        <relativePath/>
+     </parent>
+ 
+     <groupId>com.vendora</groupId>
+@@ -25,7 +26,6 @@
+     </properties>
+ 
+     <!-- ================= DEPENDENCIES ================= -->
+-
+     <dependencies>
+ 
+         <!-- WEB -->
+@@ -115,15 +115,33 @@
+     </dependencies>
+ 
+     <!-- ================= BUILD ================= -->
+-
+     <build>
+         <plugins>
+-
+             <plugin>
+                 <groupId>org.springframework.boot</groupId>
+                 <artifactId>spring-boot-maven-plugin</artifactId>
+             </plugin>
+ 
++            <plugin>
++                <groupId>org.jacoco</groupId>
++                <artifactId>jacoco-maven-plugin</artifactId>
++                <version>0.8.14</version>
++                <executions>
++                    <execution>
++                        <id>prepare-agent</id>
++                        <goals>
++                            <goal>prepare-agent</goal>
++                        </goals>
++                    </execution>
++                    <execution>
++                        <id>report</id>
++                        <phase>test</phase>
++                        <goals>
++                            <goal>report</goal>
++                        </goals>
++                    </execution>
++                </executions>
++            </plugin>
+         </plugins>
+     </build>
+ 
+Index: project/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>com\\vendora\\service\\impl\\UserServiceImpl.class\r\ncom\\vendora\\model\\Role.class\r\ncom\\vendora\\VendoraApplication.class\r\ncom\\vendora\\repository\\RoleRepository.class\r\ncom\\vendora\\controller\\PageController.class\r\ncom\\vendora\\common\\ApiResponse.class\r\ncom\\vendora\\model\\User.class\r\ncom\\vendora\\dto\\RegisterRequest.class\r\ncom\\vendora\\exception\\GlobalExceptionHandler.class\r\ncom\\vendora\\config\\CorsConfig$1.class\r\ncom\\vendora\\repository\\UserRepository.class\r\ncom\\vendora\\dto\\LoginRequest.class\r\ncom\\vendora\\service\\UserService.class\r\ncom\\vendora\\config\\SecurityConfig.class\r\nDatabaseConfig.class\r\ncom\\vendora\\config\\CorsConfig.class\r\ncom\\vendora\\controller\\AuthController.class\r\ncom\\vendora\\common\\UserRole.class\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst b/project/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+--- a/project/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst	(date 1774620895449)
+@@ -10,6 +10,7 @@
+ com\vendora\config\CorsConfig$1.class
+ com\vendora\repository\UserRepository.class
+ com\vendora\dto\LoginRequest.class
++com\vendora\config\DataInitializer.class
+ com\vendora\service\UserService.class
+ com\vendora\config\SecurityConfig.class
+ DatabaseConfig.class
+Index: project/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>D:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\common\\ApiResponse.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\common\\Constants.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\common\\UserRole.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\config\\CorsConfig.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\config\\DatabaseConfig.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\controller\\AuthController.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\controller\\PageController.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\controller\\UserController.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\dto\\LoginRequest.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\dto\\RegisterRequest.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\dto\\UserResponse.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\exception\\GlobalExceptionHandler.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\exception\\ResourceNotFoundException.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\model\\Role.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\model\\User.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\repository\\RoleRepository.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\repository\\UserRepository.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\security\\SecurityConfig.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\service\\AuthService.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\service\\UserService.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\service\\UserServiceImpl.java\r\nD:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project\\src\\main\\java\\com\\vendora\\VendoraApplication.java\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst b/project/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+--- a/project/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst	(date 1774620893591)
+@@ -3,6 +3,7 @@
+ D:\SLIIT University\Year 2 - Semester 2\IE2091 - IS Project\Assignment\Vendora-The-Online-Beauty-Store\project\src\main\java\com\vendora\common\UserRole.java
+ D:\SLIIT University\Year 2 - Semester 2\IE2091 - IS Project\Assignment\Vendora-The-Online-Beauty-Store\project\src\main\java\com\vendora\config\CorsConfig.java
+ D:\SLIIT University\Year 2 - Semester 2\IE2091 - IS Project\Assignment\Vendora-The-Online-Beauty-Store\project\src\main\java\com\vendora\config\DatabaseConfig.java
++D:\SLIIT University\Year 2 - Semester 2\IE2091 - IS Project\Assignment\Vendora-The-Online-Beauty-Store\project\src\main\java\com\vendora\config\DataInitializer.java
+ D:\SLIIT University\Year 2 - Semester 2\IE2091 - IS Project\Assignment\Vendora-The-Online-Beauty-Store\project\src\main\java\com\vendora\controller\AuthController.java
+ D:\SLIIT University\Year 2 - Semester 2\IE2091 - IS Project\Assignment\Vendora-The-Online-Beauty-Store\project\src\main\java\com\vendora\controller\PageController.java
+ D:\SLIIT University\Year 2 - Semester 2\IE2091 - IS Project\Assignment\Vendora-The-Online-Beauty-Store\project\src\main\java\com\vendora\controller\UserController.java
+Index: project/target/classes/static/html/delivery.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Vendora | Delivery Partner Registration</title>\r\n\r\n    <link rel=\"stylesheet\" href=\"../css/base.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/components.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/footer.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/form.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/layout.css\">\r\n\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css\">\r\n</head>\r\n\r\n<body class=\"home-bg\">\r\n\r\n<section class=\"form-container\">\r\n    <h2 class=\"section-title\">Delivery Partner Registration</h2>\r\n    <p class=\"text-normal\">Join our delivery network and start delivering products to Vendora customers.</p>\r\n\r\n    <form class=\"card\" id=\"deliveryForm\" enctype=\"multipart/form-data\">\r\n\r\n        <!-- Personal Information -->\r\n        <h3>Personal Information</h3>\r\n        <label for=\"fullName\">Full Name</label>\r\n        <input id=\"fullName\" type=\"text\" name=\"fullName\" placeholder=\"Rajapaksha Mudiyanselage Avishka Fernando\" required>\r\n\r\n        <label for=\"initialName\">Name with Initials</label>\r\n        <input id=\"initialName\" type=\"text\" name=\"initialName\" placeholder=\"R M A Fernando\" required>\r\n\r\n        <label for=\"DOB\">Date of Birth</label>\r\n        <input id=\"DOB\" type=\"date\" name=\"DOB\" required>\r\n\r\n        <label for=\"nic\">NIC</label>\r\n        <input id=\"nic\" type=\"text\" name=\"nic\" pattern=\"[0-9]{9}[Vv]|[0-9]{12}\" placeholder=\"123456789V\" required>\r\n\r\n        <label for=\"email\">Email Address</label>\r\n        <input id=\"email\" type=\"email\" name=\"email\" placeholder=\"example@email.com\" required>\r\n\r\n        <label for=\"phone\">Phone Number</label>\r\n        <input id=\"phone\" type=\"tel\" name=\"phone\" placeholder=\"0123456789\" pattern=\"0[0-9]{9}\" required>\r\n\r\n        <label for=\"address\">Home Address</label>\r\n        <input id=\"address\" type=\"text\" name=\"address\" placeholder=\"No 123, Street, City\" required>\r\n\r\n        <label for=\"profilePicture\">Profile Picture</label>\r\n        <input id=\"profilePicture\" type=\"file\" name=\"profilePicture\" accept=\"image/*\" required>\r\n\r\n        <!-- Emergency Contact -->\r\n        <h3>Emergency Contact</h3>\r\n        <label for=\"emergencyName\">Contact Name</label>\r\n        <input id=\"emergencyName\" type=\"text\" name=\"emergencyName\" placeholder=\"Emergency Name\" required>\r\n\r\n        <label for=\"emergencyPhone\">Contact Phone</label>\r\n        <input id=\"emergencyPhone\" type=\"tel\" name=\"emergencyPhone\" placeholder=\"0123456789\" pattern=\"0[0-9]{9}\" required>\r\n\r\n        <!-- Vehicle Information -->\r\n        <h3>Vehicle Information</h3>\r\n        <label for=\"vehicleFilter\">Select Vehicle</label>\r\n        <select id=\"vehicleFilter\" name=\"vehicle\" required>\r\n            <option value=\"\">Select Vehicle</option>\r\n            <option value=\"bike\">Motor Bike</option>\r\n            <option value=\"car\">Car</option>\r\n            <option value=\"van\">Van</option>\r\n        </select>\r\n\r\n        <div class=\"form-grid\">\r\n            <div class=\"partner bike\" style=\"display:none;\">\r\n                <label for=\"bikeModel\">Bike Model</label>\r\n                <input id=\"bikeModel\" type=\"text\" name=\"bikeModel\">\r\n\r\n                <label for=\"bikePlate\">License Plate</label>\r\n                <input id=\"bikePlate\" type=\"text\" name=\"bikePlate\">\r\n            </div>\r\n\r\n            <div class=\"partner car\" style=\"display:none;\">\r\n                <label for=\"carModel\">Car Model</label>\r\n                <input id=\"carModel\" type=\"text\" name=\"carModel\">\r\n\r\n                <label for=\"carPlate\">License Plate</label>\r\n                <input id=\"carPlate\" type=\"text\" name=\"carPlate\">\r\n            </div>\r\n\r\n            <div class=\"partner van\" style=\"display:none;\">\r\n                <label for=\"vanModel\">Van Model</label>\r\n                <input id=\"vanModel\" type=\"text\" name=\"vanModel\">\r\n\r\n                <label for=\"vanPlate\">License Plate</label>\r\n                <input id=\"vanPlate\" type=\"text\" name=\"vanPlate\">\r\n            </div>\r\n        </div>\r\n\r\n        <!-- Delivery Area -->\r\n        <h3>Delivery Area</h3>\r\n        <label for=\"deliveryProvince\">Select Province</label>\r\n        <select id=\"deliveryProvince\" name=\"province\" required>\r\n            <option value=\"\">Select Province</option>\r\n            <option value=\"central\">Central Province</option>\r\n            <option value=\"eastern\">Eastern Province</option>\r\n            <option value=\"northCentral\">North Central Province</option>\r\n            <option value=\"northern\">Northern Province</option>\r\n            <option value=\"northWestern\">North Western Province</option>\r\n            <option value=\"sabaragamuwa\">Sabaragamuwa Province</option>\r\n            <option value=\"southern\">Southern Province</option>\r\n            <option value=\"uva\">Uva Province</option>\r\n            <option value=\"western\">Western Province</option>\r\n        </select>\r\n\r\n        <label for=\"district\">Select District</label>\r\n        <select id=\"district\" name=\"district\" required>\r\n            <option value=\"\">Select District</option>\r\n        </select>\r\n\r\n        <!-- Upload Documents -->\r\n        <h3>Upload Documents</h3>\r\n        <label for=\"license\">Driving License</label>\r\n        <input id=\"license\" type=\"file\" name=\"license\" accept=\"image/*,application/pdf\" required>\r\n\r\n        <label for=\"vehicleReg\">Vehicle Registration</label>\r\n        <input id=\"vehicleReg\" type=\"file\" name=\"vehicleReg\" accept=\"image/*,application/pdf\" required>\r\n\r\n        <!-- Policies -->\r\n        <h3>Policies</h3>\r\n        <p>Please review our policies before submitting your delivery registration.</p>\r\n        <div class=\"policy-buttons\">\r\n            <a href=\"Terms.html\" class=\"btn-secondary\" target=\"_blank\">View Terms & Conditions</a>\r\n            <a href=\"Privacy.html\" class=\"btn-secondary\" target=\"_blank\">View Privacy Policy</a>\r\n        </div>\r\n\r\n        <!-- Agreement -->\r\n        <h3>Agreement</h3>\r\n        <label class=\"checkbox\">\r\n            <input type=\"checkbox\" name=\"agreement\" required>\r\n            I confirm that I have read and agree to Vendora Terms and Privacy Policy\r\n        </label>\r\n\r\n        <!-- Form Buttons -->\r\n        <div class=\"form-actions\">\r\n            <button type=\"submit\" class=\"btn-primary\">Submit Registration</button>\r\n            <button type=\"button\" class=\"btn-cancel\" onclick=\"cancelForm()\">Cancel</button>\r\n        </div>\r\n    </form>\r\n</section>\r\n\r\n<footer class=\"footer\">\r\n    <div class=\"footer-bottom\">© 2026 Vendora | The Online Beauty Store</div>\r\n</footer>\r\n\r\n<script src=\"../js/delivery.js\"></script>\r\n<script src=\"../js/form.js\"></script>\r\n<script src=\"../js/main.js\"></script>\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/classes/static/html/delivery.html b/project/target/classes/static/html/delivery.html
+--- a/project/target/classes/static/html/delivery.html	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/static/html/delivery.html	(date 1774602155785)
+@@ -4,7 +4,7 @@
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>Vendora | Delivery Partner Registration</title>
++    <title>Vendora | Supplier Registration</title>
+ 
+     <link rel="stylesheet" href="../css/base.css">
+     <link rel="stylesheet" href="../css/components.css">
+@@ -24,7 +24,6 @@
+ 
+     <form class="card" id="deliveryForm" enctype="multipart/form-data">
+ 
+-        <!-- Personal Information -->
+         <h3>Personal Information</h3>
+         <label for="fullName">Full Name</label>
+         <input id="fullName" type="text" name="fullName" placeholder="Rajapaksha Mudiyanselage Avishka Fernando" required>
+@@ -50,7 +49,7 @@
+         <label for="profilePicture">Profile Picture</label>
+         <input id="profilePicture" type="file" name="profilePicture" accept="image/*" required>
+ 
+-        <!-- Emergency Contact -->
++
+         <h3>Emergency Contact</h3>
+         <label for="emergencyName">Contact Name</label>
+         <input id="emergencyName" type="text" name="emergencyName" placeholder="Emergency Name" required>
+@@ -58,7 +57,7 @@
+         <label for="emergencyPhone">Contact Phone</label>
+         <input id="emergencyPhone" type="tel" name="emergencyPhone" placeholder="0123456789" pattern="0[0-9]{9}" required>
+ 
+-        <!-- Vehicle Information -->
++
+         <h3>Vehicle Information</h3>
+         <label for="vehicleFilter">Select Vehicle</label>
+         <select id="vehicleFilter" name="vehicle" required>
+@@ -94,7 +93,7 @@
+             </div>
+         </div>
+ 
+-        <!-- Delivery Area -->
++
+         <h3>Delivery Area</h3>
+         <label for="deliveryProvince">Select Province</label>
+         <select id="deliveryProvince" name="province" required>
+@@ -115,7 +114,7 @@
+             <option value="">Select District</option>
+         </select>
+ 
+-        <!-- Upload Documents -->
++
+         <h3>Upload Documents</h3>
+         <label for="license">Driving License</label>
+         <input id="license" type="file" name="license" accept="image/*,application/pdf" required>
+@@ -123,22 +122,20 @@
+         <label for="vehicleReg">Vehicle Registration</label>
+         <input id="vehicleReg" type="file" name="vehicleReg" accept="image/*,application/pdf" required>
+ 
+-        <!-- Policies -->
++
+         <h3>Policies</h3>
+         <p>Please review our policies before submitting your delivery registration.</p>
+         <div class="policy-buttons">
+-            <a href="Terms.html" class="btn-secondary" target="_blank">View Terms & Conditions</a>
+-            <a href="Privacy.html" class="btn-secondary" target="_blank">View Privacy Policy</a>
++            <a href="terms.html" class="btn-secondary" target="_blank">View Terms & Conditions</a>
++            <a href="privacy.html" class="btn-secondary" target="_blank">View Privacy Policies</a>
+         </div>
+ 
+-        <!-- Agreement -->
+         <h3>Agreement</h3>
+         <label class="checkbox">
+             <input type="checkbox" name="agreement" required>
+             I confirm that I have read and agree to Vendora Terms and Privacy Policy
+         </label>
+ 
+-        <!-- Form Buttons -->
+         <div class="form-actions">
+             <button type="submit" class="btn-primary">Submit Registration</button>
+             <button type="button" class="btn-cancel" onclick="cancelForm()">Cancel</button>
+Index: project/src/main/java/com/vendora/security/SecurityConfig.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.vendora.config;\r\n\r\nimport org.springframework.context.annotation.Bean;\r\nimport org.springframework.context.annotation.Configuration;\r\nimport org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;\r\n\r\n@Configuration\r\npublic class SecurityConfig {\r\n\r\n    @Bean\r\n    public BCryptPasswordEncoder passwordEncoder() {\r\n        return new BCryptPasswordEncoder();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/src/main/java/com/vendora/security/SecurityConfig.java b/project/src/main/java/com/vendora/security/SecurityConfig.java
+--- a/project/src/main/java/com/vendora/security/SecurityConfig.java	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/src/main/java/com/vendora/security/SecurityConfig.java	(date 1774615627524)
+@@ -2,6 +2,8 @@
+ 
+ import org.springframework.context.annotation.Bean;
+ import org.springframework.context.annotation.Configuration;
++import org.springframework.security.config.annotation.web.builders.HttpSecurity;
++import org.springframework.security.web.SecurityFilterChain;
+ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+ 
+ @Configuration
+@@ -11,4 +13,20 @@
+     public BCryptPasswordEncoder passwordEncoder() {
+         return new BCryptPasswordEncoder();
+     }
++
++    /**
++     * TEMPORARY: Disable authentication for local frontend access.
++     * Re-enable proper auth rules before deploying.
++     */
++    @Bean
++    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
++        http
++                .csrf(csrf -> csrf.disable())
++                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
++                .formLogin(form -> form.disable())
++                .httpBasic(basic -> basic.disable())
++                .logout(logout -> logout.disable());
++
++        return http.build();
++    }
+ }
+\ No newline at end of file
+Index: project/target/classes/static/html/about.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Vendora | About Us</title>\r\n\r\n    <link rel=\"stylesheet\" href=\"../css/base.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/components.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/footer.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/header.css\">\r\n    <link rel=\"stylesheet\" href=\"../css/layout.css\">\r\n\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap\" rel=\"stylesheet\">\r\n</head>\r\n\r\n<body class=\"home-bg\">\r\n<!-- HEADER -->\r\n<header class=\"header-grid\">\r\n    <!-- Logo -->\r\n    <div class=\"logo\">\r\n        <img src=\"../images/Vendora.png\" alt=\"Vendora Logo\">\r\n    </div>\r\n\r\n    <!-- Navbar -->\r\n    <nav class=\"navbar\">\r\n        <a href=\"index.html\">Home</a>\r\n        <a href=\"shop.html\">Shop</a>\r\n        <a href=\"login.html\">Login</a>\r\n        <a href=\"Signup.html\">Signup</a>\r\n    </nav>\r\n\r\n    <!-- Search + Cart -->\r\n    <div class=\"header-search\">\r\n        <label for=\"searchInput\" class=\"sr-only\">Search products</label>\r\n        <input id=\"searchInput\" type=\"text\" placeholder=\"Search products...\" class=\"search-input\">\r\n        <div class=\"icon-btn\"><i class=\"fa-solid fa-cart-shopping\"></i></div>\r\n    </div>\r\n</header>\r\n\r\n<!-- ABOUT SECTION -->\r\n<section class=\"about-hero\">\r\n    <h2 class=\"section-title\">Vendora | About Us</h2>\r\n    <div class=\"about-card bottom-text\">\r\n        <img src=\"../images/about_1.png\" class=\"about-bg\" alt=\"About Vendora\">\r\n        <div class=\"about-text\">\r\n            <p>\r\n                Vendora is a modern online beauty store designed to make cosmetic shopping easier, faster,\r\n                and more reliable. Our platform connects trusted suppliers, delivery partners,\r\n                and beauty-loving customers in one digital space.\r\n            </p>\r\n            <p>\r\n                Customers can explore a wide range of cosmetic products and place orders with ease.\r\n                Visitors can browse freely while registered customers can purchase products using\r\n                secure payment options.\r\n            </p>\r\n            <p>\r\n                Vendora creates a smart connection between suppliers who provide quality beauty\r\n                products and delivery partners who ensure safe and timely delivery to customers.\r\n            </p>\r\n        </div>\r\n    </div>\r\n</section>\r\n\r\n<!-- MISSION SECTION -->\r\n<section class=\"about-hero\">\r\n    <h2 class=\"section-title\">Our Mission</h2>\r\n    <div class=\"about-card right-text\">\r\n        <img src=\"../images/Mission.png\" class=\"about-bg\" alt=\"Mission Vendora\">\r\n        <div class=\"about-text\">\r\n            <p>Our mission is to make beauty shopping simple, reliable, and accessible for everyone.</p>\r\n            <p>Vendora connects suppliers, customers, and delivery partners through one organized platform to ensure smooth product distribution.</p>\r\n            <p>We focus on providing quality cosmetic products while maintaining a trustworthy and convenient shopping experience.</p>\r\n        </div>\r\n    </div>\r\n</section>\r\n\r\n<!-- WHY CHOOSE VENDORA -->\r\n<section class=\"about-hero\">\r\n    <h2 class=\"section-title\">Why Choose Vendora?</h2>\r\n    <div class=\"about-card right-text\">\r\n        <img src=\"../images/choose.jpg\" class=\"about-bg\" alt=\"Choose Vendora\">\r\n        <div class=\"about-text\">\r\n            <ul>\r\n                <li>Wide range of quality cosmetic products</li>\r\n                <li>Trusted suppliers providing authentic items</li>\r\n                <li>Secure and simple online ordering</li>\r\n                <li>Cash on Delivery and Card Payment options</li>\r\n                <li>Reliable delivery partners</li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n</section>\r\n\r\n<!-- PROMISE SECTION -->\r\n<section class=\"about-hero\">\r\n    <h2 class=\"section-title\">Our Beauty Promise</h2>\r\n    <div class=\"about-card center-text\">\r\n        <img src=\"../images/promise.webp\" class=\"about-bg\" alt=\"Promise Vendora\">\r\n        <div class=\"about-text\">\r\n            <p>\r\n                At Vendora, we promise to provide safe and high-quality beauty products.\r\n            </p>\r\n            <p>\r\n                Our platform ensures reliable connections between suppliers,\r\n                delivery partners, and customers.\r\n            </p>\r\n            <p>\r\n                We continuously improve our service to provide a better\r\n                shopping experience for all users.\r\n            </p>\r\n        </div>\r\n    </div>\r\n</section>\r\n\r\n<!-- FOOTER -->\r\n<footer class=\"footer\">\r\n    <div class=\"footer-grid\">\r\n\r\n        <!-- SUBSCRIBE -->\r\n        <div class=\"footer-subscribe\">\r\n            <h4>SUBSCRIBE</h4>\r\n            <p>Get blog updates and exclusive discounts.</p>\r\n\r\n            <!-- Email -->\r\n            <div class=\"subscribe-input\">\r\n                <label for=\"subscribeEmail\" class=\"visually-hidden\">Email for subscription</label>\r\n                <input type=\"email\" id=\"subscribeEmail\" placeholder=\"Enter your email\">\r\n                <button>➤</button>\r\n            </div>\r\n\r\n            <!-- Phone -->\r\n            <div class=\"subscribe-input\">\r\n                <label for=\"subscribePhone\" class=\"visually-hidden\">Phone number for subscription</label>\r\n                <input type=\"tel\" id=\"subscribePhone\" placeholder=\"Enter your phone number\">\r\n            </div>\r\n\r\n            <div>\r\n                <button>SUBSCRIBE</button>\r\n            </div>\r\n\r\n            <!-- SOCIAL ICONS -->\r\n            <div class=\"social-icons\">\r\n                <a href=\"https://facebook.com\" target=\"_blank\"><i class=\"fa-brands fa-facebook-f\"></i></a>\r\n                <a href=\"https://youtube.com\" target=\"_blank\"><i class=\"fa-brands fa-youtube\"></i></a>\r\n                <a href=\"https://instagram.com\" target=\"_blank\"><i class=\"fa-brands fa-instagram\"></i></a>\r\n                <a href=\"https://tiktok.com\" target=\"_blank\"><i class=\"fa-brands fa-tiktok\"></i></a>\r\n            </div>\r\n        </div>\r\n\r\n        <!-- SHOP -->\r\n        <div>\r\n            <h4>Shop</h4>\r\n            <a href=\"shop.html\">Makeup</a>\r\n            <a href=\"shop.html\">Skin Care</a>\r\n            <a href=\"shop.html\">Hair Care</a>\r\n            <a href=\"shop.html\">Body Care</a>\r\n        </div>\r\n\r\n        <!-- ABOUT -->\r\n        <div>\r\n            <h4>ABOUT US</h4>\r\n            <a href=\"about.html\">Our Mission</a>\r\n            <a href=\"about.html\">Support</a>\r\n        </div>\r\n\r\n        <!-- CUSTOMER SERVICE -->\r\n        <div>\r\n            <h4>Customer Service</h4>\r\n            <a href=\"#\">My Account</a>\r\n            <a href=\"#\">Contact Us</a>\r\n            <a href=\"#\">Delivery Location</a>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"footer-bottom\">\r\n        <p>© 2026 Vendora | The Online Beauty Store</p>\r\n        <p>Terms & Conditions | Privacy Policy | Cookie Policy | Do Not Sell My Personal Information | Vendora</p>\r\n        <p>If you are having problems using this website, please <button>CLICK HERE</button> for assistance.</p>\r\n    </div>\r\n</footer>\r\n\r\n<script src=\"../js/form.js\"></script>\r\n<script src=\"../js/main.js\"></script>\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/classes/static/html/about.html b/project/target/classes/static/html/about.html
+--- a/project/target/classes/static/html/about.html	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/classes/static/html/about.html	(date 1774602155785)
+@@ -13,25 +13,24 @@
+     <link rel="stylesheet" href="../css/layout.css">
+ 
+     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Playfair+Display&display=swap" rel="stylesheet">
++    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+ </head>
+ 
+ <body class="home-bg">
+-<!-- HEADER -->
++
+ <header class="header-grid">
+-    <!-- Logo -->
+     <div class="logo">
+         <img src="../images/Vendora.png" alt="Vendora Logo">
+     </div>
+ 
+-    <!-- Navbar -->
+     <nav class="navbar">
+         <a href="index.html">Home</a>
+-        <a href="shop.html">Shop</a>
+-        <a href="login.html">Login</a>
+-        <a href="Signup.html">Signup</a>
++        <a href="#">Shop</a>
++        <a href="#">Login</a>
++        <a href="#">Sign Up</a>
++        <a href="#"> 👤 </a>
+     </nav>
+ 
+-    <!-- Search + Cart -->
+     <div class="header-search">
+         <label for="searchInput" class="sr-only">Search products</label>
+         <input id="searchInput" type="text" placeholder="Search products..." class="search-input">
+@@ -117,30 +116,22 @@
+ <!-- FOOTER -->
+ <footer class="footer">
+     <div class="footer-grid">
+-
+-        <!-- SUBSCRIBE -->
+         <div class="footer-subscribe">
+             <h4>SUBSCRIBE</h4>
+             <p>Get blog updates and exclusive discounts.</p>
+ 
+-            <!-- Email -->
+             <div class="subscribe-input">
+-                <label for="subscribeEmail" class="visually-hidden">Email for subscription</label>
++                <label for="subscribeEmail" class="visually-hidden">Email</label>
+                 <input type="email" id="subscribeEmail" placeholder="Enter your email">
+                 <button>➤</button>
+             </div>
+-
+-            <!-- Phone -->
+             <div class="subscribe-input">
+-                <label for="subscribePhone" class="visually-hidden">Phone number for subscription</label>
++                <label for="subscribePhone" class="visually-hidden">Phone</label>
+                 <input type="tel" id="subscribePhone" placeholder="Enter your phone number">
+             </div>
+-
+             <div>
+                 <button>SUBSCRIBE</button>
+             </div>
+-
+-            <!-- SOCIAL ICONS -->
+             <div class="social-icons">
+                 <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                 <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+@@ -149,27 +140,26 @@
+             </div>
+         </div>
+ 
+-        <!-- SHOP -->
+         <div>
+-            <h4>Shop</h4>
+-            <a href="shop.html">Makeup</a>
+-            <a href="shop.html">Skin Care</a>
+-            <a href="shop.html">Hair Care</a>
+-            <a href="shop.html">Body Care</a>
++            <h4>PRODUCT NAVIGATOR</h4>
++            <a href="shop.html?category=Cosmetics">Cosmetics</a>
++            <a href="shop.html?category=Skin Care">Skin Care</a>
++            <a href="shop.html?category=Hair Care">Hair Care</a>
++            <a href="shop.html?category=Body Care">Body Care</a>
++            <a href="shop.html?category=Fragrance">Fragrance</a>
++            <a href="shop.html?category=Beauty Tools">Beauty Tools</a>
+         </div>
+ 
+-        <!-- ABOUT -->
+         <div>
+             <h4>ABOUT US</h4>
+             <a href="about.html">Our Mission</a>
+-            <a href="about.html">Support</a>
++            <a href="#">Contact Us</a>
+         </div>
+ 
+-        <!-- CUSTOMER SERVICE -->
+         <div>
+-            <h4>Customer Service</h4>
+-            <a href="#">My Account</a>
+-            <a href="#">Contact Us</a>
++            <h4>CUSTOMER SERVICE</h4>
++            <a href="#">Visit My Account</a>
++            <a href="#">Support</a>
+             <a href="#">Delivery Location</a>
+         </div>
+     </div>
+Index: project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst b/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+--- a/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst	(revision af074e4b183bb07d86a4089b6bca90297c252ce7)
++++ b/project/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst	(date 1774620895572)
+@@ -1,0 +1,1 @@
++D:\SLIIT University\Year 2 - Semester 2\IE2091 - IS Project\Assignment\Vendora-The-Online-Beauty-Store\project\src\test\java\com\vendora\VendoraApplicationTests.java

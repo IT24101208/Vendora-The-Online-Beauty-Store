@@ -1,0 +1,127 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_28_03_2026_03_45_[Changes]" date="1774649744022" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_28_03_2026_03_45_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 28/03/2026 03:45 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/controller/PageController.class" />
+    <option name="AFTER_PATH" value="project/target/classes/com/vendora/controller/PageController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_28_03_2026_03_45_[Changes]/PageController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/controller/AuthController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/vendora-Logo.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/DatabaseConfig.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/static/images/ingredients.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/p7.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/product5.jpg" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/product4.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/static/images/login-background.webp" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/dto/RegisterRequest.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/common/UserRole.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/static/images/glow_foundation.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/static/images/i1.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/product3.webp" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/model/Role.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/cart-logo.webp" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/config/SecurityConfig.class" />
+    <option name="AFTER_PATH" value="project/target/classes/com/vendora/config/SecurityConfig.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_28_03_2026_03_45_[Changes]/SecurityConfig.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/VendoraApplication.class" />
+    <option name="AFTER_PATH" value="project/target/classes/com/vendora/VendoraApplication.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_28_03_2026_03_45_[Changes]/VendoraApplication.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/static/images/eye_shadow_palette.webp" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/p8.webp" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/product1.webp" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/vendora-0.0.1-SNAPSHOT.jar" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/static/images/rose_lipstick.webp" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/repository/UserRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/static/images/i2.webp" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/static/images/beauty_tips.jpg" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/vendora-0.0.1-SNAPSHOT.jar.original" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/service/UserService.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/service/impl/UserServiceImpl.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/static/images/b1.jpg" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/p9.webp" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/repository/RoleRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/background 2.jpg" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/p6.jpeg" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/dto/LoginRequest.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/login-background.webp" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/p10.webp" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/templates/IT24101208/images/product2.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="project/target/classes/com/vendora/model/User.class" />
+  </binary>
+</changelist>

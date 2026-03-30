@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectResources">
     <resource url="http://www.thymeleaf.org" location="https://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd" />
   </component>

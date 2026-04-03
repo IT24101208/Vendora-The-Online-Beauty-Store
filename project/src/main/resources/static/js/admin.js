@@ -1,14 +1,33 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
     loadOrders();
     loadPayments();
+    updateDashboardStats();
 });
 
-// --- 1. Load Orders  ---
-/**
- * Fetches the master list of orders and populates the Order Management table.
- */
+// --- 1. Dashboard Stats Update
+async function updateDashboardStats() {
+    try {
+        const response = await fetch('http://localhost:8080/api/orders/stats');
+        if (!response.ok) throw new Error('Failed to fetch stats');
+
+        const data = await response.json();
+
+        const revenueEl = document.getElementById('total-revenue');
+        const ordersEl = document.getElementById('total-orders');
+        const pendingEl = document.getElementById('pending-orders');
+        const avgEl = document.getElementById('avg-value');
+
+        if(revenueEl) revenueEl.innerText = `Rs. ${data.totalRevenue}`;
+        if(ordersEl) ordersEl.innerText = data.totalOrders;
+        if(pendingEl) pendingEl.innerText = data.pendingOrders;
+        if(avgEl) avgEl.innerText = `Rs. ${data.avgOrderValue}`;
+
+    } catch (error) {
+        console.error("Dashboard Stats Error:", error);
+    }
+}
+
+// --- 2. Load Orders (US_4.3) ---
 async function loadOrders() {
     try {
         const response = await fetch('http://localhost:8080/api/orders');
@@ -21,7 +40,6 @@ async function loadOrders() {
 
         orders.forEach(order => {
             const status = order.status || 'Pending';
-            // Combines firstName and lastName from the Java Model
             const name = `${order.firstName || ''} ${order.lastName || ''}`;
 
             tableBody.innerHTML += `
@@ -31,22 +49,16 @@ async function loadOrders() {
                     <td>${order.product}</td>
                     <td><span class="status-badge ${status.toLowerCase()}">${status}</span></td>
                     <td>
-                        <button class="btn-status" style="background:#be185d; color:white;" onclick="updateStatus(${order.id})">Update Status</button>
-                        <button class="btn-del" style="background:#ef4444; color:white;" onclick="deleteOrder(${order.id})">Delete Order</button>
+                        <button class="btn-status" style="background:#be185d; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="updateStatus(${order.id})">Update Status</button>
+                        <button class="btn-del" style="background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="deleteOrder(${order.id})">Delete Order</button>
                     </td>
                 </tr>
             `;
         });
-    } catch (error) {
-        console.error("Error fetching orders:", error);
-    }
+    } catch (error) { console.error("Error loading orders:", error); }
 }
 
-// 2. Load Payments
-/**
- * Fetches orders to display financial data.
- * Provides a 'Confirm Receipt' action for orders with a 'PENDING' payment status.
- */
+// --- 3. Load Payments (US_4.7) ---
 async function loadPayments() {
     try {
         const response = await fetch('http://localhost:8080/api/orders');
@@ -73,50 +85,47 @@ async function loadPayments() {
                 </tr>
             `;
         });
-    } catch (error) {
-        console.error("Error loading payments:", error);
-    }
+    } catch (error) { console.error("Error loading payments:", error); }
 }
 
-//  3. Status Update
+// --- 4. Status Update (US_4.4) ---
 async function updateStatus(id) {
     const s = prompt("New Status (Shipped / Delivered / Pending):");
     if(s) {
         const res = await fetch(`http://localhost:8080/api/orders/${id}/status`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(s) // Sent as a JSON string to match @RequestBody String status
+            body: JSON.stringify(s)
         });
         if (res.ok) {
             alert("Status Updated!");
             loadOrders();
+            updateDashboardStats();
         }
     }
 }
 
-// --- 4. Payment Confirm
-
+// --- 5. Payment Confirm (US_4.7) ---
 async function confirmPayment(id) {
     if(confirm("Confirm receipt of payment for Order #" + id + "?")) {
         const res = await fetch(`http://localhost:8080/api/orders/${id}/pay-confirm`, { method: 'PUT' });
         if (res.ok) {
             alert("Payment Verified!");
-            loadOrders(); // Refresh status badge in Order table
-            loadPayments(); // Refresh Verified label in Payment table
+            loadOrders();
+            loadPayments();
+            updateDashboardStats();
         }
     }
 }
 
-// --- 5. Delete Order ---
-/**
- * Permanently removes an order record via a DELETE request.
- */
+// --- 6. Delete Order ---
 async function deleteOrder(id) {
-    if(confirm("Delete this order? This action is permanent.")) {
+    if(confirm("Delete this order?")) {
         const res = await fetch(`http://localhost:8080/api/orders/${id}`, { method: 'DELETE' });
         if (res.ok) {
             loadOrders();
             loadPayments();
+            updateDashboardStats();
         }
     }
 }

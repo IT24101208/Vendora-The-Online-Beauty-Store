@@ -1,28 +1,20 @@
-
-// --- 1. Global State Variables ---
+// --- 1. Global Variables ---
 let shippingCost = 5.99;
 let shippingMethod = "Standard";
-const subtotal = 45.00; // Static subtotal for this specific product flow
+const subtotal = 45.00;
 
-// --- 2. Shipping Selection Logic ---
+// --- 2. Shipping Selection ---
 function selectShipping(cost, method, el) {
     shippingCost = cost;
     shippingMethod = method;
     document.getElementById('display-shipping').innerText = `$${cost.toFixed(2)}`;
-
     const total = subtotal + cost;
     document.getElementById('display-total').innerText = `$${total.toFixed(2)}`;
-
-    // Toggle active UI state
     document.querySelectorAll('.shipping-option').forEach(opt => opt.classList.remove('active'));
     el.classList.add('active');
 }
 
-// --- 3. Multi-Step Navigation ---
-/**
- * Handles the transition between Shipping Information and Payment.
- * Includes basic validation before allowing the user to proceed to Step 2.
- */
+// --- 3. Step Navigation ---
 function goToStep(step) {
     if (step === 2) {
         const fields = ['firstName', 'email', 'address'];
@@ -39,9 +31,6 @@ function goToStep(step) {
 }
 
 // --- 4. Payment View Toggle ---
-/**
- * Shows or hides credit card inputs based on payment type (Online vs COD).
- */
 function togglePayView(type) {
     const cardFields = document.getElementById('card-fields');
     if (cardFields) {
@@ -49,14 +38,7 @@ function togglePayView(type) {
     }
 }
 
-// --- 5. Final Order Placement (API Integration) ---
-/**
- * Orchestrates the full purchase flow:
- * 1. Validates inputs
- * 2. POSTs to /api/orders/add
- * 3. POSTs to /api/payments/process
- * 4. Displays success screen
- */
+// --- 5. Final Order Placement ---
 async function handlePlaceOrder() {
     const payType = document.querySelector('input[name="payType"]:checked').value;
     const totalAmount = parseFloat(document.getElementById('display-total').innerText.replace('$', ''));
@@ -70,7 +52,6 @@ async function handlePlaceOrder() {
         }
     }
 
-    // Preparing Data for Spring Boot Backend
     const orderData = {
         firstName: document.getElementById('firstName').value.trim(),
         lastName: document.getElementById('lastName').value.trim(),
@@ -86,7 +67,6 @@ async function handlePlaceOrder() {
     };
 
     try {
-        // Step A: Register the Order
         const res = await fetch('http://localhost:8080/api/orders/add', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -96,7 +76,7 @@ async function handlePlaceOrder() {
         if (res.ok) {
             const savedOrder = await res.json();
 
-            // Step B: Record the Payment Transaction
+            // Payment process simulation (If you have a payment API)
             const paymentData = {
                 orderId: savedOrder.id,
                 amount: totalAmount,
@@ -112,19 +92,15 @@ async function handlePlaceOrder() {
 
             showSuccessPage(savedOrder);
         } else {
-            alert("Order failed. Please check your data and try again.");
+            alert("Order failed. Please try again.");
         }
     } catch (error) {
-        console.error("Connection Error:", error);
-        alert("Server is not running. Please check IntelliJ IDEA / Spring Boot.");
+        console.error("Error:", error);
+        alert("Server is not running. Please check IntelliJ IDEA.");
     }
 }
 
-// --- 6. Success View with PDF & Cancel Options (US_4.6) ---
-/**
- * Renders the final receipt view. Injects a 'Cancel Order' button specifically
- * for the initial order state.
- */
+// --- 6. Success Page with Cancel Button (US_4.6 Implementation) ---
 function showSuccessPage(order) {
     document.body.innerHTML = `
         <div id="invoice" style="max-width: 600px; margin: 50px auto; padding: 30px; background: white; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1); font-family: 'Segoe UI', sans-serif;">
@@ -153,14 +129,11 @@ function showSuccessPage(order) {
     `;
 }
 
-// --- 7. Customer Self-Service Cancellation (US_4.6) ---
-/**
- * Allows the customer to cancel the order immediately after purchase.
- * Updates UI state upon successful server response.
- */
+// --- 7. Customer Cancel Function (US_4.6) ---
 async function cancelOrder(orderId) {
     if (confirm("Are you sure you want to cancel this order? This cannot be undone.")) {
         try {
+
             const res = await fetch(`http://localhost:8080/api/orders/${orderId}/cancel`, {
                 method: 'PUT'
             });
@@ -171,24 +144,19 @@ async function cancelOrder(orderId) {
                 document.getElementById('statusText').style.color = "red";
                 document.getElementById('cancelBtn').style.display = "none";
             } else {
-                alert("Could not cancel order. It might already be in processing.");
+                alert("Could not cancel order. It might already be shipped.");
             }
         } catch (error) {
-            console.error("Fetch Error:", error);
+            console.error("Error:", error);
             alert("Error connecting to server!");
         }
     }
 }
 
-// --- 8. PDF Receipt Export ---
-/**
- * Uses html2pdf library to capture the invoice div and save it as a local PDF.
- */
+// --- 8. PDF Download ---
 function downloadPDF() {
     const element = document.getElementById('invoice');
     const buttons = document.getElementById('action-buttons');
-
-    // Hide buttons before capture to avoid them showing in the PDF
     buttons.style.display = 'none';
 
     const opt = {
@@ -200,6 +168,6 @@ function downloadPDF() {
     };
 
     html2pdf().set(opt).from(element).save().then(() => {
-        buttons.style.display = 'flex'; // Restore UI buttons
+        buttons.style.display = 'flex';
     });
 }

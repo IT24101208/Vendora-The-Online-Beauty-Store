@@ -1,12 +1,7 @@
-package com.vendora.model;
+package com.vendora.Model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.DynamicUpdate;
-
-
-// Persistence entity representing a customer Order in the Vendora system.
-//Uses @DynamicUpdate to ensure only modified columns are included in SQL UPDATE statements,
-//improving performance for large tables.
 
 @Entity
 @Table(name = "orders")
@@ -17,32 +12,18 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Customer Information
     private String firstName;
     private String lastName;
-
-    // Order Details
     private String product;
     private double amount;
-
-    // Fulfillment status of the order (e.g., Pending, Shipped, Delivered, Cancelled).
-
     private String status;
-
-    //Financial status of the order (e.g., PENDING, PAID, Refund Requested).
     private String paymentStatus;
 
-    // The method used for the transaction (e.g., Credit Card, PayPal).
 
-    private String paymentMethod;
-
-
-    // Default constructor required by JPA/Hibernate.
-
+    // Default Constructor
     public Order() {}
 
-
-    //Overloaded constructor for manual object creation.
+    // All-Args Constructor
     public Order(Long id, String firstName, String lastName, String product, double amount, String status, String paymentStatus, String paymentMethod) {
         this.id = id;
         this.firstName = firstName;
@@ -54,8 +35,7 @@ public class Order {
         this.paymentMethod = paymentMethod;
     }
 
-    // --- Getters and Setters ---
-
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -76,6 +56,9 @@ public class Order {
 
     public String getPaymentStatus() { return paymentStatus; }
     public void setPaymentStatus(String paymentStatus) { this.paymentStatus = paymentStatus; }
+
+
+    private String paymentMethod;
 
     public String getPaymentMethod() { return paymentMethod; }
     public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }

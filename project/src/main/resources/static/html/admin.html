@@ -24,13 +24,14 @@
         .delivered { background: #dcfce7; color: #166534; }
         .paid { background: #dcfce7; color: #166534; font-weight: bold; }
         .cancelled { background: #fee2e2; color: #991b1b; }
-        .refund-requested { background: #ffedd5; color: #9a3412; }
 
-        button { cursor: pointer; border: none; padding: 7px 12px; border-radius: 5px; font-weight: bold; color: white; transition: 0.3s; }
+        button { cursor: pointer; border: none; padding: 7px 12px; border-radius: 5px; font-weight: bold; color: white; transition: 0.3s; margin-right: 5px; }
         .btn-status { background: #be185d; }
         .btn-pay { background: #059669; }
         .btn-del { background: #ef4444; }
         .btn-refund { background: #1d4ed8; }
+        /* අලුත් Download Button එකේ පාට */
+        .btn-download { background: #6366f1; }
         button:hover { opacity: 0.8; }
     </style>
 </head>
@@ -52,25 +53,16 @@
         <tbody id="orderTableBody"></tbody>
     </table>
 
-    <hr style="margin-top: 50px; border: 1px solid #fce7f3;">
-
     <h2>💳 Payment Confirmations</h2>
     <table>
         <thead><tr><th>Order ID</th><th>Total Amount</th><th>Payment Method</th><th>Payment Status</th><th>Action</th></tr></thead>
         <tbody id="paymentTableBody"></tbody>
     </table>
-
-    <hr style="margin-top: 50px; border: 1px solid #fce7f3;">
-
-    <h2 style="color: #1d4ed8;">💸 Pending Refunds (Refund Requests)</h2>
-    <table>
-        <thead><tr><th>Order ID</th><th>Amount</th><th>Payment Method</th><th>Action</th></tr></thead>
-        <tbody id="refundTableBody"></tbody>
-    </table>
 </div>
 
 <script>
     const BASE_URL = 'http://localhost:8080/api/orders';
+    const ADMIN_URL = 'http://localhost:8080/api/admin'; // Admin Controller
 
     document.addEventListener('DOMContentLoaded', () => {
         refreshData();
@@ -79,13 +71,13 @@
     function refreshData() {
         loadOrders();
         loadPayments();
-        loadRefundRequests();
         updateDashboardStats();
     }
 
+    // --- 1. Dashboard Stats ---
     async function updateDashboardStats() {
         try {
-            const response = await fetch(`${BASE_URL}/stats`);
+            const response = await fetch(`${ADMIN_URL}/stats`);
             const data = await response.json();
             document.getElementById('total-revenue').innerText = `Rs. ${data.totalRevenue}`;
             document.getElementById('total-orders').innerText = data.totalOrders;
@@ -94,6 +86,7 @@
         } catch (error) { console.error("Stats Error:", error); }
     }
 
+    // --- 2. Load Orders
     async function loadOrders() {
         try {
             const res = await fetch(BASE_URL);
@@ -110,12 +103,21 @@
                         <td><span class="status-badge ${statusClass}">${status}</span></td>
                         <td>
                             <button class="btn-status" onclick="updateStatus(${order.id})">Update Status</button>
+                            <button class="btn-download" onclick="downloadReceipt(${order.id})">Download Receipt</button>
                             <button class="btn-del" onclick="deleteOrder(${order.id})">Delete Order</button>
                         </td>
                     </tr>`;
             }).join('');
         } catch (error) { console.error(error); }
     }
+
+    // --- 3. Download Receipt Function
+    function downloadReceipt(orderId) {
+        console.log("Requesting receipt for Order ID:", orderId);
+
+        window.location.href = `${ADMIN_URL}/download-receipt/${orderId}`;
+    }
+
 
     async function loadPayments() {
         try {
@@ -136,55 +138,17 @@
         } catch (error) { console.error(error); }
     }
 
-    async function loadRefundRequests() {
-        try {
-            const res = await fetch(BASE_URL);
-            const orders = await res.json();
-            const body = document.getElementById('refundTableBody');
-            const refundOrders = orders.filter(o => o.status === 'Refund Requested');
-            body.innerHTML = refundOrders.map(order => `
-                <tr>
-                    <td>#${order.id}</td>
-                    <td>Rs. ${order.amount.toFixed(2)}</td>
-                    <td>${order.paymentMethod}</td>
-                    <td><button class="btn-refund" onclick="completeRefund(${order.id})">Mark as Refunded</button></td>
-                </tr>`).join('');
-        } catch (error) { console.error(error); }
-    }
-
-    async function completeRefund(id) {
-        if(confirm("Confirm manual refund for Order #" + id + "?")) {
-            await sendUpdate(id, "Cancelled");
-        }
-    }
-
     async function updateStatus(id) {
         const s = prompt("New Status (Confirmed/Processing/Delivered/Pending):");
-        if(s) await sendUpdate(id, s);
-    }
-
-    async function sendUpdate(id, newStatus) {
-        try {
-            const response = await fetch(`${BASE_URL}/${id}/status`, {
-                method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(newStatus)
-            });
-            if(response.ok) {
-                alert("Success!");
-                refreshData();
-            } else {
-                alert("Failed to update.");
-            }
-        } catch (err) { console.error(err); }
-    }
-
-    async function confirmPayment(id) {
-        if(confirm("Verify payment?")) {
+        if(s) {
             try {
-                const res = await fetch(`${BASE_URL}/${id}/pay-confirm`, { method: 'PUT' });
-                if(res.ok) { alert("Verified!"); refreshData(); }
-            } catch (error) { console.error(error); }
+                const res = await fetch(`${BASE_URL}/${id}/status`, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(s)
+                });
+                if(res.ok) refreshData();
+            } catch (err) { console.error(err); }
         }
     }
 
@@ -194,6 +158,27 @@
                 const res = await fetch(`${BASE_URL}/${id}`, { method: 'DELETE' });
                 if(res.ok) refreshData();
             } catch (err) { console.error(err); }
+        }
+    }
+
+    async function confirmPayment(orderId) {
+        if (!confirm(`Are you sure you want to verify payment for Order #${orderId}?`)) return;
+
+        try {
+            const response = await fetch(`${BASE_URL}/${orderId}/pay-confirm`, { method: 'PUT' });
+
+            if (response.ok) {
+
+                const btn = document.querySelector(`button[onclick="confirmPayment(${orderId})"]`);
+                if (btn) {
+                    btn.parentElement.innerHTML = '<span style="color: #059669; font-weight: bold;">✅ Verified</span>';
+                }
+                updateDashboardStats(); // Stats ටිකත් Update කරන්න
+            } else {
+                alert("Update Failed!");
+            }
+        } catch (error) {
+            console.error("Error:", error);
         }
     }
 </script>

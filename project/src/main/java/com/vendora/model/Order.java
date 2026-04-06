@@ -1,4 +1,4 @@
-package com.vendora.Model;
+package com.vendora.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -18,6 +18,11 @@ public class Order {
     private double amount;
     private String status;
     private String paymentStatus;
+    private String phone;
+
+    // Getter and Setter
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
 
 
     // Default Constructor

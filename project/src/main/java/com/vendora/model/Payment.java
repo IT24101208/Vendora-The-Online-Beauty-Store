@@ -1,4 +1,4 @@
-package com.vendora.Model;
+package com.vendora.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;

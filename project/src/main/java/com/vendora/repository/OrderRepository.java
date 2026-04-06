@@ -1,7 +1,7 @@
 package com.vendora.repository;
 
 
-import com.vendora.Model.Order;
+import com.vendora.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

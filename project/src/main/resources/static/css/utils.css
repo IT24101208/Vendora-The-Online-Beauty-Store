@@ -1,0 +1,83 @@
+/* === UTILS.CSS - HELPER & UTILITY CLASSES === */
+
+/* 1. BRAND COLOR UTILITIES (High Contrast & Accessibility) */
+.text-brand { color: #674176 !important; } /* Deep Purple */
+.text-accent { color: #9A70A1 !important; } /* Muted Purple */
+.text-rose { color: #EAACB3 !important; }  /* Brand Rose */
+
+.bg-brand { background-color: #674176 !important; color: #ffffff; }
+.bg-soft-pink { background-color: #F6D5DA !important; } /* Romantic Pink Background */
+.bg-lavender { background-color: #CD9FCC !important; }
+
+/* 2. SPACING UTILITIES (Aligned with Old Layout Margins) */
+.m-0 { margin: 0 !important; }
+.mt-1 { margin-top: 1rem !important; }
+.mb-1 { margin-bottom: 1rem !important; }
+.mt-2 { margin-top: 2rem !important; }
+.mb-2 { margin-bottom: 2rem !important; }
+
+/* Custom Spacing from Old Page Header Logic */
+.section-margin { margin: 40px 0 !important; }
+.container-padding { padding: 40px 20px !important; }
+
+/* 3. FLEX & GRID SHORTCUTS */
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* 4. VISIBILITY & ACCESSIBILITY */
+.hidden { display: none !important; }
+
+/* Responsive Toggles from New Design System */
+@media (min-width: 769px) {
+  .hide-desktop { display: none !important; }
+}
+
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+
+  .grid-2 {
+    grid-template-columns: 1fr; /* Stack on mobile */
+  }
+}
+
+/* Screen Reader Only - Crucial for Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* 5. MISC HELPERS */
+.shadow-premium {
+  box-shadow: 0 12px 24px rgba(103, 65, 118, 0.12) !important;
+}
+
+.rounded-standard {
+  border-radius: 8px !important; /* From old base.css variables */
+}
+
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

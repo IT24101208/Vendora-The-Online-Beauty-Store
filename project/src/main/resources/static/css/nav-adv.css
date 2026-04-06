@@ -1,0 +1,130 @@
+/* === NAV-ADV.CSS - ADVANCED INTERACTIONS & NAVIGATION === */
+
+/* 1. MAGNETIC UNDERLINE (Professional Nav Style) */
+.nav-link-adv {
+  position: relative;
+  display: inline-block;
+  padding: 5px 0;
+  color: var(--text-main);
+  font-family: 'Roboto Condensed', sans-serif; /* Retained from old base.css */
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.nav-link-adv::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #674176; /* Brand Primary Purple [cite: 411] */
+  transform-origin: bottom right;
+  transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1); /* Enhanced easing  */
+}
+
+.nav-link-adv:hover {
+  color: #674176;
+}
+
+.nav-link-adv:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* 2. ADVANCED PROFILE DROPDOWN (Merged with Old Logic) */
+.profile-menu-adv {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 30px;
+  transition: background 0.3s ease;
+}
+
+.profile-menu-adv:hover {
+  background: #F6D5DA; /* Soft Brand Pink background on hover */
+}
+
+.profile-img-adv {
+  width: 38px; /* Dimensions from old components.css [cite: 988] */
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #CD9FCC; /* Brand Lavender border */
+  object-fit: cover;
+}
+
+.dropdown-adv {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 220px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(103, 65, 118, 0.15); /* Tinted brand shadow */
+  padding: 15px;
+  margin-top: 10px;
+  z-index: 1000;
+
+  /* Advanced Animation States [cite: 359] */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.profile-menu-adv:hover .dropdown-adv {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* 3. DROPDOWN INTERNALS */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  width: 100%;
+  border-radius: 8px;
+  color: var(--text-main);
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #F6D5DA;
+  color: #674176;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #eee;
+  margin: 8px 0;
+}
+
+/* 4. MEGAMENU CAPABILITIES (Multi-column) */
+.megamenu {
+  position: absolute;
+  left: 0;
+  width: 100vw;
+  max-width: 1200px; /* Aligned with old site max-width [cite: 1001] */
+  background: white;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  /* Uses same animation logic as profile dropdown */
+}
+
+/* 5. ACCESSIBILITY: REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-adv, .nav-link-adv::after {
+    transition: none !important;
+    transform: none !important;
+  }
+}

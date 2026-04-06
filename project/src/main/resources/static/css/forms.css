@@ -1,0 +1,136 @@
+/* ===FORMS.CSS - DATA COLLECTION & VALIDATION=== */
+
+/* 1. FORM GROUP & SPACING */
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Consistent spacing from new design */
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  display: block;
+}
+
+/* 2. TEXT INPUTS & TEXTAREAS */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius); /* Uses 8px from root variables [cite: 952] */
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+
+/* Focus States - Updated with Client Brand (#674176) and Accessibility Glow */
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #674176;
+  box-shadow: 0 0 0 3px rgba(103, 65, 118, 0.15); /* Soft brand purple glow [cite: 86] */
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* 3. CUSTOM CHECKBOXES & RADIOS */
+input[type="checkbox"],
+input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  transition: var(--transition);
+}
+
+input[type="radio"] {
+  border-radius: 50%;
+}
+
+/* Active state using Client's Deep Purple (#674176) */
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  background-color: #674176;
+  border-color: #674176;
+}
+
+input[type="checkbox"]:checked::before {
+  content: "✓";
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* 4. FILE UPLOAD (DRAG & DROP) */
+.file-upload-wrapper {
+  border: 2px dashed #ccc;
+  border-radius: var(--border-radius);
+  background: #fcfcfc;
+  transition: var(--transition);
+  text-align: center;
+  padding: 2rem;
+  cursor: pointer;
+}
+
+.file-upload-wrapper:hover {
+  border-color: #674176;
+  background: #F6D5DA; /* Using client's softest pink for hover state */
+}
+
+/* 5. VALIDATION & FEEDBACK */
+
+/* Retained Alert Style from Old CSS for delivery errors */
+.note-danger {
+  margin: 15px 0;
+  padding: 10px 15px;
+  background: #ffe5e5;
+  color: #d8000c;
+  border-left: 4px solid #d8000c;
+  border-radius: 6px;
+  font-size: 14px; /* [cite: 998] */
+}
+
+.is-invalid {
+  border-color: #d93025 !important;
+}
+
+.error-message {
+  font-size: 0.8rem;
+  color: #d93025;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+/* Password Toggle - Uses Brand Color */
+.password-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #674176;
+  font-weight: 600;
+}

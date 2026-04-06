@@ -1,0 +1,125 @@
+/* === TABLES.CSS - STRUCTURED DATA & PRICING === */
+
+/* 1. BASE TABLE CONTAINER */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto; /* Ensures mobile accessibility for large product lists */
+  margin-bottom: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  font-family: 'Roboto Condensed', sans-serif; /* Retained from old base.css */
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+/* 2. TABLE HEADERS (Updated for Luxury/Accessibility) */
+thead {
+  background-color: #674176; /* Brand Deep Purple */
+  color: #ffffff;
+}
+
+th {
+  padding: 15px 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid rgba(0,0,0,0.1);
+}
+
+/* 3. TABLE BODY & STRIPING */
+td {
+  padding: 12px 20px;
+  border-bottom: 1px solid #eee;
+  color: var(--text-main);
+  vertical-align: middle;
+}
+
+/* Zebra Striping using Client's Soft Pink (#F6D5DA) */
+tbody tr:nth-child(even) {
+  background-color: #F6D5DA;
+  transition: background var(--transition);
+}
+
+tbody tr:hover {
+  background-color: #F5B5B5; /* Slightly darker pink on hover */
+}
+
+/* 4. PRODUCT INFO CELLS (Specific for Cosmetics) */
+.table-product-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.status-instock {
+  background-color: #e6f4ea;
+  color: #1e8e3e;
+}
+
+.status-lowstock {
+  background-color: #fff4e5;
+  color: #d97706;
+}
+
+/* 5. PRICING TABLE VARIANTS (Merged from Old Layout) */
+.pricing-table td {
+  text-align: center;
+  font-weight: 500;
+}
+
+.price-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: #674176;
+  font-weight: 700;
+}
+
+/* 6. MOBILE RESPONSIVENESS */
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+    display: block; /* Stack rows for accessibility on small phones */
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr { border: 1px solid #ccc; margin-bottom: 10px; }
+
+  td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  td:before {
+    position: absolute;
+    top: 12px;
+    left: 20px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    content: attr(data-label); /* Uses data attributes for labels */
+    font-weight: bold;
+    text-align: left;
+    color: #674176;
+  }
+}

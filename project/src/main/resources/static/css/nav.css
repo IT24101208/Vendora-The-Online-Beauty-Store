@@ -1,0 +1,173 @@
+/* === NAV.CSS - NAVIGATION SYSTEM === */
+
+/* 1. NAVBAR CONTAINER */
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1.5rem 0; /* Increased padding for an airy, premium feel */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all var(--transition);
+}
+
+.navbar.scrolled {
+  box-shadow: 0 2px 15px rgba(103, 65, 118, 0.08);
+  padding: 0.8rem 0;
+}
+
+.nav-container {
+  display: flex;
+  flex-direction: column; /* Stacks Logo on top of Links as per reference */
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+/* 2. LOGO & BRANDING */
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem; /* Significantly increased from 1.5rem */
+  font-weight: 700;
+  color: #674176; /* Brand Primary Purple */
+  text-decoration: none;
+  letter-spacing: -1px;
+  transition: transform var(--transition);
+}
+
+.nav-logo:hover {
+  transform: scale(1.02);
+}
+
+/* 3. NAVIGATION LINKS */
+.nav-links {
+  display: flex;
+  gap: 3rem; /* Wide gap for luxury spacing */
+  list-style: none;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-top: 1px solid #f9f9f9; /* Subtle divider below logo */
+  width: 100%;
+  justify-content: center;
+}
+
+.nav-link {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-main);
+  transition: color var(--transition);
+  position: relative;
+}
+
+.nav-link:hover {
+  color: #674176;
+}
+
+/* 4. UTILITY ICONS (Search/Cart) */
+.nav-utilities {
+  position: absolute;
+  right: 20px;
+  bottom: 15px; /* Aligned with the link row */
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* 5. INTERACTIVE HOVER (Magnetic Underline) */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -6px;
+  left: 0;
+  background-color: #674176;
+  transition: width 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* 6. DROPDOWN MENUS */
+.nav-item-dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(15px);
+  background: #fff;
+  min-width: 220px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  padding: 15px 0;
+  z-index: 10;
+}
+
+.nav-item-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-link {
+  display: block;
+  padding: 10px 25px;
+  color: var(--text-main);
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.dropdown-link:hover {
+  background-color: #F6D5DA; /* Soft Pink Highlight */
+  color: #674176;
+  padding-left: 30px; /* Subtle slide effect */
+}
+
+/* 7. MOBILE NAVIGATION */
+@media (max-width: 768px) {
+  .nav-container {
+    flex-direction: row; /* Horizontal for mobile */
+    justify-content: space-between;
+    padding: 10px 20px;
+  }
+
+  .nav-logo {
+    font-size: 1.8rem; /* Scaled down for mobile */
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    height: 100vh;
+    background: #ffffff;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+    z-index: 2000;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-link {
+    font-size: 1.4rem;
+  }
+}

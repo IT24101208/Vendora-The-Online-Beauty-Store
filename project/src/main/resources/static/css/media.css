@@ -1,0 +1,102 @@
+/* === MEDIA.CSS - RESPONSIVE ADAPTATIONS & UTILITIES === */
+
+/* 1. GLOBAL IMAGE & VIDEO RESPONSIVENESS */
+img, video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover; /* Retained from old base.css [cite: 9, 227] */
+}
+
+/* 2. TABLET ADAPTATIONS (Max-width: 992px) */
+@media (max-width: 992px) {
+  .container {
+    max-width: 95%;
+    padding: 0 15px;
+  }
+
+  /* Ecommerce Adjustments */
+  .checkout-layout {
+    grid-template-columns: 1fr; /* Stack sidebar on tablet [cite: 715] */
+  }
+
+  .pricing-card.featured {
+    transform: scale(1); /* Remove scale effect for touch stability [cite: 715] */
+    margin: 1rem 0;
+  }
+}
+
+/* 3. MOBILE ADAPTATIONS (Max-width: 768px) */
+@media (max-width: 768px) {
+  /* Hero & About Section Logic (Merged from old CSS) */
+  .about-text {
+    position: static; /* Remove absolute positioning from desktop [cite: 48] */
+    max-width: 100%;
+    margin-top: 15px;
+    transform: none;
+    text-align: center;
+  }
+
+  .about-text h2 {
+    font-size: 1.5rem; /* Adjusted for mobile readability [cite: 49] */
+  }
+
+  .service-section {
+    width: 95%; /* Expanded for smaller screens [cite: 49] */
+  }
+
+  /* Grid Adjustments */
+  .product-grid, .feedback-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  /* Navigation Mobile State */
+  .nav-links {
+    display: none; /* Logic for JS toggle menu */
+  }
+
+  .hide-mobile {
+    display: none !important; /* Utility from new system */
+  }
+}
+
+/* 4. SMALL MOBILE / SMARTPHONE (Max-width: 480px) */
+@media (max-width: 480px) {
+  .btn {
+    width: 100%; /* Stack buttons for easier thumb access [cite: 671, 1200] */
+    padding: 0.7rem 1.2rem;
+  }
+
+  .form-actions {
+    flex-direction: column; /* Stack form buttons vertically [cite: 671, 1206] */
+  }
+
+  .product-card img {
+    height: 180px; /* Slightly smaller for mobile grids */
+  }
+
+  /* Interactive Overlays for Mobile */
+  .product-action-overlay {
+    position: static;
+    background: transparent;
+    padding: 0 1rem 1rem; /* Show action buttons by default on touch  */
+  }
+}
+
+/* 5. ACCESSIBILITY: REDUCED MOTION PREFERENCE */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    transition-duration: 0s !important; /* Disables motion for sensitive users [cite: 654, 1071] */
+  }
+}
+
+/* 6. PRINT STYLES */
+@media print {
+  .no-print { display: none !important; }
+  body { font-size: 12pt; color: #000; }
+  /* Show URLs next to links for physical copies */
+  a::after { content: " (" attr(href) ")"; }
+}

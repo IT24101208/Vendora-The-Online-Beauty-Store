@@ -1,10 +1,13 @@
+/* === BUTTONS.CSS - ACTION ELEMENTS === */
+
+/* 1. BASE BUTTON STYLE */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 0.8rem 1.8rem;
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif; /* Consistent with Vendora Typography */
   font-size: 0.9rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -28,6 +31,7 @@
   border-color: transparent;
 }
 
+/* 2. PRIMARY ACTION (Brand Purple) */
 .btn-primary {
   background-color: #674176;
   color: #ffffff;
@@ -39,6 +43,7 @@
   border-color: #674176;
 }
 
+/* 3. SECONDARY ACTION (Outline Style) */
 .btn-secondary {
   background-color: transparent;
   border-color: #ddd;
@@ -51,6 +56,7 @@
   color: #674176;
 }
 
+/* 4. CALL TO ACTION (High Impact) */
 .btn-cta {
   background-color: #000;
   color: #fff;
@@ -59,11 +65,12 @@
 }
 
 .btn-cta:hover {
-  background-color: #9A70A1;
+  background-color: #9A70A1; /* Brand Muted Purple */
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(205, 159, 204, 0.4);
+  box-shadow: 0 6px 20px rgba(103, 65, 118, 0.3);
 }
 
+/* 5. ICON & UTILITY BUTTONS */
 .btn-icon {
   width: 42px;
   height: 42px;
@@ -78,6 +85,7 @@
   color: #fff;
 }
 
+/* 6. SWITCHES & FORM ACTIONS */
 .toggle-switch {
   position: relative;
   display: inline-block;
@@ -104,12 +112,82 @@ input:checked + .slider {
   margin-top: 1.5rem;
 }
 
+/* 7. MOBILE RESPONSIVENESS */
 @media (max-width: 480px) {
   .btn {
-    width: 100%;
+    width: 100%; /* Full width buttons for mobile usability */
     padding: 0.7rem 1.2rem;
   }
   .form-actions {
     flex-direction: column;
   }
+}
+
+/* FEEDBACK BUTTONS */
+.feedback-filters {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.feedback-filters button {
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: #f1f1f1;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.feedback-filters button:hover {
+  background: #ddd;
+}
+
+.feedback-filters button.active {
+  background: #000;
+  color: #fff;
+}
+
+.delete-feedback-btn {
+  margin-top: auto;
+  align-self: flex-end;
+  background: #fff2f2;
+  color: #d93025;
+  border: 1px solid #ffd6d6;
+  padding: 7px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.delete-feedback-btn:hover {
+  background: #ffe2e2;
+}
+
+.floating-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  font-size: 24px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+}
+
+.floating-btn:hover {
+  transform: scale(1.08);
 }

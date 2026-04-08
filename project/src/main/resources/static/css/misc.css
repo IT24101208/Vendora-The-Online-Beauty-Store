@@ -1,24 +1,9 @@
 /* === MISC.CSS - UTILITY CLASSES & GLOBAL HELPERS === */
 
-/* 1. DISPLAY & VISIBILITY UTILITIES */
-.hidden {
-  display: none !important; /* Retained from old base.css [cite: 1189] */
-}
-
-/* Responsive Display Shortcuts from New Design System */
-@media (min-width: 769px) {
-  .hide-desktop { display: none !important; }
-}
-
-@media (max-width: 768px) {
-  .hide-mobile { display: none !important; }
-}
-
 /* 2. SPACING & ALIGNMENT HELPERS */
 .m-0 { margin: 0 !important; }
 .p-0 { padding: 0 !important; }
 
-/* Standard Spacing (Merged with Old Page Header Logic [cite: 1193]) */
 .mt-1 { margin-top: 1rem !important; }
 .mb-1 { margin-bottom: 1rem !important; }
 .mt-2 { margin-top: 2rem !important; }
@@ -29,7 +14,7 @@
 .text-right { text-align: right !important; }
 
 /* 3. DECORATIVE BRAND ELEMENTS */
-/* Magnetic Underline - Updated to Luxury Purple (#674176) [cite: 399] */
+/* Magnetic Underline - Luxury Purple (#674176) */
 .link-underline {
   position: relative;
   display: inline-block;
@@ -53,7 +38,7 @@
   transform-origin: bottom left;
 }
 
-/* Pulse Effect for CTA/Notifications - Updated to Brand Pink [cite: 389] */
+/* Pulse Effect - Updated to Soft Brand Pink (#F6D5DA) */
 @keyframes pulse-brand {
   0% { box-shadow: 0 0 0 0 rgba(246, 213, 218, 0.7); }
   70% { box-shadow: 0 0 0 10px rgba(246, 213, 218, 0); }
@@ -65,7 +50,7 @@
 }
 
 /* 4. OVERLAYS & BACKGROUNDS */
-/* Parallax Background - Replaces Old Fixed Image Logic [cite: 372, 1185] */
+/* Parallax Background */
 .parallax-bg {
   background-attachment: fixed;
   background-position: center;
@@ -76,14 +61,10 @@
 .overlay-dark {
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0; width: 100%; height: 100%;
 }
 
 /* 5. LOADING STATES */
-/* Skeleton Shimmer for Content Placeholders [cite: 420] */
 @keyframes shimmer {
   0% { background-position: -468px 0; }
   100% { background-position: 468px 0; }

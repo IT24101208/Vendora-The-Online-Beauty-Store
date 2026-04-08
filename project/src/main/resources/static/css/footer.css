@@ -1,144 +1,118 @@
-/* Footer layout, links, subscribe form, social icons, and responsive footer styles */
+/* MAIN FOOTER CONTAINER */
 .footer {
-    background: #111;
-    color: #ccc;
-    padding: 25px 20px; /* Reduced padding for compact look */
+    background: #1A1A1A;
+    color: #ffffff;
+    padding: 50px 60px;
     width: 100%;
     font-family: 'Roboto Condensed', sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    box-sizing: border-box;
 }
 
 /* GRID LAYOUT */
 .footer-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 25px; /* Reduced gap */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: auto;
+    align-items: start;
 }
 
-/* TITLES & LINKS */
+/* SECTION TITLES */
 .footer h4 {
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: #fff36e;
-    letter-spacing: 0.3px;
+    margin-bottom: 15px;
+    color: #FFF36E;
+    font-size: 16px;
+    letter-spacing: 0.5px;
 }
 
+/* FOOTER LINKS */
 .footer a {
+    color: #cccccc;
     display: block;
-    margin-bottom: 4px;
-    font-size: 13px;
-    color: #ccc;
-    transition: color var(--transition);
+    margin-bottom: 8px;
+    text-decoration: none;
+    font-size: 17px;
+    transition: color 0.2s ease;
 }
 
 .footer a:hover {
     color: var(--brand-color);
 }
 
-/* FOOTER BOTTOM - Sticky */
-.footer-bottom {
-    margin-top: 20px;
-    padding: 4px 0; /* Compact padding */
-    border-top: 1px solid #333;
-    text-align: center;
-    font-size: 12px;
-    color: #aaa;
-}
-
-/* Optional interactive button inside footer-bottom */
-.footer-bottom button {
-    color: var(--brand-color);
-    font-weight: 600;
-    padding: 0 4px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.footer-bottom button:hover {
-    text-decoration: underline;
-}
-
-/* SUBSCRIBE */
+/* SUBSCRIBE SECTION */
 .footer-subscribe {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    max-width: 280px;
+    gap: 10px;
+    max-width: 100%;
 }
 
 .footer-subscribe p {
-    font-size: 12px;
+    font-size: 14px;
+    color: #cccccc;
+    line-height: 1.5;
 }
 
-/* Form */
-.subscribe-form {
+/* INPUT + BUTTON WRAPPER */
+.subscribe-input {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-.subscribe-form input {
-    padding: 8px 10px;
-    border-radius: 4px;
-    border: 1px solid #444;
-    background: #1e1e1e;
-    color: #fff;
-    font-size: 13px;
+/* SUBSCRIBE INPUT */
+.subscribe-input input {
+    flex: 1;
+    min-width: 180px;
+    padding: 10px 12px;
+    border: none;
+    outline: none;
+    background: #dddddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: box-shadow 0.2s ease, border 0.2s ease;
 }
 
-.subscribe-form input::placeholder {
-    color: #888;
+.subscribe-input input:focus {
+    box-shadow: 0 0 0 3px rgba(219, 112, 147, 0.2);
 }
 
-.subscribe-form input:focus {
-    border-color: var(--brand-color);
-}
-
-/* Button */
-.btn-subscribe {
-    padding: 8px;
-    border-radius: 4px;
+/* SUBSCRIBE BUTTON */
+.subscribe-input button {
     background: var(--brand-color);
     color: #fff;
-    font-size: 13px;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: var(--transition);
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.btn-subscribe:hover {
+.subscribe-input button:hover {
     opacity: 0.9;
-}
-
-/* Message */
-.subscribe-message {
-    font-size: 11px;
-    margin-top: 2px;
-    color: #4caf50;
+    transform: translateY(-1px);
 }
 
 /* SOCIAL ICONS */
 .social-icons {
     display: flex;
-    gap: 8px;
-    margin-top: 10px;
+    gap: 12px;
+    margin-top: 15px;
+    flex-wrap: wrap;
 }
 
 .social-icons a {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: #333;
-    color: #fff;
-    font-size: 13px;
-    transition: var(--transition);
+    background: #333333;
+    color: #ffffff;
+    font-size: 16px;
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .social-icons a:hover {
@@ -146,30 +120,100 @@
     transform: scale(1.1);
 }
 
+/* FOOTER BOTTOM */
+.footer-bottom {
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1;
+    color: #cccccc;
+}
+
+.footer-bottom button {
+    background: none;
+    border: none;
+    color: var(--brand-color);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.footer-bottom button:hover {
+    text-decoration: underline;
+}
+
 /* RESPONSIVE */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .footer {
-        padding: 20px 15px;
+        padding: 40px 30px;
     }
 
     .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 30px;
+    }
+
+    .footer a {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 30px 20px;
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        text-align: center;
+    }
+
+    .footer-bottom {
+        font-size: 13px;
+        line-height: 1.5;
         text-align: center;
     }
 
     .social-icons {
         justify-content: center;
     }
+
+    .subscribe-input {
+        flex-direction: column;
+    }
+
+    .subscribe-input input,
+    .subscribe-input button {
+        width: 100%;
+    }
 }
 
-/* Sticky Footer Implementation */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
+@media (max-width: 480px) {
+    .footer {
+        padding: 25px 15px;
+    }
 
-main {
-    flex: 1; /* Pushes footer to bottom */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .footer h4 {
+        font-size: 15px;
+    }
+
+    .footer a {
+        font-size: 15px;
+    }
+
+    .footer-subscribe p {
+        font-size: 13px;
+    }
+
+    .footer-bottom {
+        font-size: 12px;
+    }
 }

@@ -1,13 +1,13 @@
+/* === MAIN.CSS - GLOBAL RESPONSIVE & SYSTEM OVERRIDES === */
+
+/* 1. TABLET & SMALL DESKTOP (1024px) */
 @media (max-width: 1024px) {
   .nav-links {
     gap: 25px;
   }
-
-  .footer-grid {
-    gap: 2rem;
-  }
 }
 
+/* 2. MOBILE LANDSCAPE & TABLETS (768px) */
 @media (max-width: 768px) {
   .nav-content {
     flex-direction: row;
@@ -19,41 +19,25 @@
     font-size: 1.8rem;
   }
 
+  /* Core navigation toggle logic */
   .nav-links {
-    display: none;
+    display: none; /* Controlled via JS toggle */
   }
 
   .section {
     padding: 50px 20px;
   }
-
-  .footer {
-    padding: 3rem 0 2rem;
-  }
-
-  .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-    text-align: center;
-  }
-
-  .footer-bottom {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
 }
 
+/* 3. MOBILE PORTRAIT (480px) */
 @media (max-width: 480px) {
   .nav-logo {
     font-size: 1.5rem;
   }
 
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.75rem; }
+  /* Mobile Headings Scaling */
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.75rem !important; }
 
   .nav-utilities {
     gap: 1rem;
@@ -62,16 +46,13 @@
   }
 }
 
+/* 4. DESKTOP UTILITIES (769px and up) */
 @media (min-width: 769px) {
-  .hide-desktop. { display: none !important; }
-}
 
-@media (max-width: 768px) {
-  .hide-mobile { display: none !important; }
-}
-
+/* 5. ACCESSIBILITY: REDUCED MOTION */
+/* This global override ensures a comfortable experience for sensitive users */
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *, ::before, ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

@@ -1,3 +1,6 @@
+/* === ANIMATIONS.CSS - INTERACTIVE EFFECTS === */
+
+/* 1. HOVER EFFECTS */
 .hover-lift {
   transition: transform var(--transition), box-shadow var(--transition);
 }
@@ -15,6 +18,7 @@
   transform: scale(1.05);
 }
 
+/* 2. ENTRANCE ANIMATIONS */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -43,31 +47,28 @@
 .reveal {
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1)[cite: 7, 8];
+  transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .reveal.active {
   opacity: 1;
-  transform: translateY(0)[cite: 9];
+  transform: translateY(0);
 }
 
 /* 4. INTERACTIVE BRANDING */
-
-/* Updated Pulse with Client's Brand Color (#674176) */
 @keyframes pulse-brand {
-  0% { box-shadow: 0 0 0 0 rgba(103, 65, 118, 0.4); } /* New Brand Purple */
+  0% { box-shadow: 0 0 0 0 rgba(103, 65, 118, 0.4); }
   70% { box-shadow: 0 0 0 10px rgba(103, 65, 118, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(103, 65, 118, 0); } [cite: 13, 15]
+  100% { box-shadow: 0 0 0 0 rgba(103, 65, 118, 0); }
 }
 
 .pulse {
-  animation: pulse-brand 2s infinite[cite: 15];
+  animation: pulse-brand 2s infinite;
 }
 
-/* Magnetic Underline for Navigation Links */
 .link-underline {
   position: relative;
-  display: inline-block[cite: 16, 17];
+  display: inline-block;
 }
 
 .link-underline::after {
@@ -77,31 +78,31 @@
   height: 2px;
   bottom: -2px;
   left: 0;
-  background-color: var(--brand-color); /* Linked to #674176 in base.css */
+  background-color: #674176; /* Brand Purple */
   transform: scaleX(0);
   transform-origin: bottom right;
-  transition: transform 0.3s ease-out[cite: 17];
+  transition: transform 0.3s ease-out;
 }
 
 .link-underline:hover::after {
   transform: scaleX(1);
-  transform-origin: bottom left[cite: 17];
+  transform-origin: bottom left;
 }
 
-/* 5. LOADING SKELETON SHIMMER */
+/* 5. LOADING STATES */
 @keyframes shimmer {
   0% { background-position: -468px 0; }
-  100% { background-position: 468px 0; } [cite: 17]
+  100% { background-position: 468px 0; }
 }
 
 .shimmer {
   animation: shimmer 1.25s infinite linear;
   background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
   background-size: 800px 104px;
-  position: relative[cite: 17];
+  position: relative;
 }
 
-/* 6. ACCESSIBILITY: REDUCED MOTION */
+/* 6. ACCESSIBILITY */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-delay: -1ms !important;

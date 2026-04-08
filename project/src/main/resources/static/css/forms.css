@@ -1,4 +1,4 @@
-/* ===FORMS.CSS - DATA COLLECTION & VALIDATION=== */
+/* === FORMS.CSS - DATA COLLECTION & VALIDATION === */
 
 /* 1. FORM GROUP & SPACING */
 .form-group {
@@ -6,13 +6,13 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Consistent spacing from new design */
+  gap: 8px; /* Consistent spacing from Vendora design system */
 }
 
 label {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--heading-color);
+  color: #674176; /* Brand Purple for labels */
   display: block;
 }
 
@@ -31,17 +31,17 @@ textarea {
   color: var(--text-main);
   background-color: #fff;
   border: 1px solid #ddd;
-  border-radius: var(--border-radius); /* Uses 8px from root variables [cite: 952] */
+  border-radius: var(--border-radius);
   transition: border-color var(--transition), box-shadow var(--transition);
   outline: none;
 }
 
-/* Focus States - Updated with Client Brand (#674176) and Accessibility Glow */
+/* Focus States - Luxury Purple Glow (#674176) */
 input:focus,
 select:focus,
 textarea:focus {
   border-color: #674176;
-  box-shadow: 0 0 0 3px rgba(103, 65, 118, 0.15); /* Soft brand purple glow [cite: 86] */
+  box-shadow: 0 0 0 3px rgba(103, 65, 118, 0.15); /* Soft brand purple glow */
 }
 
 textarea {
@@ -68,7 +68,7 @@ input[type="radio"] {
   border-radius: 50%;
 }
 
-/* Active state using Client's Deep Purple (#674176) */
+/* Active state using Brand Purple (#674176) */
 input[type="checkbox"]:checked,
 input[type="radio"]:checked {
   background-color: #674176;
@@ -95,12 +95,10 @@ input[type="checkbox"]:checked::before {
 
 .file-upload-wrapper:hover {
   border-color: #674176;
-  background: #F6D5DA; /* Using client's softest pink for hover state */
+  background: #F6D5DA; /* Using brand's softest pink on hover */
 }
 
 /* 5. VALIDATION & FEEDBACK */
-
-/* Retained Alert Style from Old CSS for delivery errors */
 .note-danger {
   margin: 15px 0;
   padding: 10px 15px;
@@ -108,7 +106,7 @@ input[type="checkbox"]:checked::before {
   color: #d8000c;
   border-left: 4px solid #d8000c;
   border-radius: 6px;
-  font-size: 14px; /* [cite: 998] */
+  font-size: 14px;
 }
 
 .is-invalid {
@@ -118,7 +116,7 @@ input[type="checkbox"]:checked::before {
 .error-message {
   font-size: 0.8rem;
   color: #d93025;
-  margin-top: -10px;
+  margin-top: -5px;
   margin-bottom: 10px;
   font-weight: 500;
 }
@@ -133,4 +131,47 @@ input[type="checkbox"]:checked::before {
   font-size: 0.8rem;
   color: #674176;
   font-weight: 600;
+}
+
+/* FEEDBACK FORM */
+.form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-card h3 {
+  margin-bottom: 5px;
+}
+
+#loggedUser {
+  font-size: 13px;
+  color: #777;
+  background: #f8f8f8;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+/* CHECKBOX GRID */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.checkbox-grid label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.checkbox-grid label:hover {
+  background: #f9f9f9;
+  border-color: #674176;
 }

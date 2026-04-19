@@ -55,6 +55,7 @@ async function loadOrders() {
                 </tr>
             `;
         });
+
     } catch (error) { console.error("Error loading orders:", error); }
 }
 
@@ -107,13 +108,21 @@ async function updateStatus(id) {
 
 // --- 5. Payment Confirm (US_4.7) ---
 async function confirmPayment(id) {
-    if(confirm("Confirm receipt of payment for Order #" + id + "?")) {
-        const res = await fetch(`http://localhost:8080/api/orders/${id}/pay-confirm`, { method: 'PUT' });
-        if (res.ok) {
-            alert("Payment Verified!");
-            loadOrders();
-            loadPayments();
-            updateDashboardStats();
+    if(confirm("Verify payment for Order #" + id + "?")) {
+        try {
+            // BASE_URL එක 'http://localhost:8080/api/orders' විය යුතුයි
+            const res = await fetch(`${BASE_URL}/${id}/pay-confirm`, {
+                method: 'PUT'
+            });
+
+            if(res.ok) {
+                alert("Payment Verified!");
+                refreshData(); // ටේබල් එක අලුත් කරයි
+            } else {
+                alert("Error: Could not verify payment.");
+            }
+        } catch (error) {
+            console.error("Error confirming payment:", error);
         }
     }
 }
@@ -129,3 +138,40 @@ async function deleteOrder(id) {
         }
     }
 }
+function downloadReceipt(orderId) {
+    fetch(`/api/admin/download-receipt/${orderId}`)
+        .then(response => {
+            if (response.ok) return response.blob();
+            throw new Error('Receipt generation failed');
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Receipt_${orderId}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+window.confirmPayment = function(orderId) {
+    if (confirm("Are you sure you want to confirm receipt for Order #" + orderId + "?")) {
+        fetch(`http://localhost:8080/api/admin/confirm-receipt/${orderId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("Receipt Confirmed Successfully!");
+                    location.reload(); // දත්ත අලුත් කිරීමට
+                } else {
+                    alert("Failed to confirm receipt.");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+};

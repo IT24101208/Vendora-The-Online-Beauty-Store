@@ -1,7 +1,7 @@
 package com.vendora.controller;
 
-import com.vendora.model.Order;
-import com.vendora.model.Payment;
+import com.vendora.Model.Order;
+import com.vendora.Model.Payment;
 import com.vendora.repository.OrderRepository;
 import com.vendora.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;

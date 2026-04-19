@@ -1,6 +1,6 @@
 package com.vendora.controller;
 
-import com.vendora.model.Order;
+import com.vendora.Model.Order;
 import com.vendora.repository.OrderRepository;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -119,4 +119,18 @@ public class AdminController {
             return ResponseEntity.ok("Payment Verified Successfully!");
         }).orElse(ResponseEntity.notFound().build());
     }
+    @PutMapping("/refund-order/{orderId}")
+    public ResponseEntity<?> refundOrder(@PathVariable Long orderId) {
+        return orderRepository.findById(orderId).map(order -> {
+            // ඕඩර් එකේ සාමාන්‍ය Status එක Refunded කරයි
+            order.setStatus("Refunded");
+
+            // පේමන්ට් එකේ Status එකත් REFUNDED කරයි (මෙන්න මේකයි වැදගත්)
+            order.setPaymentStatus("REFUNDED");
+
+            orderRepository.save(order);
+            return ResponseEntity.ok("Order and Payment Refunded Successfully!");
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
 }

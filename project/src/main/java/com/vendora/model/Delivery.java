@@ -1,84 +1,44 @@
 package com.vendora.model;
 
 import jakarta.persistence.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-
-import jakarta.persistence.*;
 import lombok.Data;
-
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "Delivery")
+@Table(name = "deliveries")
 public class Delivery {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "delivery_id")
-    private Long id;
+    @Column(columnDefinition = "CHAR(36)", updatable = false, nullable = false)
+    private String id = UUID.randomUUID().toString();
 
-    @Column(name = "delivery_code", nullable = false, unique = true, length = 50)
-    private String deliveryCode;
+    @Column(name = "order_id", columnDefinition = "CHAR(36)", nullable = false)
+    private String orderId;
 
-    /**
-     * The customer who owns this delivery.
-     * References User(user_id) — we store only the FK, no full User entity
-     * needed in this module.
-     */
-    @Column(name = "user_id", nullable = false)
-    private Long customerId;
+    @Column(name = "customer_id", columnDefinition = "CHAR(36)", nullable = false)
+    private String customerId;
 
-    /**
-     * The assigned delivery agent.
-     *
-     * ── Required schema change ───────────────────────────────────────────────
-     * The production Delivery table has no agent FK. Run migration
-     * V1__add_delivery_person_id.sql to add this column before starting the app.
-     * ────────────────────────────────────────────────────────────────────────
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "delivery_person_id")
-    private DeliveryPerson agent;
-
-    @Column(name = "address", columnDefinition = "TEXT", nullable = false)
-    private String address;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private DeliveryStatus status = DeliveryStatus.PENDING;
-
-    @Column(name = "tracking_number", length = 100)
+    @Column(name = "tracking_number", length = 50, nullable = false, unique = true)
     private String trackingNumber;
 
-    @Column(name = "province", length = 50)
-    private String province;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private DeliveryStatus status = DeliveryStatus.PENDING;
 
-    @Column(name = "district", length = 50)
-    private String district;
+    @Column(name = "delivery_address", columnDefinition = "TEXT", nullable = false)
+    private String deliveryAddress;
 
-    @Column(name = "delivery_date")
-    private LocalDate deliveryDate;
+    @Column(columnDefinition = "TEXT")
+    private String notes;
 
-    /**
-     * General-purpose notes column (failure reason, rejection note, return reason).
-     * Maps to the single `failure_reason` TEXT column in the production schema.
-     */
-    @Column(name = "failure_reason", columnDefinition = "TEXT")
-    private String failureReason;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "created_at", updatable = false,
-            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
+    @Column(name = "picked_up_at")
+    private LocalDateTime pickedUpAt;
 
-    @Column(name = "updated_at",
-            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private LocalDateTime updatedAt;
-
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
+    @Column(name = "delivered_at")
+    private LocalDateTime deliveredAt;
 }

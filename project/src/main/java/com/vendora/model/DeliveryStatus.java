@@ -3,12 +3,8 @@ package com.vendora.model;
 public enum DeliveryStatus {
     PENDING,
     ASSIGNED,
-    ACCEPTED,
-    IN_TRANSIT,
+    OUT_FOR_DELIVERY,
     DELIVERED,
     FAILED,
-    REJECTED,
-    RETURN_REQUESTED,
-    RETURN_IN_TRANSIT,
     RETURNED
 }

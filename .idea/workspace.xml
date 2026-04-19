@@ -5,108 +5,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="Backend_Update V1">
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/HomeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/Login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/admin.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/agent.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/resources/static/html/customer.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/CustomerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/CreateDeliveryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/DeliveryAssignmentDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/DeliveryStatusHistoryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/FailureLogRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/ReturnRequestCreateDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/ReturnRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/AssignmentStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/DeliveryAssignment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/DeliveryStatusHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/FailureLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/ReturnRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/ReturnRequestStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/DeliveryAssignmentRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/DeliveryStatusHistoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/FailureLogRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/ReturnRequestRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/PageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/base.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/components.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/feedback.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/footer.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/form.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/header.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/css/layout.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/about.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/cookie.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/feedback.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/privacy.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/routine.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/service.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/shop.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/terms.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/Banner.mp4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/COD.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/Deliver Banner_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/Deliver Banner_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/Mission.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/OP.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/Vendora.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/about_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/about_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/b2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/b3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/bodycare.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/choose.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/delivery.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/haircare.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/makeup.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/promise.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/skincare.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/sp1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/sp2.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/sp3.avif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/sp4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/supplier.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/images/vendora-Logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/feedback.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/form.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/policy.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/routine.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/service.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/shop.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/controller/PageController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/css/base.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/css/components.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/css/feedback.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/css/footer.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/css/form.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/css/header.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/css/layout.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/about.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/cookie.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/feedback.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/privacy.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/routine.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/service.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/shop.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/html/terms.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/Banner.mp4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/COD.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/Deliver Banner_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/Deliver Banner_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/Mission.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/OP.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/Vendora.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/about_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/about_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/b2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/b3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/bodycare.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/choose.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/delivery.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/haircare.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/makeup.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/promise.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/skincare.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/sp1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/sp2.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/sp3.avif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/sp4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/supplier.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/images/vendora-Logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/js/feedback.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/js/form.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/js/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/js/policy.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/js/routine.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/js/service.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/static/js/shop.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/DeliveryAgentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/DeliveryAgentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/AddNoteDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/AssignAgentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/AssignAgentDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/CreateDeliveryPersonDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/DeliveryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/DeliveryDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/DeliveryPersonDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/Delivery.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/Delivery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/DeliveryPerson.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/DeliveryStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/DeliveryStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/DeliveryPersonRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/DeliveryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/DeliveryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/service/DeliveryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/service/DeliveryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,8 +49,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -141,12 +73,12 @@
     &quot;assignee&quot;: &quot;IT24101208&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/IT24101208/Vendora-The-Online-Beauty-Store.git",
-    "accountId": "a94d2f43-5824-41cc-8f03-27ebebf855a2"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/IT24101208/Vendora-The-Online-Beauty-Store.git&quot;,
+    &quot;accountId&quot;: &quot;a94d2f43-5824-41cc-8f03-27ebebf855a2&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/project/src/main/resources/static/html/supplier.html" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -168,41 +100,41 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.VendoraApplication.executor": "Debug",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Downloaded.Files.Path": "D:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project",
-    "Downloaded.Files.Path.Enabled": "true",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.VendoraApplication.executor": "Run",
-    "git-widget-placeholder": "Delivery-Tracking",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/SLIIT University/Year 2 - Semester 2/IE2091 - IS Project/Assignment/Vendora-The-Online-Beauty-Store",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.VendoraApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Downloaded.Files.Path&quot;: &quot;D:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.VendoraApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Delivery-Tracking&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/SLIIT University/Year 2 - Semester 2/IE2091 - IS Project/Assignment/Vendora-The-Online-Beauty-Store&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\SLIIT University\Year 2 - Semester 2\IE2091 - IS Project\Assignment\Vendora-The-Online-Beauty-Store\project\src\main\resources\static" />
@@ -239,6 +171,8 @@
       <option name="presentableId" value="Default" />
       <updated>1772013291786</updated>
       <workItem from="1774679427985" duration="6370000" />
+      <workItem from="1776593758898" duration="156000" />
+      <workItem from="1776601893313" duration="2368000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Project Push">
       <option name="closed" value="true" />

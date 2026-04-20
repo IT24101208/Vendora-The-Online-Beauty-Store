@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Shopping Cart - Vendora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+<div class="max-w-7xl mx-auto p-6">
+    <div class="flex justify-end mb-8">
+        <a href="/logout" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2 rounded-full font-medium flex items-center gap-2">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </div>
+    <h1 class="text-4xl font-bold text-center mb-2">Your Shopping Cart</h1>
+    <div class="flex justify-center mb-8">
+        <input id="searchInput" type="text" placeholder="Search items in cart..." class="w-full max-w-md px-6 py-3 bg-white border border-gray-200 rounded-2xl shadow-sm focus:outline-none focus:border-pink-300">
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div th:each="item : ${items}" class="bg-white rounded-3xl shadow-md overflow-hidden relative">
+            <div th:if="${item.stock <= 5 && item.stock > 0}" class="absolute top-4 right-4 bg-yellow-400 text-black text-xs px-3 py-1 rounded-full font-bold">Limited Stock</div>
+            <div th:if="${item.stock == 0}" class="absolute inset-0 bg-gray-900/70 flex items-center justify-center text-white font-bold text-xl rounded-3xl">Out of Stock</div>
+            <img th:src="${item.imageUrl}" class="w-full h-64 object-cover">
+            <div class="p-6">
+                <h3 class="font-semibold text-lg" th:text="${item.productName}"></h3>
+                <p class="text-pink-600 text-xl mt-1" th:text="'Rs. ' + ${item.price}"></p>
+                <p class="text-sm text-gray-500 mt-1">Current stock: <span th:text="${item.stock}"></span></p>
+                <div class="flex items-center justify-between mt-6">
+                    <div class="flex items-center gap-3">
+                        <button onclick="changeQty(this)" class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full text-xl">-</button>
+                        <span class="font-semibold w-8 text-center qty-display">1</span>
+                        <button onclick="changeQty(this)" class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full text-xl">+</button>
+                    </div>
+                    <div class="text-right">
+                        <small class="text-gray-500">Subtotal</small><br>
+                        <span class="font-bold text-xl subtotal-display" th:text="'Rs. ' + ${item.price}"></span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3 mt-8">
+                    <button onclick="purchaseItem([[${item.id}]], [[${item.price}]], this)" th:class="'py-3 bg-green-600 hover:bg-green-700 text-white rounded-2xl font-medium ' + (${item.stock} == 0 ? 'opacity-50 pointer-events-none' : '')">Purchase</button>
+                    <button onclick="removeItem([[${item.id}]])" class="py-3 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-medium">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex gap-4 justify-center mt-12">
+        <button onclick="clearFullCart()" class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-2xl font-semibold flex items-center gap-2"><i class="fas fa-trash"></i> Clear Full Cart</button>
+        <button onclick="window.location.href='/'" class="bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 rounded-2xl font-semibold">Continue Shopping</button>
+    </div>
+</div>
+
+<!-- Purchase Bill Modal -->
+<div id="billModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl mx-4 overflow-hidden">
+        <div class="bg-pink-600 text-white px-8 py-6 text-2xl font-bold text-center">Purchase Bill</div>
+        <table class="w-full text-left">
+            <thead><tr class="bg-gray-100"><th class="px-8 py-4">Product</th><th class="px-8 py-4">Qty</th><th class="px-8 py-4 text-right">Unit Price</th><th class="px-8 py-4 text-right">Subtotal</th></tr></thead>
+            <tbody id="billBody" class="divide-y"></tbody>
+        </table>
+        <div class="px-8 py-6 border-t flex justify-between items-baseline text-2xl font-bold"><div>Total</div><div id="billTotal" class="text-pink-600">LKR 0.00</div></div>
+        <div class="px-8 py-6 text-center text-gray-600">Thank you for your purchase!</div>
+        <div class="flex border-t">
+            <button onclick="confirmPurchase()" class="flex-1 py-6 text-lg font-semibold bg-green-600 text-white hover:bg-green-700">Confirm & Pay</button>
+            <button onclick="hideBillModal()" class="flex-1 py-6 text-lg font-semibold text-gray-600 hover:bg-gray-100">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function changeQty(btn) {
+        let qtyEl = btn.parentElement.querySelector('.qty-display');
+        let qty = parseInt(qtyEl.textContent) + (btn.textContent === '+' ? 1 : -1);
+        if (qty < 1) qty = 1;
+        qtyEl.textContent = qty;
+    }
+
+    function purchaseItem(id, price, btn) {
+        let qty = parseInt(btn.parentElement.parentElement.querySelector('.qty-display').textContent);
+        let total = price * qty;
+        document.getElementById('billBody').innerHTML = `<tr><td class="px-8 py-4">${btn.parentElement.parentElement.parentElement.querySelector('h3').textContent}</td><td class="px-8 py-4">${qty}</td><td class="px-8 py-4 text-right">Rs. ${price}</td><td class="px-8 py-4 text-right font-bold">Rs. ${total}</td></tr>`;
+        document.getElementById('billTotal').textContent = `LKR ${total}.00`;
+        document.getElementById('billModal').classList.remove('hidden');
+    }
+
+    function confirmPurchase() {
+        alert("✅ Order placed successfully!");
+        hideBillModal();
+        location.reload();
+    }
+
+    function hideBillModal() {
+        document.getElementById('billModal').classList.add('hidden');
+    }
+
+    function removeItem(id) {
+        if (confirm("Remove this item from cart?")) {
+            window.location.href = `/cart/remove/${id}`;
+        }
+    }
+
+    function clearFullCart() {
+        if (confirm("Clear the entire cart?")) {
+            alert("Cart cleared");
+            location.reload();
+        }
+    }
+
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+        let term = e.target.value.toLowerCase();
+        document.querySelectorAll('.grid > div').forEach(card => {
+            let name = card.querySelector('h3').textContent.toLowerCase();
+            card.style.display = name.includes(term) ? 'block' : 'none';
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package com.vendora.cart.dto;
+package com.vendora.dto;
 
 import java.math.BigDecimal;
 

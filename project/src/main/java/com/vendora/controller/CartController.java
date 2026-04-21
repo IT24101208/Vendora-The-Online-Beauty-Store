@@ -1,4 +1,4 @@
-package com.vendora.cart.service;
+package com.vendora.service;
 
 import com.vendora.cart.dto.CartItemDto;
 import com.vendora.model.Cart;

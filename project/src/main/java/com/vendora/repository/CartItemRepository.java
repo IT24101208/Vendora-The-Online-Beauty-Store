@@ -1,7 +1,11 @@
 package com.vendora.repository;
 
-import com.vendora.model.CartItem;
+import com.vendora.cart.model.Cart;
+import com.vendora.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CartItemRepository extends JpaRepository<CartItem, Long> {
+import java.util.Optional;
+
+public interface CartRepository extends JpaRepository<Cart, Long> {
+    Optional<Cart> findByUser(User user);
 }

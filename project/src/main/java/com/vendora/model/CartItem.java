@@ -1,18 +1,35 @@
 package com.vendora.model;
 
+import com.vendora.model.Product;
 import jakarta.persistence.*;
-import lombok.*;
 
 @Entity
 @Table(name = "cart_items")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class CartItem {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String productName;
-    private double price;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @Column(nullable = false)
     private int quantity;
-    private int stock;
-    private String imageUrl;
+
+    public CartItem() {}
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public Cart getCart() { return cart; }
+    public void setCart(Cart cart) { this.cart = cart; }
+    public Product getProduct() { return product; }
+    public void setProduct(Product product) { this.product = product; }
+    public int getQuantity() { return quantity; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
 }

@@ -1,11 +1,12 @@
-package com.vendora.repository;
+package com.vendora.cart.repository;
 
 import com.vendora.cart.model.Cart;
-import com.vendora.model.User;
+import com.vendora.cart.model.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
-public interface CartRepository extends JpaRepository<Cart, Long> {
-    Optional<Cart> findByUser(User user);
+public interface CartItemRepository extends JpaRepository<CartItem, Long> {
+    List<CartItem> findByCart(Cart cart);
+    void deleteByCart(Cart cart);
 }

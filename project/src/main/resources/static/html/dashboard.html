@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Supplier Dashboard - Vendora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-pink-50">
+<nav class="bg-white shadow-md py-4">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <span class="text-2xl font-bold text-pink-500">Vendora Supplier</span>
+        <div class="flex gap-6">
+            <a href="/supplier/dashboard" class="text-pink-500">Dashboard</a>
+            <a href="/logout" class="text-gray-600 hover:text-pink-500"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>
+</nav>
+<div class="max-w-7xl mx-auto px-6 py-10">
+    <h1 class="text-4xl font-bold text-pink-500 mb-2">Welcome back, <span th:text="${supplier.companyName}"></span> 🎉</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="bg-white rounded-2xl p-6 shadow-sm"><p class="text-gray-500">Your Products</p><p class="text-3xl font-bold text-pink-500" th:text="${productCount}">0</p></div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm"><p class="text-gray-500">Pending Orders</p><p class="text-3xl font-bold text-pink-500">0</p></div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm"><p class="text-gray-500">Total Revenue</p><p class="text-3xl font-bold text-pink-500">LKR 0</p></div>
+    </div>
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="p-6 border-b flex justify-between items-center"><h2 class="text-xl font-semibold">Manage My Products</h2><a href="/supplier/dashboard/products/new" class="bg-pink-500 text-white px-4 py-2 rounded-lg"><i class="fas fa-plus"></i> Add Product</a></div>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y">
+                <thead class="bg-gray-50"><tr><th class="px-6 py-3">Image</th><th>Name</th><th>Category</th><th>Price (LKR)</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody>
+                    <tr th:each="p : ${products}">
+                        <td class="px-6 py-4"><img th:if="${p.imagePath}" th:src="${p.imagePath}" class="w-12 h-12 object-cover rounded" th:unless="${p.imagePath}" src="/images/default-product.png" class="w-12 h-12 object-cover rounded"><i th:unless="${p.imagePath}" class="fas fa-gem text-pink-400 text-2xl"></i></td>
+                        <td class="px-6 py-4" th:text="${p.name}"></td>
+                        <td class="px-6 py-4" th:text="${p.category}"></td>
+                        <td class="px-6 py-4" th:text="'LKR ' + ${p.price}"></td>
+                        <td class="px-6 py-4" th:text="${p.stockQuantity}"></td>
+                        <td class="px-6 py-4"><span th:if="${p.stockQuantity > 0}" class="text-green-600">In Stock</span><span th:unless="${p.stockQuantity > 0}" class="text-red-500">Out of Stock</span></td>
+                        <td class="space-x-2"><a th:href="@{/supplier/dashboard/products/edit/{id}(id=${p.id})}" class="text-blue-500"><i class="fas fa-edit"></i></a>
+                        <form th:action="@{/supplier/dashboard/products/delete/{id}(id=${p.id})}" method="post" class="inline"><button type="submit" class="text-red-500"><i class="fas fa-trash"></i></button></form></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Suppliers - Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-pink-50">
+<nav class="bg-white shadow-md py-4 px-6 flex justify-between">
+    <span class="text-2xl font-bold text-pink-500">Vendora Admin</span>
+    <div><a href="/admin/suppliers/pending" class="text-gray-600 mr-4">Pending</a><a href="/logout" class="text-gray-600">Logout</a></div>
+</nav>
+<div class="max-w-7xl mx-auto px-6 py-10">
+    <h1 class="text-4xl font-bold text-pink-500">All Suppliers</h1>
+    <div class="bg-white rounded-2xl shadow-sm mt-6 overflow-hidden">
+        <table class="min-w-full divide-y">
+            <thead class="bg-gray-50"><tr><th>ID</th><th>Company</th><th>Contact</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody>
+                <tr th:each="s : ${suppliers}">
+                    <td class="px-6 py-4" th:text="${s.id}"></td><td th:text="${s.companyName}"></td><td th:text="${s.contactPerson}"></td><td th:text="${s.email}"></td><td th:text="${s.phone}"></td>
+                    <td><span th:if="${s.status == 'ACTIVE'}" class="bg-green-100 text-green-800 px-2 py-1 rounded">Active</span><span th:if="${s.status == 'INACTIVE'}" class="bg-red-100 text-red-800 px-2 py-1 rounded">Inactive</span><span th:if="${s.status == 'PENDING'}" class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Pending</span></td>
+                    <td><form th:action="@{/admin/suppliers/delete/{id}(id=${s.id})}" method="post" onsubmit="return confirm('Delete supplier?')"><button class="text-red-500"><i class="fas fa-trash"></i></button></form></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

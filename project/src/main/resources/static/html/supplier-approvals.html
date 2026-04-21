@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Pending Approvals</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-pink-50">
+<div class="max-w-6xl mx-auto py-10">
+    <h1 class="text-3xl font-bold text-pink-500">Pending Supplier Approvals</h1>
+    <div class="bg-white rounded-2xl shadow mt-6 overflow-hidden">
+        <table class="min-w-full"><thead class="bg-gray-50"><tr><th class="px-6 py-3">Company</th><th>Contact</th><th>Email</th><th>Actions</th></tr></thead>
+            <tbody>
+                <tr th:each="s : ${pendingList}"><td class="px-6 py-4" th:text="${s.companyName}"></td><td th:text="${s.contactPerson}"></td><td th:text="${s.email}"></td>
+                    <td><form th:action="@{/admin/suppliers/approve/{id}(id=${s.id})}" method="post" class="inline"><button class="bg-green-500 text-white px-3 py-1 rounded mr-2">Approve</button></form><form th:action="@{/admin/suppliers/reject/{id}(id=${s.id})}" method="post" class="inline"><button class="bg-red-500 text-white px-3 py-1 rounded">Reject</button></form></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

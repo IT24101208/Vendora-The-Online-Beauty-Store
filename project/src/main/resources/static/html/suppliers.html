@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Suppliers</title>
+</head>
+
+<body>
+
+<h1>Suppliers</h1>
+
+<table border="1">
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Action</th>
+</tr>
+
+<tr th:each="s : ${suppliers}">
+    <td th:text="${s.id}"></td>
+    <td th:text="${s.name}"></td>
+    <td th:text="${s.email}"></td>
+    <td>
+        <button th:onclick="'deleteSupplier(' + ${s.id} + ')'">
+            Delete
+        </button>
+    </td>
+</tr>
+
+</table>
+
+<script>
+function deleteSupplier(id){
+    window.location.href="/suppliers/delete/"+id;
+}
+</script>
+
+</body>
+</html>

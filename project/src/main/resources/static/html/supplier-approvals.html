@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pending suppliers — Vendora Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-pink-50">
+
+<header class="px-8 py-5 flex items-center justify-between bg-white border-b border-pink-100">
+    <a th:href="@{/}" class="text-2xl font-serif font-bold text-pink-600">Vendora Admin</a>
+    <nav class="text-sm font-semibold space-x-4">
+        <a th:href="@{/admin/suppliers/pending}" class="text-pink-600">Pending</a>
+        <a th:href="@{/admin/suppliers}" class="text-gray-600 hover:text-pink-600">All suppliers</a>
+        <a th:href="@{/logout}" class="text-gray-600 hover:text-pink-600">Sign out</a>
+    </nav>
+</header>
+
+<main class="max-w-5xl mx-auto px-6 py-10">
+    <div th:if="${toast}" class="mb-6 rounded-2xl bg-pink-100 border border-pink-200 text-pink-700 px-5 py-3">
+        <i class="fa-solid fa-circle-check mr-2"></i><span th:text="${toast}"></span>
+    </div>
+
+    <h1 class="text-3xl font-serif font-bold mb-6">Pending supplier applications</h1>
+
+    <div th:if="${#lists.isEmpty(suppliers)}" class="text-center bg-white rounded-3xl shadow py-16 text-gray-500">
+        <i class="fa-regular fa-circle-check fa-2x text-pink-400 mb-3"></i>
+        <p>All caught up — no pending applications.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <article th:each="s : ${suppliers}" class="bg-white rounded-3xl shadow p-6">
+            <div class="flex items-start justify-between mb-3">
+                <div>
+                    <h3 class="font-serif text-xl font-bold" th:text="${s.companyName}"></h3>
+                    <p class="text-sm text-gray-500" th:text="${s.contactPerson}"></p>
+                </div>
+                <span class="text-xs uppercase rounded-full bg-amber-100 text-amber-700 px-3 py-1">Pending</span>
+            </div>
+            <ul class="text-sm space-y-1 mb-5 text-gray-700">
+                <li><i class="fa-regular fa-envelope w-5 text-pink-400"></i> <span th:text="${s.email}"></span></li>
+                <li><i class="fa-solid fa-phone w-5 text-pink-400"></i> <span th:text="${s.phone}"></span></li>
+                <li><i class="fa-solid fa-location-dot w-5 text-pink-400"></i> <span th:text="${s.address}"></span></li>
+            </ul>
+            <div class="flex gap-2">
+                <form th:action="@{'/admin/suppliers/' + ${s.id} + '/approve'}" method="post" class="flex-1">
+                    <button class="w-full rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2">
+                        <i class="fa-solid fa-check mr-1"></i> Approve
+                    </button>
+                </form>
+                <form th:action="@{'/admin/suppliers/' + ${s.id} + '/reject'}" method="post" class="flex-1"
+                      onsubmit="return confirm('Reject this supplier? This cannot be undone.')">
+                    <button class="w-full rounded-full bg-white border border-pink-200 text-pink-600 hover:bg-pink-50 font-semibold py-2">
+                        <i class="fa-solid fa-xmark mr-1"></i> Reject
+                    </button>
+                </form>
+            </div>
+        </article>
+    </div>
+</main>
+</body>
+</html>

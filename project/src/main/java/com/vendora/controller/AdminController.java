@@ -66,6 +66,20 @@ public class AdminController {
         return ResponseEntity.ok(deliveryService.getStatusHistory(id));
     }
 
+    // ── Agent lookup ──────────────────────────────────────────
+    // Returns agent IDs sourced from assignment history in this module.
+    // Full agent profiles (name, phone) live in the User Module.
+
+    @GetMapping("/admin/agents")
+    public ResponseEntity<List<Long>> getAgents() {
+        return ResponseEntity.ok(deliveryService.getAllAgentIds());
+    }
+
+    @GetMapping("/admin/agents/by-district/{district}")
+    public ResponseEntity<List<Long>> getAgentsByDistrict(@PathVariable String district) {
+        return ResponseEntity.ok(deliveryService.getAgentIdsByDistrict(district));
+    }
+
     // ── Return requests ────────────────────────────────────────
 
     @GetMapping("/admin/return-requests")

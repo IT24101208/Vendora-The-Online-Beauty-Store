@@ -165,6 +165,23 @@ public class DeliveryService {
         return ReturnRequestDTO.from(returnRequestRepository.save(rr));
     }
 
+    // ── ADMIN — AGENT LOOKUP ─────────────────────────────────
+
+    /** All distinct agent IDs that have ever been assigned a delivery. */
+    public List<Long> getAllAgentIds() {
+        return assignmentRepository.findAllDistinctAgentIds();
+    }
+
+    /** Distinct agent IDs that have handled deliveries in the given district. */
+    public List<Long> getAgentIdsByDistrict(String district) {
+        List<String> deliveryIds = deliveryRepository.findByCustomerDistrictIgnoreCase(district)
+                .stream().map(Delivery::getId).collect(Collectors.toList());
+        if (deliveryIds.isEmpty()) return List.of();
+        return assignmentRepository.findByDeliveryIdIn(deliveryIds)
+                .stream().map(DeliveryAssignment::getAgentId)
+                .distinct().sorted().collect(Collectors.toList());
+    }
+
     // ── AGENT ─────────────────────────────────────────────────
 
     public List<DeliveryAssignmentDTO> getAgentAssignments(Long agentId) {

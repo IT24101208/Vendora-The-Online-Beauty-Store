@@ -10,4 +10,8 @@ public interface DeliveryAssignmentRepository extends JpaRepository<DeliveryAssi
     List<DeliveryAssignment> findByAgentIdOrderByAssignedAtDesc(Long agentId);
     List<DeliveryAssignment> findByDeliveryId(String deliveryId);
     Optional<DeliveryAssignment> findByDeliveryIdAndStatus(String deliveryId, AssignmentStatus status);
+    List<DeliveryAssignment> findByDeliveryIdIn(List<String> deliveryIds);
+
+    @org.springframework.data.jpa.repository.Query("SELECT DISTINCT da.agentId FROM DeliveryAssignment da ORDER BY da.agentId")
+    List<Long> findAllDistinctAgentIds();
 }

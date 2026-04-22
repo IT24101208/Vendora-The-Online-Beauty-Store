@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="Backend_Update V3">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/Agent.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/Customer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/controller/AdminController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/controller/DeliveryAgentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/controller/DeliveryAgentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/dto/AssignAgentDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/dto/AssignAgentDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/dto/DeliveryDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/dto/DeliveryDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/model/Delivery.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/model/Delivery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/repository/DeliveryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/repository/DeliveryRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/classes/com/vendora/service/DeliveryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/classes/com/vendora/service/DeliveryService.class" afterDir="false" />
-    </list>
+    <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="Frontend_Update V2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -78,41 +65,41 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.VendoraApplication.executor": "Debug",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Downloaded.Files.Path": "D:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project",
-    "Downloaded.Files.Path.Enabled": "true",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.VendoraApplication.executor": "Run",
-    "git-widget-placeholder": "Delivery-Tracking",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/SLIIT University/Year 2 - Semester 2/IE2091 - IS Project/Assignment/Vendora-The-Online-Beauty-Store",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "Errors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.VendoraApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Downloaded.Files.Path&quot;: &quot;D:\\SLIIT University\\Year 2 - Semester 2\\IE2091 - IS Project\\Assignment\\Vendora-The-Online-Beauty-Store\\project&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.VendoraApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Delivery-Tracking&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/SLIIT University/Year 2 - Semester 2/IE2091 - IS Project/Assignment/Vendora-The-Online-Beauty-Store&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\SLIIT University\Year 2 - Semester 2\IE2091 - IS Project\Assignment\Vendora-The-Online-Beauty-Store\project\src\main\resources\static" />
@@ -160,6 +147,7 @@
       <workItem from="1776832616586" duration="746000" />
       <workItem from="1776846154773" duration="275000" />
       <workItem from="1776846601056" duration="379000" />
+      <workItem from="1776846998147" duration="121000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Project Push">
       <option name="closed" value="true" />
@@ -289,7 +277,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776831198536</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Frontend_Update V2">
+      <option name="closed" value="true" />
+      <created>1776847080948</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1776847080948</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers>
       <JIRA url="https://vendora2026ise.atlassian.net">
         <option name="apiType" value="REST_2_0" />
@@ -330,7 +326,8 @@
     <MESSAGE value="Backend_Update V1" />
     <MESSAGE value="Backend_Update V2" />
     <MESSAGE value="Backend_Update V3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Backend_Update V3" />
+    <MESSAGE value="Frontend_Update V2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Frontend_Update V2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

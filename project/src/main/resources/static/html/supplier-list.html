@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All suppliers — Vendora Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-pink-50">
+
+<header class="px-8 py-5 flex items-center justify-between bg-white border-b border-pink-100">
+    <a th:href="@{/}" class="text-2xl font-serif font-bold text-pink-600">Vendora Admin</a>
+    <nav class="text-sm font-semibold space-x-4">
+        <a th:href="@{/admin/suppliers/pending}" class="text-gray-600 hover:text-pink-600">Pending</a>
+        <a th:href="@{/admin/suppliers}" class="text-pink-600">All suppliers</a>
+        <a th:href="@{/logout}" class="text-gray-600 hover:text-pink-600">Sign out</a>
+    </nav>
+</header>
+
+<main class="max-w-6xl mx-auto px-6 py-10">
+    <div th:if="${toast}" class="mb-6 rounded-2xl bg-pink-100 border border-pink-200 text-pink-700 px-5 py-3">
+        <i class="fa-solid fa-circle-check mr-2"></i><span th:text="${toast}"></span>
+    </div>
+
+    <h1 class="text-3xl font-serif font-bold mb-6">All suppliers</h1>
+
+    <form method="get" th:action="@{/admin/suppliers}" class="bg-white rounded-2xl shadow p-4 mb-6 flex flex-col md:flex-row gap-3 md:items-center">
+        <input name="q" th:value="${q}" type="search" placeholder="Search by name or email…"
+               class="flex-1 rounded-full border border-pink-200 px-4 py-2 focus:outline-none focus:border-pink-400">
+        <select name="status" class="rounded-full border border-pink-200 px-4 py-2 bg-white">
+            <option value="">All statuses</option>
+            <option th:each="st : ${statuses}" th:value="${st.name()}" th:text="${st.name()}"
+                    th:selected="${selectedStatus != null and selectedStatus.name() == st.name()}"></option>
+        </select>
+        <button class="rounded-full bg-pink-500 hover:bg-pink-600 text-white font-semibold px-5 py-2">
+            <i class="fa-solid fa-magnifying-glass mr-1"></i> Filter
+        </button>
+    </form>
+
+    <div class="bg-white rounded-3xl shadow overflow-hidden">
+        <div th:if="${#lists.isEmpty(suppliers)}" class="text-center py-12 text-gray-500">
+            No suppliers match your filters.
+        </div>
+        <table th:unless="${#lists.isEmpty(suppliers)}" class="w-full text-sm">
+            <thead class="bg-pink-50 text-pink-700 uppercase text-xs">
+                <tr><th class="text-left px-6 py-3">Company</th><th class="text-left px-6 py-3">Contact</th><th class="text-left px-6 py-3">Email</th><th class="text-left px-6 py-3">Phone</th><th class="text-left px-6 py-3">Status</th><th class="px-6 py-3"></th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="s : ${suppliers}" class="border-t border-pink-100 hover:bg-pink-50/50">
+                    <td class="px-6 py-3 font-semibold" th:text="${s.companyName}"></td>
+                    <td class="px-6 py-3" th:text="${s.contactPerson}"></td>
+                    <td class="px-6 py-3" th:text="${s.email}"></td>
+                    <td class="px-6 py-3" th:text="${s.phone}"></td>
+                    <td class="px-6 py-3">
+                        <span th:switch="${s.status.name()}">
+                            <span th:case="'PENDING'" class="rounded-full bg-amber-100 text-amber-700 px-3 py-1 text-xs">Pending</span>
+                            <span th:case="'APPROVED'" class="rounded-full bg-emerald-100 text-emerald-700 px-3 py-1 text-xs">Approved</span>
+                            <span th:case="*" class="rounded-full bg-gray-100 text-gray-600 px-3 py-1 text-xs" th:text="${s.status}"></span>
+                        </span>
+                    </td>
+                    <td class="px-6 py-3 text-right">
+                        <a th:href="@{'/admin/suppliers/' + ${s.id} + '/delete'}" onclick="return confirm('Delete this supplier and all their products?')" class="text-red-500 hover:underline">
+                            <i class="fa-regular fa-trash-can"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

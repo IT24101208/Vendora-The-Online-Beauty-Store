@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ReturnRequestCreateDTO {
-    private String customerId;
+    private Long customerId;
     private String reasonCode;
     private String description;
 }

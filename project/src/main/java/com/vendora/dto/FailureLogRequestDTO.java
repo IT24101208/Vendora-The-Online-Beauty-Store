@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class FailureLogRequestDTO {
-    private String loggedBy;
+    private Long loggedBy;
     private String reasonCode;
     private String description;
 }

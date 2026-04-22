@@ -17,8 +17,9 @@ public class DeliveryAssignment {
     @Column(name = "delivery_id", columnDefinition = "CHAR(36)", nullable = false)
     private String deliveryId;
 
-    @Column(name = "agent_id", columnDefinition = "CHAR(36)", nullable = false)
-    private String agentId;
+    /** FK → users.user_id (BIGINT) */
+    @Column(name = "agent_id", nullable = false)
+    private Long agentId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

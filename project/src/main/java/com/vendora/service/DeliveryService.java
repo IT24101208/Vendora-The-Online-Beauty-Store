@@ -5,9 +5,12 @@ import com.vendora.model.*;
 import com.vendora.repository.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,20 +27,53 @@ public class DeliveryService {
                            DeliveryStatusHistoryRepository historyRepository,
                            FailureLogRepository failureLogRepository,
                            ReturnRequestRepository returnRequestRepository) {
-        this.deliveryRepository     = deliveryRepository;
-        this.assignmentRepository   = assignmentRepository;
-        this.historyRepository      = historyRepository;
-        this.failureLogRepository   = failureLogRepository;
+        this.deliveryRepository      = deliveryRepository;
+        this.assignmentRepository    = assignmentRepository;
+        this.historyRepository       = historyRepository;
+        this.failureLogRepository    = failureLogRepository;
         this.returnRequestRepository = returnRequestRepository;
+    }
+
+    // ── INTEGRATION ───────────────────────────────────────────
+    // Called by the Order module when a payment succeeds
+
+    @Transactional
+    public DeliveryDTO createDeliveryFromOrder(OrderPaymentDTO dto) {
+        deliveryRepository.findByOrderId(dto.getOrderId()).ifPresent(existing -> {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                "Delivery already exists for order " + dto.getOrderId());
+        });
+
+        Delivery delivery = new Delivery();
+        delivery.setOrderId(dto.getOrderId());
+        delivery.setCustomerId(dto.getCustomerId());
+        delivery.setCustomerDistrict(dto.getCustomerDistrict());
+        delivery.setTrackingNumber(generateTrackingNumber(dto.getOrderId(), dto.getOrderCode()));
+        delivery.setDeliveryAddress(dto.getDeliveryAddress());
+        delivery.setNotes(dto.getNotes());
+
+        Delivery saved = deliveryRepository.save(delivery);
+        recordHistory(saved.getId(), DeliveryStatus.PENDING, null);
+        return DeliveryDTO.from(saved);
     }
 
     // ── ADMIN ─────────────────────────────────────────────────
 
+    @Transactional
     public DeliveryDTO createDelivery(CreateDeliveryDTO dto) {
+        deliveryRepository.findByOrderId(dto.getOrderId()).ifPresent(existing -> {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                "Delivery already exists for order " + dto.getOrderId());
+        });
+
         Delivery delivery = new Delivery();
         delivery.setOrderId(dto.getOrderId());
         delivery.setCustomerId(dto.getCustomerId());
-        delivery.setTrackingNumber(dto.getTrackingNumber());
+        delivery.setCustomerDistrict(dto.getCustomerDistrict());
+        delivery.setTrackingNumber(
+            dto.getTrackingNumber() != null ? dto.getTrackingNumber()
+                : generateTrackingNumber(dto.getOrderId(), null)
+        );
         delivery.setDeliveryAddress(dto.getDeliveryAddress());
         delivery.setNotes(dto.getNotes());
         Delivery saved = deliveryRepository.save(delivery);
@@ -59,9 +95,32 @@ public class DeliveryService {
                 .stream().map(DeliveryDTO::from).collect(Collectors.toList());
     }
 
+    /**
+     * Assigns a delivery agent to a delivery.
+     * Validates that the agent's service district matches the customer's delivery district.
+     */
+    @Transactional
     public DeliveryAssignmentDTO assignAgent(String deliveryId, AssignAgentDTO dto) {
         Delivery delivery = findDelivery(deliveryId);
+
+        if (delivery.getStatus() == DeliveryStatus.DELIVERED
+                || delivery.getStatus() == DeliveryStatus.RETURNED) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "Cannot assign an agent to a delivery that is already " + delivery.getStatus());
+        }
+
+        // District validation — reject if districts don't match
+        String agentDistrict    = dto.getAgentServiceDistrict();
+        String customerDistrict = delivery.getCustomerDistrict();
+        if (agentDistrict != null && customerDistrict != null
+                && !agentDistrict.equalsIgnoreCase(customerDistrict)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "Agent service district '" + agentDistrict
+                + "' does not match customer district '" + customerDistrict + "'");
+        }
+
         delivery.setStatus(DeliveryStatus.ASSIGNED);
+        delivery.setAgentId(dto.getAgentId());
         deliveryRepository.save(delivery);
 
         DeliveryAssignment assignment = new DeliveryAssignment();
@@ -83,35 +142,63 @@ public class DeliveryService {
                 .stream().map(ReturnRequestDTO::from).collect(Collectors.toList());
     }
 
-    public ReturnRequestDTO approveReturn(String returnId, String agentId, String adminId) {
+    @Transactional
+    public ReturnRequestDTO approveReturn(String returnId, Long agentId, Long adminId) {
         ReturnRequest rr = findReturnRequest(returnId);
+        if (rr.getStatus() != ReturnRequestStatus.REQUESTED) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "Only REQUESTED returns can be approved, current status: " + rr.getStatus());
+        }
         rr.setAgentId(agentId);
         rr.setStatus(agentId != null ? ReturnRequestStatus.PICKUP_SCHEDULED : ReturnRequestStatus.APPROVED);
         return ReturnRequestDTO.from(returnRequestRepository.save(rr));
     }
 
+    @Transactional
     public ReturnRequestDTO rejectReturn(String returnId) {
         ReturnRequest rr = findReturnRequest(returnId);
+        if (rr.getStatus() != ReturnRequestStatus.REQUESTED) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "Only REQUESTED returns can be rejected, current status: " + rr.getStatus());
+        }
         rr.setStatus(ReturnRequestStatus.REJECTED);
         return ReturnRequestDTO.from(returnRequestRepository.save(rr));
     }
 
     // ── AGENT ─────────────────────────────────────────────────
 
-    public List<DeliveryAssignmentDTO> getAgentAssignments(String agentId) {
+    public List<DeliveryAssignmentDTO> getAgentAssignments(Long agentId) {
         return assignmentRepository.findByAgentIdOrderByAssignedAtDesc(agentId)
                 .stream().map(DeliveryAssignmentDTO::from).collect(Collectors.toList());
     }
 
-    public DeliveryAssignmentDTO acceptAssignment(String assignmentId, String agentId) {
+    @Transactional
+    public DeliveryAssignmentDTO acceptAssignment(String assignmentId, Long agentId) {
         DeliveryAssignment assignment = findAssignment(assignmentId);
+        if (!assignment.getAgentId().equals(agentId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                "Agent is not assigned to this delivery");
+        }
+        if (assignment.getStatus() != AssignmentStatus.PENDING) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "Assignment is not in PENDING status");
+        }
         assignment.setStatus(AssignmentStatus.ACCEPTED);
         assignment.setRespondedAt(LocalDateTime.now());
         return DeliveryAssignmentDTO.from(assignmentRepository.save(assignment));
     }
 
-    public DeliveryAssignmentDTO rejectAssignment(String assignmentId, String agentId, String reason) {
+    @Transactional
+    public DeliveryAssignmentDTO rejectAssignment(String assignmentId, Long agentId, String reason) {
         DeliveryAssignment assignment = findAssignment(assignmentId);
+        if (!assignment.getAgentId().equals(agentId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                "Agent is not assigned to this delivery");
+        }
+        if (assignment.getStatus() != AssignmentStatus.PENDING) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "Assignment is not in PENDING status");
+        }
         assignment.setStatus(AssignmentStatus.REJECTED);
         assignment.setRejectionReason(reason);
         assignment.setRespondedAt(LocalDateTime.now());
@@ -119,13 +206,15 @@ public class DeliveryService {
 
         Delivery delivery = findDelivery(assignment.getDeliveryId());
         delivery.setStatus(DeliveryStatus.PENDING);
+        delivery.setAgentId(null);
         deliveryRepository.save(delivery);
 
         recordHistory(delivery.getId(), DeliveryStatus.PENDING, agentId);
         return DeliveryAssignmentDTO.from(assignment);
     }
 
-    public DeliveryDTO pickupDelivery(String deliveryId, String agentId) {
+    @Transactional
+    public DeliveryDTO pickupDelivery(String deliveryId, Long agentId) {
         Delivery delivery = findDelivery(deliveryId);
         delivery.setStatus(DeliveryStatus.OUT_FOR_DELIVERY);
         delivery.setPickedUpAt(LocalDateTime.now());
@@ -134,7 +223,8 @@ public class DeliveryService {
         return DeliveryDTO.from(delivery);
     }
 
-    public DeliveryDTO completeDelivery(String deliveryId, String agentId) {
+    @Transactional
+    public DeliveryDTO completeDelivery(String deliveryId, Long agentId) {
         Delivery delivery = findDelivery(deliveryId);
         delivery.setStatus(DeliveryStatus.DELIVERED);
         delivery.setDeliveredAt(LocalDateTime.now());
@@ -143,6 +233,7 @@ public class DeliveryService {
         return DeliveryDTO.from(delivery);
     }
 
+    @Transactional
     public DeliveryDTO failDelivery(String deliveryId, FailureLogRequestDTO dto) {
         Delivery delivery = findDelivery(deliveryId);
         delivery.setStatus(DeliveryStatus.FAILED);
@@ -161,23 +252,27 @@ public class DeliveryService {
         return DeliveryDTO.from(delivery);
     }
 
-    public DeliveryDTO pickupReturn(String deliveryId, String agentId) {
+    @Transactional
+    public DeliveryDTO pickupReturn(String deliveryId, Long agentId) {
         ReturnRequest rr = returnRequestRepository.findByDeliveryId(deliveryId)
                 .stream()
                 .filter(r -> r.getStatus() == ReturnRequestStatus.PICKUP_SCHEDULED)
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No scheduled return for this delivery"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "No scheduled return for this delivery"));
         rr.setStatus(ReturnRequestStatus.PICKED_UP);
         returnRequestRepository.save(rr);
         return DeliveryDTO.from(findDelivery(deliveryId));
     }
 
-    public DeliveryDTO completeReturn(String deliveryId, String agentId) {
+    @Transactional
+    public DeliveryDTO completeReturn(String deliveryId, Long agentId) {
         ReturnRequest rr = returnRequestRepository.findByDeliveryId(deliveryId)
                 .stream()
                 .filter(r -> r.getStatus() == ReturnRequestStatus.PICKED_UP)
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No picked-up return for this delivery"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "No picked-up return for this delivery"));
         rr.setStatus(ReturnRequestStatus.COMPLETED);
         rr.setCompletedAt(LocalDateTime.now());
         returnRequestRepository.save(rr);
@@ -191,12 +286,24 @@ public class DeliveryService {
 
     // ── CUSTOMER ─────────────────────────────────────────────
 
-    public List<DeliveryDTO> getCustomerDeliveries(String customerId) {
+    public List<DeliveryDTO> getCustomerDeliveries(Long customerId) {
         return deliveryRepository.findByCustomerIdOrderByCreatedAtDesc(customerId)
                 .stream().map(DeliveryDTO::from).collect(Collectors.toList());
     }
 
+    @Transactional
     public ReturnRequestDTO createReturnRequest(String deliveryId, ReturnRequestCreateDTO dto) {
+        Delivery delivery = findDelivery(deliveryId);
+
+        if (delivery.getStatus() != DeliveryStatus.DELIVERED) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "Returns can only be requested for DELIVERED items, current status: " + delivery.getStatus());
+        }
+        if (!delivery.getCustomerId().equals(dto.getCustomerId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                "Delivery does not belong to this customer");
+        }
+
         ReturnRequest rr = new ReturnRequest();
         rr.setDeliveryId(deliveryId);
         rr.setCustomerId(dto.getCustomerId());
@@ -205,7 +312,7 @@ public class DeliveryService {
         return ReturnRequestDTO.from(returnRequestRepository.save(rr));
     }
 
-    public List<ReturnRequestDTO> getCustomerReturnRequests(String customerId) {
+    public List<ReturnRequestDTO> getCustomerReturnRequests(Long customerId) {
         return returnRequestRepository.findByCustomerIdOrderByRequestedAtDesc(customerId)
                 .stream().map(ReturnRequestDTO::from).collect(Collectors.toList());
     }
@@ -227,11 +334,19 @@ public class DeliveryService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Return request not found"));
     }
 
-    private void recordHistory(String deliveryId, DeliveryStatus status, String changedBy) {
+    private void recordHistory(String deliveryId, DeliveryStatus status, Long changedBy) {
         DeliveryStatusHistory history = new DeliveryStatusHistory();
         history.setDeliveryId(deliveryId);
         history.setStatus(status);
         history.setChangedBy(changedBy);
         historyRepository.save(history);
+    }
+
+    /** Generates a unique tracking number: VND-{orderId}-{6-char UUID suffix} */
+    private String generateTrackingNumber(Long orderId, String orderCode) {
+        String base = (orderCode != null && !orderCode.isBlank())
+            ? orderCode
+            : String.format("%08d", orderId);
+        return "VND-" + base + "-" + UUID.randomUUID().toString().substring(0, 6).toUpperCase();
     }
 }

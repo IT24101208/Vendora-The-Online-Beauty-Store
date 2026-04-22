@@ -14,11 +14,21 @@ public class Delivery {
     @Column(columnDefinition = "CHAR(36)", updatable = false, nullable = false)
     private String id = UUID.randomUUID().toString();
 
-    @Column(name = "order_id", columnDefinition = "CHAR(36)", nullable = false)
-    private String orderId;
+    /** FK → orders.order_id (BIGINT) */
+    @Column(name = "order_id", nullable = false)
+    private Long orderId;
 
-    @Column(name = "customer_id", columnDefinition = "CHAR(36)", nullable = false)
-    private String customerId;
+    /** FK → users.user_id (BIGINT) */
+    @Column(name = "customer_id", nullable = false)
+    private Long customerId;
+
+    /** Cached from users.district at creation — used for district-based agent assignment */
+    @Column(name = "customer_district", length = 50, nullable = false)
+    private String customerDistrict;
+
+    /** FK → users.user_id (BIGINT) — set when an agent is assigned */
+    @Column(name = "agent_id")
+    private Long agentId;
 
     @Column(name = "tracking_number", length = 50, nullable = false, unique = true)
     private String trackingNumber;

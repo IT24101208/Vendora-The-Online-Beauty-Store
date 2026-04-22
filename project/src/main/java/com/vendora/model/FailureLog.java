@@ -17,8 +17,9 @@ public class FailureLog {
     @Column(name = "delivery_id", columnDefinition = "CHAR(36)", nullable = false)
     private String deliveryId;
 
-    @Column(name = "logged_by", columnDefinition = "CHAR(36)", nullable = false)
-    private String loggedBy;
+    /** FK → users.user_id (BIGINT) — the agent who logged the failure */
+    @Column(name = "logged_by", nullable = false)
+    private Long loggedBy;
 
     @Column(name = "reason_code", length = 50, nullable = false)
     private String reasonCode;

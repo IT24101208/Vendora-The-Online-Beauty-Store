@@ -1,4 +1,5 @@
 package com.vendora.dto;
+
 import com.vendora.model.Delivery;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -7,8 +8,10 @@ import java.time.LocalDateTime;
 public class DeliveryDTO {
 
     private String id;
-    private String orderId;
-    private String customerId;
+    private Long orderId;
+    private Long customerId;
+    private String customerDistrict;
+    private Long agentId;
     private String trackingNumber;
     private String status;
     private String deliveryAddress;
@@ -22,6 +25,8 @@ public class DeliveryDTO {
         dto.setId(d.getId());
         dto.setOrderId(d.getOrderId());
         dto.setCustomerId(d.getCustomerId());
+        dto.setCustomerDistrict(d.getCustomerDistrict());
+        dto.setAgentId(d.getAgentId());
         dto.setTrackingNumber(d.getTrackingNumber());
         dto.setStatus(d.getStatus().name());
         dto.setDeliveryAddress(d.getDeliveryAddress());

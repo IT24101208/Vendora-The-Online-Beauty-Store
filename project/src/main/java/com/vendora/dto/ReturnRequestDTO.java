@@ -9,8 +9,8 @@ public class ReturnRequestDTO {
 
     private String id;
     private String deliveryId;
-    private String customerId;
-    private String agentId;
+    private Long customerId;
+    private Long agentId;
     private String reasonCode;
     private String description;
     private String status;

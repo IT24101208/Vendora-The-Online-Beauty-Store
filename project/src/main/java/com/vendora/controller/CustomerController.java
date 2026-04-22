@@ -18,7 +18,7 @@ public class CustomerController {
     }
 
     @GetMapping("/deliveries")
-    public ResponseEntity<List<DeliveryDTO>> getMyDeliveries(@RequestParam String customerId) {
+    public ResponseEntity<List<DeliveryDTO>> getMyDeliveries(@RequestParam Long customerId) {
         return ResponseEntity.ok(deliveryService.getCustomerDeliveries(customerId));
     }
 
@@ -35,7 +35,7 @@ public class CustomerController {
     }
 
     @GetMapping("/return-requests")
-    public ResponseEntity<List<ReturnRequestDTO>> getMyReturnRequests(@RequestParam String customerId) {
+    public ResponseEntity<List<ReturnRequestDTO>> getMyReturnRequests(@RequestParam Long customerId) {
         return ResponseEntity.ok(deliveryService.getCustomerReturnRequests(customerId));
     }
 }

@@ -18,21 +18,21 @@ public class DeliveryAgentController {
     }
 
     @GetMapping("/assignments")
-    public ResponseEntity<List<DeliveryAssignmentDTO>> getAssignments(@RequestParam String agentId) {
+    public ResponseEntity<List<DeliveryAssignmentDTO>> getAssignments(@RequestParam Long agentId) {
         return ResponseEntity.ok(deliveryService.getAgentAssignments(agentId));
     }
 
     @PostMapping("/assignments/{id}/accept")
     public ResponseEntity<DeliveryAssignmentDTO> accept(
             @PathVariable String id,
-            @RequestParam String agentId) {
+            @RequestParam Long agentId) {
         return ResponseEntity.ok(deliveryService.acceptAssignment(id, agentId));
     }
 
     @PostMapping("/assignments/{id}/reject")
     public ResponseEntity<DeliveryAssignmentDTO> reject(
             @PathVariable String id,
-            @RequestParam String agentId,
+            @RequestParam Long agentId,
             @RequestParam String reason) {
         return ResponseEntity.ok(deliveryService.rejectAssignment(id, agentId, reason));
     }
@@ -40,14 +40,14 @@ public class DeliveryAgentController {
     @PostMapping("/deliveries/{id}/pickup")
     public ResponseEntity<DeliveryDTO> pickup(
             @PathVariable String id,
-            @RequestParam String agentId) {
+            @RequestParam Long agentId) {
         return ResponseEntity.ok(deliveryService.pickupDelivery(id, agentId));
     }
 
     @PostMapping("/deliveries/{id}/complete")
     public ResponseEntity<DeliveryDTO> complete(
             @PathVariable String id,
-            @RequestParam String agentId) {
+            @RequestParam Long agentId) {
         return ResponseEntity.ok(deliveryService.completeDelivery(id, agentId));
     }
 
@@ -61,14 +61,14 @@ public class DeliveryAgentController {
     @PostMapping("/deliveries/{id}/pickup-return")
     public ResponseEntity<DeliveryDTO> pickupReturn(
             @PathVariable String id,
-            @RequestParam String agentId) {
+            @RequestParam Long agentId) {
         return ResponseEntity.ok(deliveryService.pickupReturn(id, agentId));
     }
 
     @PostMapping("/deliveries/{id}/complete-return")
     public ResponseEntity<DeliveryDTO> completeReturn(
             @PathVariable String id,
-            @RequestParam String agentId) {
+            @RequestParam Long agentId) {
         return ResponseEntity.ok(deliveryService.completeReturn(id, agentId));
     }
 }

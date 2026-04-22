@@ -9,7 +9,7 @@ public class DeliveryAssignmentDTO {
 
     private String id;
     private String deliveryId;
-    private String agentId;
+    private Long agentId;
     private String status;
     private String rejectionReason;
     private LocalDateTime assignedAt;

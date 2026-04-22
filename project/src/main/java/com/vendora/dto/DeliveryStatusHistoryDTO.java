@@ -10,7 +10,8 @@ public class DeliveryStatusHistoryDTO {
     private String id;
     private String deliveryId;
     private String status;
-    private String changedBy;
+    /** FK → users.user_id; null when changed by the system (e.g. auto-created on payment) */
+    private Long changedBy;
     private LocalDateTime changedAt;
 
     public static DeliveryStatusHistoryDTO from(DeliveryStatusHistory h) {

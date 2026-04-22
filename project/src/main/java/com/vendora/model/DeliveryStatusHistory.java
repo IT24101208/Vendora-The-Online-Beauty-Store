@@ -21,8 +21,9 @@ public class DeliveryStatusHistory {
     @Column(nullable = false)
     private DeliveryStatus status;
 
-    @Column(name = "changed_by", columnDefinition = "CHAR(36)", nullable = false)
-    private String changedBy;
+    /** FK → users.user_id (BIGINT); nullable for system-triggered transitions */
+    @Column(name = "changed_by")
+    private Long changedBy;
 
     @Column(name = "changed_at", nullable = false)
     private LocalDateTime changedAt = LocalDateTime.now();

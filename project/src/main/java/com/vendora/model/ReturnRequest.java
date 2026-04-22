@@ -17,11 +17,13 @@ public class ReturnRequest {
     @Column(name = "delivery_id", columnDefinition = "CHAR(36)", nullable = false)
     private String deliveryId;
 
-    @Column(name = "customer_id", columnDefinition = "CHAR(36)", nullable = false)
-    private String customerId;
+    /** FK → users.user_id (BIGINT) */
+    @Column(name = "customer_id", nullable = false)
+    private Long customerId;
 
-    @Column(name = "agent_id", columnDefinition = "CHAR(36)")
-    private String agentId;
+    /** FK → users.user_id (BIGINT); set when admin assigns an agent to handle the return */
+    @Column(name = "agent_id")
+    private Long agentId;
 
     @Column(name = "reason_code", length = 50, nullable = false)
     private String reasonCode;

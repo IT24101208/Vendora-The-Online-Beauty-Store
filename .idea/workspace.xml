@@ -4,41 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="Backend_Update V1">
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/CustomerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/CreateDeliveryDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/DeliveryAssignmentDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/DeliveryStatusHistoryDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/FailureLogRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/ReturnRequestCreateDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/ReturnRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/AssignmentStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/DeliveryAssignment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/DeliveryStatusHistory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/FailureLog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/ReturnRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/ReturnRequestStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/DeliveryAssignmentRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/DeliveryStatusHistoryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/FailureLogRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/ReturnRequestRepository.java" afterDir="false" />
+    <list default="true" id="aabc6dc0-a376-43de-8bb4-d56aa51e60f5" name="Changes" comment="Backend_Update V2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/DeliveryAgentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/DeliveryAgentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/AddNoteDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/AssignAgentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/AssignAgentDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/CreateDeliveryPersonDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/DeliveryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/DeliveryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/dto/DeliveryPersonDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/Delivery.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/Delivery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/DeliveryPerson.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/DeliveryStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/model/DeliveryStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/DeliveryPersonRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/DeliveryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/repository/DeliveryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/com/vendora/service/DeliveryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/java/com/vendora/service/DeliveryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/project/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/html/Admin.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +30,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop" />
+        <entry key="$PROJECT_DIR$" value="Order&amp;Delivery_Integration" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -172,7 +140,12 @@
       <updated>1772013291786</updated>
       <workItem from="1774679427985" duration="6370000" />
       <workItem from="1776593758898" duration="156000" />
-      <workItem from="1776601893313" duration="2368000" />
+      <workItem from="1776601893313" duration="2837000" />
+      <workItem from="1776614214132" duration="387000" />
+      <workItem from="1776617268989" duration="14000" />
+      <workItem from="1776617338625" duration="160000" />
+      <workItem from="1776646644385" duration="255000" />
+      <workItem from="1776791092571" duration="125000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Project Push">
       <option name="closed" value="true" />
@@ -286,7 +259,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774683468723</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Backend_Update V2">
+      <option name="closed" value="true" />
+      <created>1776604394329</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1776604394329</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers>
       <JIRA url="https://vendora2026ise.atlassian.net">
         <option name="apiType" value="REST_2_0" />
@@ -325,7 +306,8 @@
     <MESSAGE value="Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
     <MESSAGE value="Frontend - VII" />
     <MESSAGE value="Backend_Update V1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Backend_Update V1" />
+    <MESSAGE value="Backend_Update V2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Backend_Update V2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

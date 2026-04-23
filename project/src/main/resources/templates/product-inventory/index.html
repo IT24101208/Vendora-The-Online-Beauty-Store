@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vendora Dashboard</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div id="navbar-root"></div>
+  
+<main class="page">
+  <section class="page-header">
+    <h1 class="page-title">Dashboard</h1>
+    <p class="page-subtitle">Overview of your cosmetic inventory</p>
+  </section>
+  <section id="stats-grid" class="summary-grid"></section>
+  <section class="split">
+    <div class="card pad">
+      <h2 class="section-title">Low Stock Alerts</h2>
+      <div id="dashboard-low-stock"></div>
+    </div>
+    <div>
+      <h2 class="section-title">Quick Actions</h2>
+      <div class="quick-grid">
+        <a class="quick-card gradient-rose" href="create-product.html"><h3>Add Product</h3><p>Create a new cosmetic listing</p></a>
+        <a class="quick-card card" style="color:#9f1239;border:1px solid var(--border);" href="products.html"><h3>Browse Inventory</h3><p>View and manage all products</p></a>
+        <a class="quick-card card" style="color:#b45309;border:1px solid #fde68a;" href="low-stock.html"><h3>Stock Alerts</h3><p>Check items needing restock</p></a>
+      </div>
+      <p class="footer-note">Backend remains unchanged. This dashboard uses the same API routes as the original React frontend.</p>
+    </div>
+  </section>
+</main>
+
+  <script type="module" src="assets/js/pages/dashboard.js"></script>
+</body>
+</html>

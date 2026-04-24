@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -68,7 +69,6 @@ public class AdminController {
 
     // ── Agent lookup ──────────────────────────────────────────
     // Returns agent IDs sourced from assignment history in this module.
-    // Full agent profiles (name, phone) live in the User Module.
 
     @GetMapping("/admin/agents")
     public ResponseEntity<List<Long>> getAgents() {
@@ -78,6 +78,24 @@ public class AdminController {
     @GetMapping("/admin/agents/by-district/{district}")
     public ResponseEntity<List<Long>> getAgentsByDistrict(@PathVariable String district) {
         return ResponseEntity.ok(deliveryService.getAgentIdsByDistrict(district));
+    }
+
+    // ── Agent registration ────────────────────────────────────
+
+    @PostMapping("/admin/agents/register")
+    public ResponseEntity<AgentProfileDTO> registerAgent(@RequestBody RegisterAgentDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(deliveryService.registerAgent(dto));
+    }
+
+    @GetMapping("/admin/agents/profiles")
+    public ResponseEntity<List<AgentProfileDTO>> getAllAgentProfiles() {
+        return ResponseEntity.ok(deliveryService.getAllAgentProfiles());
+    }
+
+    @GetMapping("/admin/agents/profiles/district/{district}")
+    public ResponseEntity<List<AgentProfileDTO>> getAgentProfilesByDistrict(@PathVariable String district) {
+        return ResponseEntity.ok(deliveryService.getAgentProfilesByDistrict(district));
     }
 
     // ── Return requests ────────────────────────────────────────

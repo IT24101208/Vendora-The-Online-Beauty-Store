@@ -6,6 +6,7 @@
   <title>Vendora · Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    /* noinspection CssUnknownProperty, CssInvalidPropertyValue */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --rose-50:  #fff1f5;
@@ -350,18 +351,36 @@
     <div class="page-header">
       <div>
         <div class="page-title">Delivery Agents</div>
-        <div class="page-sub">Agent management is handled by the Vendora User Module</div>
+        <div class="page-sub">Manage and register delivery agents</div>
       </div>
+      <button class="btn-primary" onclick="openModal('registerAgentModal')">+ Register Agent</button>
     </div>
     <div class="panel">
-      <div class="empty" style="padding:4rem 2rem;">
-        <div class="empty-icon">🛵</div>
-        <p style="font-weight:500;margin-bottom:.5rem;">Agent management is outside this module</p>
-        <p style="font-size:.875rem;max-width:420px;margin:0 auto;line-height:1.6;">
-          Delivery agents are registered and managed through the main Vendora User Module.
-          To assign an agent to a delivery, use the <strong>Assign</strong> button in the
-          Deliveries view and enter the agent's numeric ID and service district.
-        </p>
+      <div class="panel-head">
+        <span class="panel-title">All Agents</span>
+        <div class="filter-tabs">
+          <button class="tab active" onclick="filterAgents('ALL', this)">All</button>
+          <button class="tab" onclick="filterAgents('AVAILABLE', this)">Available</button>
+          <button class="tab" onclick="filterAgents('ON_DELIVERY', this)">On Delivery</button>
+          <button class="tab" onclick="filterAgents('UNAVAILABLE', this)">Unavailable</button>
+          <button class="tab" onclick="filterAgents('SUSPENDED', this)">Suspended</button>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+          <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>District</th>
+            <th>Vehicle</th>
+            <th>Licence Plate</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody id="agentsBody"></tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -377,12 +396,19 @@
     </div>
     <p style="color:var(--muted);font-size:.9rem;margin-bottom:1.25rem;">Assign an agent to delivery <strong id="assignDeliveryCode"></strong></p>
     <div class="field">
-      <label>Agent ID <span style="color:var(--rose-500)">*</span></label>
-      <input id="agentIdInput" type="number" placeholder="Numeric agent ID">
+      <label>Delivery District</label>
+      <div id="assignDistrictDisplay" style="padding:.65rem .9rem;background:var(--rose-50);border:1.5px solid var(--border);border-radius:10px;font-size:.9rem;color:var(--text);font-weight:500;">—</div>
     </div>
     <div class="field">
-      <label>Agent Service District <span style="color:var(--rose-500)">*</span></label>
-      <input id="agentDistrictInput" placeholder="e.g. Colombo — must match delivery district">
+      <label>Select Agent <span style="color:var(--rose-500)">*</span></label>
+      <select id="agentSelect" disabled>
+        <option value="">— loading… —</option>
+      </select>
+      <div id="agentSelectHint" style="font-size:.78rem;color:var(--muted);margin-top:.35rem;"></div>
+    </div>
+    <div class="field" id="agentManualField" style="display:none;">
+      <label>Or enter Agent ID manually <span style="color:var(--rose-500)">*</span></label>
+      <input id="agentIdManual" type="number" placeholder="Numeric agent ID from User Module">
     </div>
     <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.25rem;">
       <button class="btn-sm btn-outline" onclick="closeModal('assignModal')">Cancel</button>
@@ -403,7 +429,20 @@
       <div class="field"><label>Customer ID <span style="color:var(--rose-500)">*</span></label><input id="del-customer" type="number" placeholder="Numeric customer ID"></div>
     </div>
     <div class="field-row">
-      <div class="field"><label>Customer District <span style="color:var(--rose-500)">*</span></label><input id="del-district" placeholder="e.g. Colombo"></div>
+      <div class="field"><label>Customer District <span style="color:var(--rose-500)">*</span></label>
+        <select id="del-district">
+          <option value="">— Select district —</option>
+          <option>Ampara</option><option>Anuradhapura</option><option>Badulla</option>
+          <option>Batticaloa</option><option>Colombo</option><option>Galle</option>
+          <option>Gampaha</option><option>Hambantota</option><option>Jaffna</option>
+          <option>Kalutara</option><option>Kandy</option><option>Kegalle</option>
+          <option>Kilinochchi</option><option>Kurunegala</option><option>Mannar</option>
+          <option>Matale</option><option>Matara</option><option>Monaragala</option>
+          <option>Mullaitivu</option><option>Nuwara Eliya</option><option>Polonnaruwa</option>
+          <option>Puttalam</option><option>Ratnapura</option><option>Trincomalee</option>
+          <option>Vavuniya</option>
+        </select>
+      </div>
       <div class="field"><label>Tracking Number</label><input id="del-tracking" placeholder="Auto-generated if blank"></div>
     </div>
     <div class="field"><label>Delivery Address <span style="color:var(--rose-500)">*</span></label><input id="del-address" placeholder="45 Sunset Blvd, Apartment 2B, Colombo"></div>
@@ -424,12 +463,108 @@
     </div>
     <p style="color:var(--muted);font-size:.9rem;margin-bottom:1.25rem;">Optionally assign a delivery agent to collect the return item.</p>
     <div class="field">
-      <label>Agent ID (optional)</label>
-      <input id="returnAgentIdInput" type="number" placeholder="Leave empty if not yet assigned">
+      <label>Select Agent (optional)</label>
+      <select id="returnAgentSelect">
+        <option value="">— Not assigning agent yet —</option>
+      </select>
+      <div id="returnAgentHint" style="font-size:.78rem;color:var(--muted);margin-top:.35rem;"></div>
     </div>
     <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.25rem;">
       <button class="btn-sm btn-outline" onclick="closeModal('approveReturnModal')">Cancel</button>
       <button class="btn-primary" onclick="submitApproveReturn()">Approve</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Register Agent Modal ── -->
+<div class="overlay" id="registerAgentModal">
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-head">
+      <span class="modal-title">Register Delivery Agent</span>
+      <button class="modal-close" onclick="closeModal('registerAgentModal')">×</button>
+    </div>
+
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:1.25rem;font-weight:500;text-transform:uppercase;letter-spacing:.4px;">Personal Details</p>
+    <div class="field-row">
+      <div class="field"><label>Full Name <span style="color:var(--rose-500)">*</span></label><input id="ag-name" placeholder="Kasun Perera"></div>
+      <div class="field"><label>NIC <span style="color:var(--rose-500)">*</span></label><input id="ag-nic" placeholder="200012345678 or 991234567V"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Email <span style="color:var(--rose-500)">*</span></label><input id="ag-email" type="email" placeholder="agent@example.com"></div>
+      <div class="field"><label>Phone <span style="color:var(--rose-500)">*</span></label><input id="ag-phone" placeholder="0771234567"></div>
+    </div>
+    <div class="field"><label>Address Line 1 <span style="color:var(--rose-500)">*</span></label><input id="ag-address" placeholder="45 Sunset Road"></div>
+    <div class="field-row">
+      <div class="field"><label>City <span style="color:var(--rose-500)">*</span></label><input id="ag-city" placeholder="Colombo"></div>
+      <div class="field"><label>District <span style="color:var(--rose-500)">*</span></label>
+        <select id="ag-district">
+          <option value="">— Select —</option>
+          <option>COLOMBO</option><option>GAMPAHA</option><option>KALUTARA</option>
+          <option>KANDY</option><option>MATALE</option><option>NUWARA_ELIYA</option>
+          <option>GALLE</option><option>MATARA</option><option>HAMBANTOTA</option>
+          <option>JAFFNA</option><option>KILINOCHCHI</option><option>MANNAR</option>
+          <option>MULLAITIVU</option><option>VAVUNIYA</option><option>TRINCOMALEE</option>
+          <option>BATTICALOA</option><option>AMPARA</option><option>KURUNEGALA</option>
+          <option>PUTTALAM</option><option>ANURADHAPURA</option><option>POLONNARUWA</option>
+          <option>BADULLA</option><option>MONARAGALA</option><option>RATNAPURA</option>
+          <option>KEGALLE</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Province <span style="color:var(--rose-500)">*</span></label>
+        <select id="ag-province">
+          <option value="">— Select —</option>
+          <option>WESTERN</option><option>CENTRAL</option><option>SOUTHERN</option>
+          <option>NORTHERN</option><option>EASTERN</option><option>NORTH_WESTERN</option>
+          <option>NORTH_CENTRAL</option><option>UVA</option><option>SABARAGAMUWA</option>
+        </select>
+      </div>
+      <div class="field"><label>Postal Code</label><input id="ag-postal" placeholder="10100"></div>
+    </div>
+
+    <p style="font-size:.82rem;color:var(--muted);margin:1.25rem 0 .75rem;font-weight:500;text-transform:uppercase;letter-spacing:.4px;border-top:1px solid var(--border);padding-top:1rem;">Vehicle & Emergency Contact</p>
+    <div class="field-row">
+      <div class="field"><label>Emergency Contact Name <span style="color:var(--rose-500)">*</span></label><input id="ag-ec-name" placeholder="Nimal Perera"></div>
+      <div class="field"><label>Emergency Contact Phone <span style="color:var(--rose-500)">*</span></label><input id="ag-ec-phone" placeholder="0711234567"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Vehicle Type <span style="color:var(--rose-500)">*</span></label>
+        <select id="ag-vehicle-type">
+          <option value="">— Select —</option>
+          <option value="BIKE">Bike</option>
+          <option value="THREE_WHEELER">Three Wheeler</option>
+          <option value="CAR">Car</option>
+          <option value="VAN">Van</option>
+          <option value="LORRY">Lorry</option>
+        </select>
+      </div>
+      <div class="field"><label>Vehicle Model <span style="color:var(--rose-500)">*</span></label><input id="ag-vehicle-model" placeholder="Honda CB150"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Licence Plate <span style="color:var(--rose-500)">*</span></label><input id="ag-plate" placeholder="WP CAB-1234"></div>
+      <div class="field"><label>Service Area District <span style="color:var(--rose-500)">*</span></label>
+        <select id="ag-service-district">
+          <option value="">— Same as home district —</option>
+          <option>COLOMBO</option><option>GAMPAHA</option><option>KALUTARA</option>
+          <option>KANDY</option><option>MATALE</option><option>NUWARA_ELIYA</option>
+          <option>GALLE</option><option>MATARA</option><option>HAMBANTOTA</option>
+          <option>JAFFNA</option><option>KILINOCHCHI</option><option>MANNAR</option>
+          <option>MULLAITIVU</option><option>VAVUNIYA</option><option>TRINCOMALEE</option>
+          <option>BATTICALOA</option><option>AMPARA</option><option>KURUNEGALA</option>
+          <option>PUTTALAM</option><option>ANURADHAPURA</option><option>POLONNARUWA</option>
+          <option>BADULLA</option><option>MONARAGALA</option><option>RATNAPURA</option>
+          <option>KEGALLE</option>
+        </select>
+      </div>
+    </div>
+
+    <p style="font-size:.82rem;color:var(--muted);margin:1.25rem 0 .75rem;font-weight:500;text-transform:uppercase;letter-spacing:.4px;border-top:1px solid var(--border);padding-top:1rem;">Account</p>
+    <div class="field"><label>Temporary Password <span style="color:var(--rose-500)">*</span></label><input id="ag-password" type="password" placeholder="Agent will be asked to change on first login"></div>
+
+    <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem;">
+      <button class="btn-sm btn-outline" onclick="closeModal('registerAgentModal')">Cancel</button>
+      <button class="btn-primary" id="registerAgentBtn" onclick="submitRegisterAgent()">Register Agent</button>
     </div>
   </div>
 </div>
@@ -476,6 +611,7 @@
     document.getElementById('nav-' + name).classList.add('active');
     if (name === 'deliveries') loadDeliveries();
     if (name === 'returns')    loadReturns();
+    if (name === 'agents')     loadAgents();
   }
 
   // ── Fetch helper ──────────────────────────────────────────────────────────
@@ -544,32 +680,68 @@
   }
 
   function adminActions(d) {
+    const dist = encodeDistrict(d.customerDistrict);
     const btns = [];
     if (d.status === 'PENDING')
-      btns.push(`<button class="btn-sm btn-rose" onclick="openAssign('${d.id}', '${d.trackingNumber}')">Assign</button>`);
+      btns.push(`<button class="btn-sm btn-rose" onclick="openAssign('${d.id}','${d.trackingNumber}','${dist}')">Assign</button>`);
     if (d.status === 'FAILED')
-      btns.push(`<button class="btn-sm btn-outline" onclick="openAssign('${d.id}', '${d.trackingNumber}')">Reassign</button>`);
+      btns.push(`<button class="btn-sm btn-outline" onclick="openAssign('${d.id}','${d.trackingNumber}','${dist}')">Reassign</button>`);
     return btns.join('') || '<span style="color:var(--muted);font-size:.8rem">—</span>';
   }
 
+  function encodeDistrict(d) { return (d || '').replace(/'/g, "\\'"); }
+
   // ── Assign ────────────────────────────────────────────────────────────────
-  function openAssign(id, trackingNumber) {
-    assignTarget = id;
+  let assignDistrict = '';
+
+  async function openAssign(id, trackingNumber, district) {
+    assignTarget   = id;
+    assignDistrict = district || '';
     document.getElementById('assignDeliveryCode').textContent = trackingNumber;
-    document.getElementById('agentIdInput').value       = '';
-    document.getElementById('agentDistrictInput').value = '';
+    document.getElementById('assignDistrictDisplay').textContent = district || '—';
+
+    const sel  = document.getElementById('agentSelect');
+    const hint = document.getElementById('agentSelectHint');
+    const manualField = document.getElementById('agentManualField');
+    sel.innerHTML = '<option value="">— loading agents… —</option>';
+    sel.disabled  = true;
+    hint.textContent = '';
+    manualField.style.display = 'none';
+    document.getElementById('agentIdManual').value = '';
+
     openModal('assignModal');
+
+    try {
+      const agentIds = district
+        ? await apiFetch(`/admin/agents/by-district/${encodeURIComponent(district)}`)
+        : await apiFetch('/admin/agents');
+
+      if (!agentIds || !agentIds.length) {
+        sel.innerHTML = '<option value="">— no agents on record for this district —</option>';
+        hint.textContent = 'No agents have previously handled this district. Enter the agent ID manually below.';
+        manualField.style.display = 'block';
+      } else {
+        sel.innerHTML = '<option value="">— select an agent —</option>'
+          + agentIds.map(id => `<option value="${id}">Agent #${id}</option>`).join('');
+        sel.disabled = false;
+        hint.textContent = `${agentIds.length} agent(s) found for ${district || 'all districts'}.`;
+      }
+    } catch (e) {
+      sel.innerHTML = '<option value="">— failed to load agents —</option>';
+      hint.textContent = 'Could not fetch agents. Enter the agent ID manually below.';
+      manualField.style.display = 'block';
+    }
   }
 
   async function submitAssign() {
-    const agentId            = v('agentIdInput');
-    const agentServiceDistrict = v('agentDistrictInput');
-    if (!agentId)              { toast('Agent ID is required', 'error'); return; }
-    if (!agentServiceDistrict) { toast('Agent service district is required', 'error'); return; }
+    const sel      = document.getElementById('agentSelect');
+    let   agentId  = sel.value;
+    if (!agentId) agentId = document.getElementById('agentIdManual').value.trim();
+    if (!agentId) { toast('Please select or enter an agent ID', 'error'); return; }
     try {
       await apiFetch(`/admin/deliveries/${assignTarget}/assign`, {
         method: 'POST',
-        body: JSON.stringify({ agentId: Number(agentId), agentServiceDistrict, assignedBy: adminId })
+        body: JSON.stringify({ agentId: Number(agentId), agentServiceDistrict: assignDistrict, assignedBy: adminId })
       });
       toast('Agent assigned successfully', 'success');
       closeModal('assignModal');
@@ -660,15 +832,28 @@
     return '<span style="color:var(--muted);font-size:.8rem">—</span>';
   }
 
-  function openApproveReturn(id) {
+  async function openApproveReturn(id) {
     approveReturnTarget = id;
-    document.getElementById('returnAgentIdInput').value = '';
+    const sel  = document.getElementById('returnAgentSelect');
+    const hint = document.getElementById('returnAgentHint');
+    sel.innerHTML = '<option value="">— Not assigning agent yet —</option>';
+    hint.textContent = '';
     openModal('approveReturnModal');
+    try {
+      const agentIds = await apiFetch('/admin/agents');
+      if (agentIds && agentIds.length) {
+        sel.innerHTML = '<option value="">— Not assigning agent yet —</option>'
+          + agentIds.map(id => `<option value="${id}">Agent #${id}</option>`).join('');
+        hint.textContent = `${agentIds.length} agent(s) available.`;
+      } else {
+        hint.textContent = 'No agents on record yet.';
+      }
+    } catch (e) { hint.textContent = 'Could not load agents.'; }
   }
 
   async function submitApproveReturn() {
     if (!adminId) { toast('Admin ID not found in session', 'error'); return; }
-    const agentIdVal = document.getElementById('returnAgentIdInput').value.trim();
+    const agentIdVal = document.getElementById('returnAgentSelect').value;
     const params = new URLSearchParams({ adminId: String(adminId) });
     if (agentIdVal) params.set('agentId', agentIdVal);
     try {
@@ -685,6 +870,102 @@
       toast('Return rejected', 'success');
       loadReturns();
     } catch (e) { toast(e.message || 'Failed to reject return', 'error'); }
+  }
+
+  // ── Agents view ───────────────────────────────────────────
+  let allAgents = [];
+
+  const AGENT_AVAILABILITY_BADGE = {
+    AVAILABLE:   { cls: 'badge-delivered',        label: 'Available' },
+    ON_DELIVERY: { cls: 'badge-out_for_delivery',  label: 'On Delivery' },
+    UNAVAILABLE: { cls: 'badge-pending',           label: 'Unavailable' },
+    SUSPENDED:   { cls: 'badge-failed',            label: 'Suspended' }
+  };
+
+  function agentBadge(status) {
+    const b = AGENT_AVAILABILITY_BADGE[status] || { cls: '', label: status || '—' };
+    return `<span class="badge ${b.cls}">${b.label}</span>`;
+  }
+
+  async function loadAgents() {
+    const tbody = document.getElementById('agentsBody');
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--muted)">Loading…</td></tr>`;
+    try {
+      allAgents = await apiFetch('/admin/agents/profiles');
+      renderAgents(allAgents);
+    } catch (e) { toast('Failed to load agents', 'error'); }
+  }
+
+  function filterAgents(status, btn) {
+    document.querySelectorAll('#view-agents .filter-tabs .tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const list = status === 'ALL' ? allAgents : allAgents.filter(a => a.availabilityStatus === status);
+    renderAgents(list);
+  }
+
+  function renderAgents(list) {
+    const tbody = document.getElementById('agentsBody');
+    if (!list || !list.length) {
+      tbody.innerHTML = `<tr><td colspan="7"><div class="empty"><div class="empty-icon">🛵</div>No agents registered yet. Click "+ Register Agent" to add one.</div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = list.map(a => `
+      <tr>
+        <td style="font-size:.8rem;color:var(--muted)">${a.userCode || '—'}</td>
+        <td><strong>${a.fullName || '—'}</strong></td>
+        <td style="font-size:.85rem">${a.phone || '—'}</td>
+        <td style="font-size:.85rem">${(a.serviceAreaDistrict || a.district || '—').replace(/_/g,' ')}</td>
+        <td style="font-size:.85rem">${a.vehicleType ? a.vehicleType.replace(/_/g,' ') : '—'}${a.vehicleModel ? ' · ' + a.vehicleModel : ''}</td>
+        <td style="font-size:.85rem;font-family:monospace">${a.licencePlate || '—'}</td>
+        <td>${agentBadge(a.availabilityStatus)}</td>
+      </tr>`).join('');
+  }
+
+  // ── Register Agent ─────────────────────────────────────────
+  async function submitRegisterAgent() {
+    const btn = document.getElementById('registerAgentBtn');
+    const district = v('ag-district');
+    const body = {
+      fullName:             v('ag-name'),
+      nic:                  v('ag-nic'),
+      email:                v('ag-email'),
+      phone:                v('ag-phone'),
+      addressLine1:         v('ag-address'),
+      city:                 v('ag-city'),
+      district:             district,
+      province:             v('ag-province'),
+      postalCode:           v('ag-postal') || null,
+      emergencyContactName: v('ag-ec-name'),
+      emergencyContactPhone:v('ag-ec-phone'),
+      vehicleType:          v('ag-vehicle-type'),
+      vehicleModel:         v('ag-vehicle-model'),
+      licencePlate:         v('ag-plate'),
+      serviceAreaDistrict:  v('ag-service-district') || district || null,
+      temporaryPassword:    v('ag-password') || null
+    };
+
+    const required = ['fullName','nic','email','phone','addressLine1','city','district','province',
+                      'emergencyContactName','emergencyContactPhone','vehicleType','vehicleModel','licencePlate'];
+    const missing = required.find(k => !body[k]);
+    if (missing) { toast('Please fill all required fields', 'error'); return; }
+
+    btn.disabled = true; btn.textContent = 'Registering…';
+    try {
+      await apiFetch('/admin/agents/register', { method: 'POST', body: JSON.stringify(body) });
+      toast('Agent registered successfully', 'success');
+      closeModal('registerAgentModal');
+      resetRegisterForm();
+      loadAgents();
+    } catch (e) { toast(e.message || 'Failed to register agent', 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Register Agent'; }
+  }
+
+  function resetRegisterForm() {
+    ['ag-name','ag-nic','ag-email','ag-phone','ag-address','ag-city','ag-postal',
+     'ag-ec-name','ag-ec-phone','ag-vehicle-model','ag-plate','ag-password']
+      .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    ['ag-district','ag-province','ag-vehicle-type','ag-service-district']
+      .forEach(id => { const el = document.getElementById(id); if (el) el.selectedIndex = 0; });
   }
 
   // ── Helpers ───────────────────────────────────────────────────────────────

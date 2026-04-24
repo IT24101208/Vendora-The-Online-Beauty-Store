@@ -4,6 +4,7 @@ import com.vendora.dto.*;
 import com.vendora.model.*;
 import com.vendora.repository.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,17 +22,26 @@ public class DeliveryService {
     private final DeliveryStatusHistoryRepository historyRepository;
     private final FailureLogRepository failureLogRepository;
     private final ReturnRequestRepository returnRequestRepository;
+    private final UserRepository userRepository;
+    private final DeliveryPersonnelProfileRepository agentProfileRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public DeliveryService(DeliveryRepository deliveryRepository,
                            DeliveryAssignmentRepository assignmentRepository,
                            DeliveryStatusHistoryRepository historyRepository,
                            FailureLogRepository failureLogRepository,
-                           ReturnRequestRepository returnRequestRepository) {
+                           ReturnRequestRepository returnRequestRepository,
+                           UserRepository userRepository,
+                           DeliveryPersonnelProfileRepository agentProfileRepository,
+                           PasswordEncoder passwordEncoder) {
         this.deliveryRepository      = deliveryRepository;
         this.assignmentRepository    = assignmentRepository;
         this.historyRepository       = historyRepository;
         this.failureLogRepository    = failureLogRepository;
         this.returnRequestRepository = returnRequestRepository;
+        this.userRepository          = userRepository;
+        this.agentProfileRepository  = agentProfileRepository;
+        this.passwordEncoder         = passwordEncoder;
     }
 
     // ── INTEGRATION ───────────────────────────────────────────
@@ -334,6 +344,69 @@ public class DeliveryService {
                 .stream().map(ReturnRequestDTO::from).collect(Collectors.toList());
     }
 
+    // ── AGENT REGISTRATION ───────────────────────────────────
+
+    @Transactional
+    public AgentProfileDTO registerAgent(RegisterAgentDTO dto) {
+        if (userRepository.existsByEmail(dto.getEmail()))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already in use");
+        if (userRepository.existsByPhone(dto.getPhone()))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Phone already in use");
+        if (userRepository.existsByNic(dto.getNic()))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "NIC already in use");
+        agentProfileRepository.findByLicencePlate(dto.getLicencePlate()).ifPresent(p -> {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Licence plate already registered");
+        });
+
+        User user = new User();
+        user.setUserCode(generateUserCode());
+        user.setFullName(dto.getFullName());
+        user.setEmail(dto.getEmail());
+        user.setPhone(dto.getPhone());
+        user.setNic(dto.getNic());
+        user.setAddressLine1(dto.getAddressLine1());
+        user.setCity(dto.getCity());
+        user.setDistrict(dto.getDistrict());
+        user.setProvince(dto.getProvince());
+        user.setPostalCode(dto.getPostalCode());
+        user.setRole(UserRole.DELIVERY_PERSON);
+        user.setPasswordHash(passwordEncoder.encode(
+            dto.getTemporaryPassword() != null ? dto.getTemporaryPassword() : "Vendora@2025"
+        ));
+        User savedUser = userRepository.save(user);
+
+        DeliveryPersonnelProfile profile = new DeliveryPersonnelProfile();
+        profile.setId(savedUser.getId());
+        profile.setEmergencyContactName(dto.getEmergencyContactName());
+        profile.setEmergencyContactPhone(dto.getEmergencyContactPhone());
+        profile.setVehicleType(VehicleType.valueOf(dto.getVehicleType()));
+        profile.setVehicleModel(dto.getVehicleModel());
+        profile.setLicencePlate(dto.getLicencePlate());
+        profile.setServiceAreaDistrict(
+            dto.getServiceAreaDistrict() != null ? dto.getServiceAreaDistrict() : dto.getDistrict()
+        );
+        agentProfileRepository.save(profile);
+
+        return AgentProfileDTO.from(savedUser, profile);
+    }
+
+    public List<AgentProfileDTO> getAllAgentProfiles() {
+        return userRepository.findByRoleOrderByCreatedAtDesc(UserRole.DELIVERY_PERSON)
+                .stream()
+                .map(u -> AgentProfileDTO.from(u, agentProfileRepository.findById(u.getId()).orElse(null)))
+                .collect(Collectors.toList());
+    }
+
+    public List<AgentProfileDTO> getAgentProfilesByDistrict(String district) {
+        return agentProfileRepository.findByServiceAreaDistrictIgnoreCase(district)
+                .stream()
+                .map(p -> AgentProfileDTO.from(
+                    userRepository.findById(p.getId()).orElseThrow(),
+                    p
+                ))
+                .collect(Collectors.toList());
+    }
+
     // ── HELPERS ───────────────────────────────────────────────
 
     private Delivery findDelivery(String id) {
@@ -365,5 +438,9 @@ public class DeliveryService {
             ? orderCode
             : String.format("%08d", orderId);
         return "VND-" + base + "-" + UUID.randomUUID().toString().substring(0, 6).toUpperCase();
+    }
+
+    private String generateUserCode() {
+        return "USR-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
 }
